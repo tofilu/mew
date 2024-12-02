@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mew/assets/DailyScreen.dart';
-import 'package:mew/assets/DrugPlanScreen.dart';
+import 'package:mew/DailyScreen.dart';
+import 'package:mew/DrugPlanScreen.dart';
 
-import 'assets/CalenderScreen.dart';
+import 'CalenderScreen.dart';
 
 void main() => runApp(const MewApp());
 
