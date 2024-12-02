@@ -1,16 +1,9 @@
 # mew
 
-Software Engineering Projekt
+Software Engineering Projekt | HAW WS24
 
-## Getting Started
+## Whats MEW?
 
-This project is a starting point for a Flutter application.
+MEW (Medikamenten Einnahme Wecker)
+is an app for Android/iOS where you can log your medications and be reminded to take them
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
