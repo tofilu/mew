@@ -44,6 +44,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     //final ThemeData theme = Theme.of(context);
     return Scaffold(
+      appBar: AppBar(title: Text('MEW'), backgroundColor: Colors.blue),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
