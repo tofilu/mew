@@ -9,11 +9,13 @@ class DatabaseHandler {
         return db.execute('''CREATE TABLE medicaments(
               id INTEGER PRIMARY KEY, 
               name TEXT, 
+              dose INTEGER,
               time TEXT, 
-              frequency TEXT,
+              frequency INTEGER,
               amountLeft INTEGER,
               prescriptionTime TEXT,
               )''');
+        //für Kalender wäre noch ein Datum nötig
       },
       version: 1,
     );
