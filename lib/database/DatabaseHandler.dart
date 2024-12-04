@@ -13,7 +13,7 @@ class DatabaseHandler {
               time TEXT, 
               frequency INTEGER,
               amountLeft INTEGER,
-              prescriptionTime TEXT,
+              prescriptionTime INTEGER,
               )''');
         //für Kalender wäre noch ein Datum nötig
       },
