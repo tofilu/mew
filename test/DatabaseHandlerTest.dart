@@ -50,7 +50,19 @@ void main() {
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
 
-    //....
+    //Medikament aktualisieren
+    await dbHandler.set(drug.id!, 'Ibu', '09:00', 1, 10, 7);
+
+    //Aktualisiertes Medikament aus der Datenbank abrufen
+    final fetchedDrug = await dbHandler.get(drug.id!);
+
+    //Überprüfen, ob das Medikament korrekt aktualisiert wurde
+    expect(fetchedDrug, isNotNull);
+    expect(fetchedDrug?.name, 'Ibu');
+    expect(fetchedDrug?.time, '09:00');
+    expect(fetchedDrug?.frequency, 1);
+    expect(fetchedDrug?.amountLeft, 10);
+    expect(fetchedDrug?.prescriptionTime, 7);
   });
 
   test('Get Drug by ID', () async {
