@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mew/Helper/Drug.dart';
 import 'package:mew/database/DatabaseHandler.dart';
 
 import 'package:mew/main.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
   late DatabaseHandler dbHandler;
@@ -10,6 +13,12 @@ void main() {
   //wird vor jedem Test ausgeführt
   setUp(() {
     dbHandler = DatabaseHandler();
+  });
+
+  setUpAll(() {
+    // Initialisiere sqflite_common_ffi für Tests
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
   });
 
   test('Add Drug to Database', () async {
