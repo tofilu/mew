@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mew/DailyScreen.dart';
 import 'package:mew/DrugPlanScreen.dart';
 
-import 'CalenderScreen.dart';
+import 'AddDrugScreen.dart';
 
 void main() => runApp(const MewApp());
 
@@ -32,13 +32,13 @@ class _HomeState extends State<Home> {
       label: 'Daily',
     ),
     NavigationDestination(
-      icon: Icon(Icons.calendar_month),
-      label: 'Calender',
+      icon: Icon(Icons.add),
+      label: 'Add Medication',
     ),
     NavigationDestination(icon: Icon(Icons.medication), label: 'DrugPlan')
   ];
 
-  List<Widget> screens = [DailyScreen(), CalenderScreen(), DrugPlanScreen()];
+  List<Widget> screens = [DailyScreen(), AddDrugScreen(), DrugPlanScreen()];
 
   @override
   Widget build(BuildContext context) {
