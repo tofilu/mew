@@ -43,6 +43,16 @@ class DatabaseHandler {
     }
   }
 
+  getAll() async {
+    final db = await initDB();
+    final List<Map<String, dynamic>> maps = await db.query('medicaments');
+    if (maps.isNotEmpty) {
+      return List.generate(maps.length, (i) {
+        return makeDrug(maps[i]);
+      });
+    }
+  }
+
   Future<void> set(int id, String name, String time, int frequency, int amountLeft, int prescriptionTime) async {
     final db = await initDB();
     await db.update(
@@ -68,7 +78,7 @@ class DatabaseHandler {
     );
   }
 
- search (String name) async {
+  search (String name) async {
     final db = await initDB();
     final List<Map<String, dynamic>> maps = await db.query('medicaments',
         columns: null, where: 'name = ?', whereArgs: [name]);
