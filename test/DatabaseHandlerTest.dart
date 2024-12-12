@@ -118,6 +118,72 @@ void main() {
     expect(fetchedDrug?.amountLeft, 10);
     expect(fetchedDrug?.prescriptionTime, 7);
   });
+  test('search for Drug by Name', () async {
+    final drug = Drug(
+      id: 1,
+      name: 'Paracetamol',
+      time: '08:00',
+      frequency: 1,
+      amountLeft: 10,
+      prescriptionTime: 7,
+    );
+
+    //Medikament zur Datenbank hinzufügen
+    await dbHandler.addToDataBase(drug);
+    final fetchedDrug = await dbHandler.search('Paracetamol');
+
+    expect(fetchedDrug, isNotNull);
+    expect(fetchedDrug?.name, 'Paracetamol');
+    expect(fetchedDrug?.time, '08:00');
+    expect(fetchedDrug?.frequency, 1);
+    expect(fetchedDrug?.amountLeft, 10);
+    expect(fetchedDrug?.prescriptionTime, 7);
+  });
+  test('search for Drug by Name case insensitive', () async {
+    final drug = Drug(
+      id: 1,
+      name: 'Paracetamol',
+      time: '08:00',
+      frequency: 1,
+      amountLeft: 10,
+      prescriptionTime: 7,
+    );
+
+    //Medikament zur Datenbank hinzufügen
+    await dbHandler.addToDataBase(drug);
+    final fetchedDrug = await dbHandler.search('paracetamol');
+
+    expect(fetchedDrug, isNotNull);
+    expect(fetchedDrug?.name, 'Paracetamol');
+    expect(fetchedDrug?.time, '08:00');
+    expect(fetchedDrug?.frequency, 1);
+    expect(fetchedDrug?.amountLeft, 10);
+    expect(fetchedDrug?.prescriptionTime, 7);
+  });
+
+  test('search for Drug by partial Name ', () async {
+    final drug = Drug(
+      id: 1,
+      name: 'Paracetamol',
+      time: '08:00',
+      frequency: 1,
+      amountLeft: 10,
+      prescriptionTime: 7,
+    );
+
+    //Medikament zur Datenbank hinzufügen
+    await dbHandler.addToDataBase(drug);
+    final fetchedDrug = await dbHandler.search('paraceta');
+
+    expect(fetchedDrug, isNotNull);
+    expect(fetchedDrug?.name, 'Paracetamol');
+    expect(fetchedDrug?.time, '08:00');
+    expect(fetchedDrug?.frequency, 1);
+    expect(fetchedDrug?.amountLeft, 10);
+    expect(fetchedDrug?.prescriptionTime, 7);
+  });
+
+
   test('Search Drug by Non-Existent Name', () async {
     // Suche nach einem nicht existierenden Medikament
     final fetchedDrug = await dbHandler.search('NonExistentDrug');

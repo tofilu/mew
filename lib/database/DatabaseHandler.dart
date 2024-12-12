@@ -70,8 +70,11 @@ class DatabaseHandler {
 
  search (String name) async {
     final db = await initDB();
-    final List<Map<String, dynamic>> maps = await db.query('medicaments',
-        columns: null, where: 'name = ?', whereArgs: [name]);
+    final List<Map<String, dynamic>> maps = await db.query(
+      'medicaments',
+      where: 'LOWER(name) LIKE ?',
+      whereArgs: ['%${name.toLowerCase()}%'],
+    );
     if (maps.isNotEmpty) {
       return makeDrug(maps.first);
     }
