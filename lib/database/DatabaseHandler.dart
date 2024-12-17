@@ -90,7 +90,7 @@ class DatabaseHandler {
     }
   }
 
-  makeDrug(Map map) {
+  Drug makeDrug(Map map) {
     Drug drug = Drug(
       id: map['id'],
       name: map['name'],
