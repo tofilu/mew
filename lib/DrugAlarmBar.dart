@@ -36,7 +36,7 @@ class DrugAlarmBar extends StatelessWidget {
 
   Row buildDrugAlarmTitle() {
     return Row(children: [
-      Text(exampleDrug.name,
+      Text(drug.name,
           textAlign: TextAlign.left,
           style: TextStyle(
               color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold))
@@ -48,12 +48,12 @@ class DrugAlarmBar extends StatelessWidget {
       Column(children: [
         Padding(
             padding: const EdgeInsets.only(right: 15.0),
-            child: Text("time " + exampleDrug.time))
+            child: Text("time " + drug.time))
       ]),
       Column(children: [
         Padding(
             padding: const EdgeInsets.only(right: 5.0),
-            child: Text("every " + exampleDrug.frequency.toString() + " days"))
+            child: Text("every " + drug.frequency.toString() + " days"))
       ])
     ]);
   }
