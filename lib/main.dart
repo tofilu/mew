@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mew/DailyScreen.dart';
 import 'package:mew/DrugPlanScreen.dart';
-
-import 'AddDrugScreen.dart';
+import 'package:mew/theme/mewTheme.dart';
+import 'package:mew/AddDrugScreen.dart';
 
 void main() => runApp(const MewApp());
 
@@ -12,7 +12,10 @@ class MewApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(useMaterial3: true), home: const Home());
+        theme: MewTheme.lightTheme,
+        darkTheme: MewTheme.darkTheme,
+        themeMode: ThemeMode.system,
+        home: const Home());
   }
 }
 
@@ -44,7 +47,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     //final ThemeData theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text('MEW'), backgroundColor: Colors.blue),
+      appBar: AppBar(title: Text('MEW')
+      ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
