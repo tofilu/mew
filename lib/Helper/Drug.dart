@@ -5,6 +5,7 @@ class Drug {
   int frequency;
   int amountLeft;
   int prescriptionTime;
+  int counter;
 
   Drug({
     this.id,
@@ -13,6 +14,7 @@ class Drug {
     required this.frequency,
     required this.amountLeft,
     required this.prescriptionTime,
+    required this.counter
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +25,7 @@ class Drug {
       'frequency': frequency,
       'amountLeft': amountLeft,
       'prescriptionTime': prescriptionTime,
+      'counter': counter
     };
   }
 }

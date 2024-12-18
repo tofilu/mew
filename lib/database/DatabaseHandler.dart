@@ -1,3 +1,5 @@
+//import 'dart:nativewrappers/_internal/vm/lib/internal_patch.dart';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common/sqlite_api.dart';
 import 'package:path/path.dart';
@@ -6,18 +8,17 @@ import '../Helper/Drug.dart';
 
 class DatabaseHandler {
   static Future<Database> initDB() async {
-
     final database = openDatabase(
       join(await getDatabasesPath(), 'medicament_database.db'),
       onCreate: (db, version) {
         return db.execute('''CREATE TABLE medicaments(
               id INTEGER PRIMARY KEY, 
               name TEXT, 
-              dose INTEGER,
               time TEXT, 
               frequency INTEGER,
               amountLeft INTEGER,
-              prescriptionTime INTEGER
+              prescriptionTime INTEGER,
+              counter INTEGER
               )''');
         //für Kalender wäre noch ein Datum nötig
       },
@@ -53,7 +54,7 @@ class DatabaseHandler {
     }
   }
 
-  Future<void> set(int id, String name, String time, int frequency, int amountLeft, int prescriptionTime) async {
+  Future<void> set(int id, String name, String time, int frequency, int amountLeft, int prescriptionTime, int counter) async {
     final db = await initDB();
     await db.update(
       'medicaments',
@@ -63,6 +64,7 @@ class DatabaseHandler {
         'frequency': frequency,
         'amountLeft': amountLeft,
         'prescriptionTime': prescriptionTime,
+        'counter': counter,
       },
       where: 'id = ?',
       whereArgs: [id],
@@ -98,8 +100,15 @@ class DatabaseHandler {
       frequency: map['frequency'],
       amountLeft: map['amountLeft'],
       prescriptionTime: map['prescriptionTime'],
+      counter: map['counter'],
     );
     return drug;
+  }
+
+  Future<void> deleteDatabaseFile(String dbName) async {
+    var databasesPath = await getDatabasesPath();
+    String path = '$databasesPath/$dbName';
+    await deleteDatabase(path);
   }
 
 }

@@ -11,7 +11,8 @@ class DrugAlarmBar extends StatelessWidget {
       time: "10:00",
       frequency: 2,
       amountLeft: 100,
-      prescriptionTime: 10);
+      prescriptionTime: 10,
+      counter: 0);
 
   DrugAlarmBar({super.key, required this.drug}) {
     this.drug = drug;

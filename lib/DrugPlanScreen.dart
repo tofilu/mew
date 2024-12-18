@@ -59,7 +59,8 @@ class DrugPlanScreen extends StatelessWidget {
         time: "10:00",
         frequency: 2,
         amountLeft: 100,
-        prescriptionTime: 10);
+        prescriptionTime: 10,
+        counter: 0);
 
     Drug exampleDrug2 = Drug(
         id: 0,
@@ -67,7 +68,8 @@ class DrugPlanScreen extends StatelessWidget {
         time: "12:00",
         frequency: 5,
         amountLeft: 100,
-        prescriptionTime: 10);
+        prescriptionTime: 10,
+        counter: 0);
 
     dbHandler.addToDataBase(exampleDrug);
     dbHandler.addToDataBase(exampleDrug2);

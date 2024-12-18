@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mew/Helper/Drug.dart';
 import 'package:mew/database/DatabaseHandler.dart';
 
-import 'package:mew/main.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -13,6 +11,7 @@ void main() {
   //wird vor jedem Test ausgeführt
   setUp(() {
     dbHandler = DatabaseHandler();
+    dbHandler.deleteDatabaseFile('medicament_database.db'); //muss nur ausgeführt werden da die Datenbank in den Tests nicht geschlossen wird
   });
 
   setUpAll(() {
@@ -29,6 +28,7 @@ void main() {
       frequency: 1, //wie oft einnehmen? mehrmals am Tag, ....
       amountLeft: 10,
       prescriptionTime: 7,
+      counter: 0,
     );
 
     //Medikament zur Datenbank hinzufügen
@@ -54,12 +54,13 @@ void main() {
       frequency: 1,
       amountLeft: 10,
       prescriptionTime: 7,
+      counter: 0,
     );
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
 
     //Medikament aktualisieren
-    await dbHandler.set(drug.id!, 'Ibu', '09:00', 1, 10, 7);
+    await dbHandler.set(drug.id!, 'Ibu', '09:00', 1, 10, 7,0);
 
     //Aktualisiertes Medikament aus der Datenbank abrufen
     final fetchedDrug = await dbHandler.get(drug.id!);
@@ -81,6 +82,7 @@ void main() {
       frequency: 1,
       amountLeft: 10,
       prescriptionTime: 7,
+      counter: 0,
     );
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
@@ -105,6 +107,7 @@ void main() {
       frequency: 1,
       amountLeft: 10,
       prescriptionTime: 7,
+      counter: 0,
     );
 
     //Medikament zur Datenbank hinzufügen
@@ -126,6 +129,7 @@ void main() {
       frequency: 1,
       amountLeft: 10,
       prescriptionTime: 7,
+      counter: 0,
     );
 
     //Medikament zur Datenbank hinzufügen
@@ -147,6 +151,7 @@ void main() {
       frequency: 1,
       amountLeft: 10,
       prescriptionTime: 7,
+      counter: 0,
     );
 
     //Medikament zur Datenbank hinzufügen
@@ -169,6 +174,7 @@ void main() {
       frequency: 1,
       amountLeft: 10,
       prescriptionTime: 7,
+      counter: 0,
     );
 
     //Medikament zur Datenbank hinzufügen
@@ -200,6 +206,7 @@ void main() {
       frequency: 1,
       amountLeft: 10,
       prescriptionTime: 7,
+      counter: 0,
     );
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
