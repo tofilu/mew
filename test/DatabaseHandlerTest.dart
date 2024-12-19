@@ -46,6 +46,49 @@ void main() {
     expect(fetchedDrug?.prescriptionTime, 7);
   });
 
+  test('GetAll drugs', () async{
+    final drug1 = Drug(
+      id: 1,
+      name: 'Paracetamol',
+      time: '08:00',
+      frequency: 1,
+      amountLeft: 10,
+      prescriptionTime: 7,
+      counter: 0,
+    );
+    final drug2 = Drug(
+      id: 2,
+      name: 'Ibuprofen',
+      time: '09:00',
+      frequency: 2,
+      amountLeft: 20,
+      prescriptionTime: 7,
+      counter: 0,
+    );
+
+    //Medikamente zur Datenbank hinzufügen
+    await dbHandler.addToDataBase(drug1);
+    await dbHandler.addToDataBase(drug2);
+
+    //Alle Medikamente aus der Datenbank abrufen
+    final fetchedDrugs = await dbHandler.getAll();
+
+    //Überprüfen, ob die Medikamente korrekt abgerufen wurden
+    expect(fetchedDrugs, isNotNull);
+    expect(fetchedDrugs.length, 2);
+    expect(fetchedDrugs[0].name, 'Paracetamol');
+    expect(fetchedDrugs[1].name, 'Ibuprofen');
+  });
+
+  test('get all drugs when database is empty', () async {
+    //Alle Medikamente aus der Datenbank abrufen
+    final fetchedDrugs = await dbHandler.getAll();
+
+    //Überprüfen, ob die Medikamente korrekt abgerufen wurden
+    expect(fetchedDrugs, isNotNull);
+    expect(fetchedDrugs.length, 0);
+  });
+
   test('Set Drug', () async {
     final drug = Drug(
       id: 1,

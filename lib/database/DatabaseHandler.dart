@@ -52,6 +52,7 @@ class DatabaseHandler {
         return makeDrug(maps[i]);
       });
     }
+    return []; //leere Liste zurückgeben
   }
 
   Future<void> set(int id, String name, String time, int frequency, int amountLeft, int prescriptionTime, int counter) async {
