@@ -16,7 +16,7 @@ class DatabaseHandler {
               name TEXT, 
               time TEXT, 
               frequency INTEGER,
-              amountLeft INTEGER,
+              dosage TEXT,
               prescriptionTime INTEGER,
               counter INTEGER
               )''');
@@ -35,16 +35,19 @@ class DatabaseHandler {
 
 
 
-  get(int id) async {
+  Future<Drug> get(int id) async {
     final db = await initDB();
     final List<Map<String, dynamic>> maps = await db.query('medicaments',
         columns: null, where: 'id = ?', whereArgs: [id]);
     if (maps.isNotEmpty) {
       return makeDrug(maps.first);
     }
+    else {
+      throw Exception('Drug not found');
+    }
   }
 
-  getAll() async {
+  Future<List> getAll() async {
     final db = await initDB();
     final List<Map<String, dynamic>> maps = await db.query('medicaments');
     if (maps.isNotEmpty) {
@@ -55,7 +58,7 @@ class DatabaseHandler {
     return []; //leere Liste zurückgeben
   }
 
-  Future<void> set(int id, String name, String time, int frequency, int amountLeft, int prescriptionTime, int counter) async {
+  Future<void> set(int id, String name, String time, int frequency, String dosage, int prescriptionTime, int counter) async {
     final db = await initDB();
     await db.update(
       'medicaments',
@@ -63,7 +66,7 @@ class DatabaseHandler {
         'name': name,
         'time': time,
         'frequency': frequency,
-        'amountLeft': amountLeft,
+        'dosage': dosage,
         'prescriptionTime': prescriptionTime,
         'counter': counter,
       },
@@ -81,7 +84,7 @@ class DatabaseHandler {
     );
   }
 
-  search (String name) async {
+  Future<Drug> search (String name) async {
     final db = await initDB();
     final List<Map<String, dynamic>> maps = await db.query(
       'medicaments',
@@ -91,6 +94,9 @@ class DatabaseHandler {
     if (maps.isNotEmpty) {
       return makeDrug(maps.first);
     }
+    else {
+      throw Exception('Drug not found');
+    }
   }
 
   Drug makeDrug(Map map) {
@@ -99,7 +105,7 @@ class DatabaseHandler {
       name: map['name'],
       time: map['time'],
       frequency: map['frequency'],
-      amountLeft: map['amountLeft'],
+      dosage: map['dosage'],
       prescriptionTime: map['prescriptionTime'],
       counter: map['counter'],
     );

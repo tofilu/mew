@@ -3,7 +3,7 @@ class Drug {
   String name;
   String time;
   int frequency;
-  int amountLeft;
+  int dosage;
   int prescriptionTime;
   int counter;
 
@@ -12,7 +12,7 @@ class Drug {
     required this.name,
     required this.time,
     required this.frequency,
-    required this.amountLeft,
+    required this.dosage,
     required this.prescriptionTime,
     required this.counter
   });
@@ -23,7 +23,7 @@ class Drug {
       'name': name,
       'time': time,
       'frequency': frequency,
-      'amountLeft': amountLeft,
+      'dosage': dosage,
       'prescriptionTime': prescriptionTime,
       'counter': counter
     };
