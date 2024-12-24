@@ -8,6 +8,8 @@ import 'Helper/Drug.dart';
 class DrugPlanScreen extends StatelessWidget {
   final DatabaseHandler dbHandler = DatabaseHandler();
 
+  DrugPlanScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     setUpExampleDatabase();
@@ -58,8 +60,8 @@ class DrugPlanScreen extends StatelessWidget {
         name: "exampleDrug",
         time: "10:00",
         frequency: 2,
-        amountLeft: 100,
         prescriptionTime: 10,
+        dosage: "100 mg",
         counter: 0);
 
     Drug exampleDrug2 = Drug(
@@ -67,10 +69,10 @@ class DrugPlanScreen extends StatelessWidget {
         name: "exampleDrug2",
         time: "12:00",
         frequency: 5,
-        amountLeft: 100,
+        dosage: "50 mg",
         prescriptionTime: 10,
         counter: 0);
-
+    dbHandler.deleteDatabaseFile('medicament_database.db');
     dbHandler.addToDataBase(exampleDrug);
     dbHandler.addToDataBase(exampleDrug2);
   }
