@@ -3,19 +3,18 @@ class Drug {
   String name;
   String time;
   int frequency;
-  int dosage;
+  String dosage;
   int prescriptionTime;
   int counter;
 
-  Drug({
-    this.id,
-    required this.name,
-    required this.time,
-    required this.frequency,
-    required this.dosage,
-    required this.prescriptionTime,
-    required this.counter
-  });
+  Drug(
+      {this.id,
+      required this.name,
+      required this.time,
+      required this.frequency,
+      required this.dosage,
+      required this.prescriptionTime,
+      required this.counter});
 
   Map<String, dynamic> toMap() {
     return {
