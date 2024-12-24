@@ -33,21 +33,18 @@ class DatabaseHandler {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-
-
   Future<Drug> get(int id) async {
     final db = await initDB();
-    final List<Map<String, dynamic>> maps = await db.query('medicaments',
-        columns: null, where: 'id = ?', whereArgs: [id]);
+    final List<Map<String, dynamic>> maps = await db
+        .query('medicaments', columns: null, where: 'id = ?', whereArgs: [id]);
     if (maps.isNotEmpty) {
       return makeDrug(maps.first);
-    }
-    else {
+    } else {
       throw Exception('Drug not found');
     }
   }
 
-  Future<List> getAll() async {
+  Future<List<Drug>> getAll() async {
     final db = await initDB();
     final List<Map<String, dynamic>> maps = await db.query('medicaments');
     if (maps.isNotEmpty) {
@@ -58,7 +55,8 @@ class DatabaseHandler {
     return []; //leere Liste zurückgeben
   }
 
-  Future<void> set(int id, String name, String time, int frequency, String dosage, int prescriptionTime, int counter) async {
+  Future<void> set(int id, String name, String time, int frequency,
+      String dosage, int prescriptionTime, int counter) async {
     final db = await initDB();
     await db.update(
       'medicaments',
@@ -84,7 +82,7 @@ class DatabaseHandler {
     );
   }
 
-  Future<Drug> search (String name) async {
+  Future<Drug> search(String name) async {
     final db = await initDB();
     final List<Map<String, dynamic>> maps = await db.query(
       'medicaments',
@@ -93,8 +91,7 @@ class DatabaseHandler {
     );
     if (maps.isNotEmpty) {
       return makeDrug(maps.first);
-    }
-    else {
+    } else {
       throw Exception('Drug not found');
     }
   }
@@ -117,7 +114,4 @@ class DatabaseHandler {
     String path = '$databasesPath/$dbName';
     await deleteDatabase(path);
   }
-
 }
-
-
