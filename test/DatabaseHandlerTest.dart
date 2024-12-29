@@ -26,7 +26,7 @@ void main() {
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1, //wie oft einnehmen? mehrmals am Tag, ....
-      amountLeft: 10,
+      dosage: '1 Tablette',
       prescriptionTime: 7,
       counter: 0,
     );
@@ -42,7 +42,7 @@ void main() {
     expect(fetchedDrug?.name, 'Paracetamol');
     expect(fetchedDrug?.time, '08:00');
     expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.amountLeft, 10);
+    expect(fetchedDrug?.dosage, '1 Tablette');
     expect(fetchedDrug?.prescriptionTime, 7);
   });
 
@@ -52,7 +52,7 @@ void main() {
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
-      amountLeft: 10,
+      dosage: '1 Tablette',
       prescriptionTime: 7,
       counter: 0,
     );
@@ -61,7 +61,7 @@ void main() {
       name: 'Ibuprofen',
       time: '09:00',
       frequency: 2,
-      amountLeft: 20,
+      dosage: '1 Tablette',
       prescriptionTime: 7,
       counter: 0,
     );
@@ -95,7 +95,7 @@ void main() {
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
-      amountLeft: 10,
+      dosage: '1 Tablette',
       prescriptionTime: 7,
       counter: 0,
     );
@@ -103,7 +103,7 @@ void main() {
     await dbHandler.addToDataBase(drug);
 
     //Medikament aktualisieren
-    await dbHandler.set(drug.id!, 'Ibu', '09:00', 1, 10, 7,0);
+    await dbHandler.set(drug.id!, 'Ibu', '09:00', 1, '1 Tablette', 7,0);
 
     //Aktualisiertes Medikament aus der Datenbank abrufen
     final fetchedDrug = await dbHandler.get(drug.id!);
@@ -113,7 +113,7 @@ void main() {
     expect(fetchedDrug?.name, 'Ibu');
     expect(fetchedDrug?.time, '09:00');
     expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.amountLeft, 10);
+    expect(fetchedDrug?.dosage, '1 Tablette');
     expect(fetchedDrug?.prescriptionTime, 7);
   });
 
@@ -123,7 +123,7 @@ void main() {
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
-      amountLeft: 10,
+      dosage: '1 Tablette',
       prescriptionTime: 7,
       counter: 0,
     );
@@ -138,7 +138,7 @@ void main() {
     expect(fetchedDrug?.name, 'Paracetamol');
     expect(fetchedDrug?.time, '08:00');
     expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.amountLeft, 10);
+    expect(fetchedDrug?.dosage, '1 Tablette');
     expect(fetchedDrug?.prescriptionTime, 7);
   });
 
@@ -148,7 +148,7 @@ void main() {
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
-      amountLeft: 10,
+      dosage: '1 Tablette',
       prescriptionTime: 7,
       counter: 0,
     );
@@ -161,7 +161,7 @@ void main() {
     expect(fetchedDrug?.name, 'Paracetamol');
     expect(fetchedDrug?.time, '08:00');
     expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.amountLeft, 10);
+    expect(fetchedDrug?.dosage, '1 Tablette');
     expect(fetchedDrug?.prescriptionTime, 7);
   });
   test('search for Drug by Name', () async {
@@ -170,7 +170,7 @@ void main() {
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
-      amountLeft: 10,
+      dosage: '1 Tablette',
       prescriptionTime: 7,
       counter: 0,
     );
@@ -183,7 +183,7 @@ void main() {
     expect(fetchedDrug?.name, 'Paracetamol');
     expect(fetchedDrug?.time, '08:00');
     expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.amountLeft, 10);
+    expect(fetchedDrug?.dosage, '1 Tablette');
     expect(fetchedDrug?.prescriptionTime, 7);
   });
   test('search for Drug by Name case insensitive', () async {
@@ -192,7 +192,7 @@ void main() {
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
-      amountLeft: 10,
+      dosage: '1 Tablette',
       prescriptionTime: 7,
       counter: 0,
     );
@@ -205,7 +205,7 @@ void main() {
     expect(fetchedDrug?.name, 'Paracetamol');
     expect(fetchedDrug?.time, '08:00');
     expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.amountLeft, 10);
+    expect(fetchedDrug?.dosage, '1 Tablette');
     expect(fetchedDrug?.prescriptionTime, 7);
   });
 
@@ -215,7 +215,7 @@ void main() {
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
-      amountLeft: 10,
+      dosage: '1 Tablette',
       prescriptionTime: 7,
       counter: 0,
     );
@@ -228,17 +228,18 @@ void main() {
     expect(fetchedDrug?.name, 'Paracetamol');
     expect(fetchedDrug?.time, '08:00');
     expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.amountLeft, 10);
+    expect(fetchedDrug?.dosage, '1 Tablette');
     expect(fetchedDrug?.prescriptionTime, 7);
   });
 
 
   test('Search Drug by Non-Existent Name', () async {
-    // Suche nach einem nicht existierenden Medikament
-    final fetchedDrug = await dbHandler.search('NonExistentDrug');
+    // Suche nach einem Medikament, das nicht existiert
+    expect(
+          () async => await dbHandler.search('NonExistentDrug'),
+      throwsException,
+    );
 
-    // Sollte null zurückgeben, da das Medikament nicht existiert
-    expect(fetchedDrug, isNull);
   });
 
   test('Delete Drug', () async {
@@ -247,7 +248,7 @@ void main() {
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
-      amountLeft: 10,
+      dosage: '1 Tablette',
       prescriptionTime: 7,
       counter: 0,
     );
