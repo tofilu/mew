@@ -4,6 +4,8 @@ import 'package:mew/DrugPlanScreen.dart';
 import 'package:mew/theme/mewTheme.dart';
 import 'package:mew/AddDrugScreen.dart';
 
+import 'database/DatabaseHandler.dart';
+
 void main() => runApp(const MewApp());
 
 class MewApp extends StatelessWidget {
@@ -11,6 +13,7 @@ class MewApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DatabaseHandler().deleteDatabaseFile('medicament_database.db');
     return MaterialApp(
         theme: MewTheme.lightTheme,
         darkTheme: MewTheme.darkTheme,
@@ -47,8 +50,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     //final ThemeData theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text('MEW')
-      ),
+      appBar: AppBar(title: Text('MEW')),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {

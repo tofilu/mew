@@ -12,7 +12,6 @@ class DrugPlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    setUpExampleDatabase();
     return Scaffold(body: Center(child: createFutureBuilder()));
   }
 
@@ -52,28 +51,5 @@ class DrugPlanScreen extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return Container(child: alarmBars[index]);
         });
-  }
-
-  void setUpExampleDatabase() {
-    Drug exampleDrug = Drug(
-        id: 2,
-        name: "exampleDrug",
-        time: "10:00",
-        frequency: 2,
-        prescriptionTime: 10,
-        dosage: "100 mg",
-        counter: 2);
-
-    Drug exampleDrug2 = Drug(
-        id: 0,
-        name: "exampleDrug2",
-        time: "12:00",
-        frequency: 5,
-        dosage: "50 mg",
-        prescriptionTime: 10,
-        counter: 0);
-    dbHandler.deleteDatabaseFile('medicament_database.db');
-    dbHandler.addToDataBase(exampleDrug);
-    dbHandler.addToDataBase(exampleDrug2);
   }
 }
