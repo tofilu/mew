@@ -62,7 +62,7 @@ class DrugPlanScreen extends StatelessWidget {
         frequency: 2,
         prescriptionTime: 10,
         dosage: "100 mg",
-        counter: 0);
+        counter: 2);
 
     Drug exampleDrug2 = Drug(
         id: 0,
