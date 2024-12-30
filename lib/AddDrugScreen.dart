@@ -11,21 +11,23 @@ class AddDrugScreen extends StatefulWidget {
 }
 
 class _AddDrugScreenState extends State<AddDrugScreen> {
-  final TextEditingController medicationNameController = TextEditingController();
+  final TextEditingController medicationNameController =
+      TextEditingController();
   final TextEditingController dosageController = TextEditingController();
-  final TextEditingController presciptionTimeController = TextEditingController();
+  final TextEditingController presciptionTimeController =
+      TextEditingController();
   final TextEditingController frequencyController = TextEditingController();
   TimeOfDay? selectedTime;
 
   void saveMedication() {
     final String medicationName = medicationNameController.text;
     final String dosage = dosageController.text;
-    final int frequency = frequencyController.text as int;
-    final int prescriptionTime = presciptionTimeController.text as int;
+    final int frequency = int.parse(frequencyController.text);
+    final int prescriptionTime = int.parse(presciptionTimeController.text);
     final String time = selectedTime?.format(context) ?? '';
 
     // Save the medication to the database
-     DatabaseHandler().addToDataBase(
+    DatabaseHandler().addToDataBase(
       Drug(
         name: medicationName,
         time: time,
@@ -33,8 +35,8 @@ class _AddDrugScreenState extends State<AddDrugScreen> {
         dosage: dosage,
         prescriptionTime: prescriptionTime,
         counter: 0,
-       ),
-     );
+      ),
+    );
 
     // Show a snackbar
     ScaffoldMessenger.of(context).showSnackBar(
@@ -73,7 +75,6 @@ class _AddDrugScreenState extends State<AddDrugScreen> {
               ),
             ),
             SizedBox(height: 24),
-
             TextField(
               controller: dosageController,
               decoration: InputDecoration(
@@ -83,7 +84,6 @@ class _AddDrugScreenState extends State<AddDrugScreen> {
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: 24),
-
             Row(
               children: [
                 Text(
@@ -99,7 +99,6 @@ class _AddDrugScreenState extends State<AddDrugScreen> {
               ],
             ),
             SizedBox(height: 24),
-
             TextField(
               controller: frequencyController,
               decoration: InputDecoration(
@@ -109,20 +108,19 @@ class _AddDrugScreenState extends State<AddDrugScreen> {
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: 24),
-
             TextField(
               controller: presciptionTimeController,
               decoration: InputDecoration(
-                  labelText: 'Presciption time',
-                  hintText: 'Enter your prescription time',
+                labelText: 'Presciption time',
+                hintText: 'Enter your prescription time',
               ),
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: 24),
-
             Center(
               child: ElevatedButton(
                 onPressed: () {
+                  saveMedication();
                   // Add save logic here
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Medication saved!')),
