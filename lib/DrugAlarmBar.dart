@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mew/ChangeDrugScreen.dart';
 
 import 'Helper/Drug.dart';
 
@@ -31,7 +32,20 @@ class DrugAlarmBar extends StatelessWidget {
               child: buildDrugAlarmTitle()),
           Padding(
               padding: const EdgeInsets.only(bottom: 5.0, left: 16.0),
-              child: buildDrugAlarmInformation())
+              child: buildDrugAlarmInformation()),
+          Padding(
+              padding: const EdgeInsets.only(bottom: 5.0, left: 16.0),
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChangeDrugScreen(
+                                medicationName: drug.name,
+                                dosage: drug.dosage,
+                                time: drug.time)));
+                  },
+                  child: Icon(Icons.edit)))
         ]));
   }
 
