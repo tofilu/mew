@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 abstract class TimeConverter {
   TimeConverter();
@@ -7,22 +6,23 @@ abstract class TimeConverter {
   static TimeOfDay convertStringToTimeOfDay(String time) {
     int hour = 0;
     int minute = 0;
-    List<String> firstSplit = time.split(':');
-    if (firstSplit.length > 1) {
-      String hourString = firstSplit[0];
-      hour = int.parse(hourString);
-      List<String> secondSplit = firstSplit[1].split(' ');
-      if (secondSplit.length > 1) {
-        String minuteString = secondSplit[0];
-        minute = int.parse(minuteString);
-        if (hour == 12 && secondSplit[1] == "AM") {
-          hour -= 12;
-        }
 
-        if (secondSplit[1] == "PM") {
-          if (hour != 12) {
-            hour += 12;
-          }
+    // Split the input string into hour and the remaining part
+    List<String> firstSplit = time.split(':');
+    if (firstSplit.length == 2) {
+      hour = int.parse(firstSplit[0]);
+
+      // Split the remaining part into minute and period (AM/PM)
+      List<String> secondSplit = firstSplit[1].split(' ');
+      if (secondSplit.length == 2) {
+        minute = int.parse(secondSplit[0]);
+        String period = secondSplit[1].toUpperCase();
+
+        // Adjust for 12-hour clock conversions
+        if (hour == 12 && period == "AM") {
+          hour = 0;
+        } else if (period == "PM" && hour != 12) {
+          hour += 12;
         }
       }
     }
@@ -32,29 +32,18 @@ abstract class TimeConverter {
   static String convertTimeOfDayToString(TimeOfDay time) {
     int hour = time.hour;
     int minute = time.minute;
-    String hourString;
-    String minuteString;
 
-    String am_pm = "AM";
+    // Determine AM or PM
+    String period = hour >= 12 ? 'PM' : 'AM';
 
-    if (hour >= 12) {
-      hour -= 12;
-      am_pm = "PM";
-    }
-    if (hour == 0) {
-      hour += 12;
-    }
-    if (hour < 10) {
-      hourString = "0$hour";
-    } else {
-      hourString = hour.toString();
-    }
-    if (minute < 10) {
-      minuteString = "0$minute";
-    } else {
-      minuteString = minute.toString();
-    }
+    // Convert hour to 12-hour format
+    hour = hour % 12;
+    if (hour == 0) hour = 12; // Adjust hour to 12 if it's 0 (midnight)
 
-    return "$hourString:$minuteString $am_pm";
+    // Format hour and minute with leading zero if necessary
+    String hourString = hour.toString().padLeft(2, '0');
+    String minuteString = minute.toString().padLeft(2, '0');
+
+    return '$hourString:$minuteString $period';
   }
 }
