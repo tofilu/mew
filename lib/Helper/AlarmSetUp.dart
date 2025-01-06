@@ -2,7 +2,7 @@ import "package:android_alarm_manager_plus/android_alarm_manager_plus.dart";
 
 class AlarmSetUp{
 
-void setUpExactPeriodicAlarm(int idMed, DateTime dateTime, int frequency) async {
+void setAlarm(int idMed, DateTime dateTime, int frequency) async {
     await AndroidAlarmManager.periodic(
         Duration(days: frequency),
         idMed,
@@ -15,7 +15,7 @@ void setUpExactPeriodicAlarm(int idMed, DateTime dateTime, int frequency) async 
 
   void changeAlarm(int idMed, DateTime dateTime, int frequency) async {
     await AndroidAlarmManager.cancel(idMed);
-    setUpExactPeriodicAlarm(idMed, dateTime, frequency);
+    setAlarm(idMed, dateTime, frequency);
   }
 
   void callback() {

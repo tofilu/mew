@@ -5,6 +5,7 @@ import 'package:sqflite_common/sqlite_api.dart';
 import 'package:path/path.dart';
 
 import '../Helper/Drug.dart';
+import '../Helper/AlarmSetUp.dart';
 
 class DatabaseHandler {
   static Future<Database> initDB() async {
@@ -31,6 +32,7 @@ class DatabaseHandler {
     final db = await initDB();
     await db.insert('medicaments', drug.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
+    AlarmSetUp().setAlarm(drug.id!, drug.time as DateTime, drug.frequency);
   }
 
   Future<Drug> get(int id) async {

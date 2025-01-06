@@ -38,6 +38,8 @@ class _AddDrugScreenState extends State<AddDrugScreen> {
       ),
     );
 
+
+
     // Show a snackbar
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Medication saved!')),
