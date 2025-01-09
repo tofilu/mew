@@ -45,7 +45,7 @@ class DatabaseHandler {
 
   }
 
-  Future<Drug> get(int id) async {
+  Future<Drug> getDrug(int id) async {
     final db = await initDB();
     final List<Map<String, dynamic>> maps = await db
         .query('medicaments', columns: null, where: 'id = ?', whereArgs: [id]);

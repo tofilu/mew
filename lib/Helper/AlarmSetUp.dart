@@ -1,13 +1,17 @@
 import "package:android_alarm_manager_plus/android_alarm_manager_plus.dart";
 import 'package:mew/Helper/NotificationService.dart';
+import '../database/DatabaseHandler.dart';
+
+import 'Drug.dart';
 
 final NotificationService notificationService = NotificationService();
 
 //Top Level Function
-void callback() async {
+void callback(int idMed) async {
+  Drug drug = await DatabaseHandler().getDrug(idMed);
   await notificationService.showNotification(
-    title: 'Medication Reminder',
-    body: 'Time to take your medication',
+    title: 'Medication Reminder of ${drug.name}',
+    body: 'Time to take your ${drug.dosage} ${drug.name}',
   );
 }
 
@@ -18,7 +22,7 @@ void setAlarm(int idMed, DateTime dateTime, int frequency) async {
     await AndroidAlarmManager.periodic(
         Duration(days: frequency),
         idMed,
-        callback,
+        () => callback(idMed),
         exact: true,
         wakeup: true,
         startAt: dateTime,

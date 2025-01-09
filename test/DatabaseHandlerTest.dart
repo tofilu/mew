@@ -35,7 +35,7 @@ void main() {
     await dbHandler.addToDataBase(drug);
 
     // Hinzugefügtes Medikament aus der Datenbank abrufen
-    final fetchedDrug = await dbHandler.get(drug.id!);
+    final fetchedDrug = await dbHandler.getDrug(drug.id!);
 
     // Überprüfen, ob das Medikament korrekt gespeichert wurde
     expect(fetchedDrug, isNotNull);
@@ -106,7 +106,7 @@ void main() {
     await dbHandler.set(drug.id!, 'Ibu', '09:00', 1, '1 Tablette', 7,0);
 
     //Aktualisiertes Medikament aus der Datenbank abrufen
-    final fetchedDrug = await dbHandler.get(drug.id!);
+    final fetchedDrug = await dbHandler.getDrug(drug.id!);
 
     //Überprüfen, ob das Medikament korrekt aktualisiert wurde
     expect(fetchedDrug, isNotNull);
@@ -131,7 +131,7 @@ void main() {
     await dbHandler.addToDataBase(drug);
 
     //Medikament aus der Datenbank abrufen
-    final fetchedDrug = await dbHandler.get(drug.id!);
+    final fetchedDrug = await dbHandler.getDrug(drug.id!);
 
     //Überprüfen, ob das Medikament korrekt abgerufen wurde
     expect(fetchedDrug, isNotNull);
