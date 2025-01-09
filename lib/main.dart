@@ -3,8 +3,8 @@ import 'package:mew/DailyScreen.dart';
 import 'package:mew/DrugPlanScreen.dart';
 import 'package:mew/theme/mewTheme.dart';
 import 'package:mew/AddDrugScreen.dart';
-
 import 'database/DatabaseHandler.dart';
+import 'package:mew/Helper/NotificationService.dart';
 
 void main() => runApp(const MewApp());
 
@@ -48,9 +48,31 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    //final ThemeData theme = Theme.of(context);
+    final notificationService = NotificationService(); // Create a single instance
+
+    // Initialize the notification service
+    notificationService.initNotification();
+
     return Scaffold(
-      appBar: AppBar(title: Text('MEW')),
+      appBar: AppBar(
+        title: Text('MEW'),
+        actions: [
+          ElevatedButton(
+            onPressed: () async {
+              // Test notification
+              try {
+                await notificationService.showNotification(
+                  title: 'Test',
+                  body: 'This is a test notification',
+                );
+              } catch (e) {
+                print('ERROR NOTI: $e');
+              }
+            },
+            child: Text('Noti Test'),
+          ),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
@@ -64,4 +86,5 @@ class _HomeState extends State<Home> {
       body: screens[currentPageIndex],
     );
   }
+
 }
