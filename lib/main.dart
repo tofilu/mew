@@ -2,6 +2,7 @@ import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:mew/DailyScreen.dart';
 import 'package:mew/DrugPlanScreen.dart';
+import 'package:mew/Helper/AlarmSetUp.dart';
 import 'package:mew/theme/mewTheme.dart';
 import 'package:mew/AddDrugScreen.dart';
 import 'Home.dart';
@@ -14,6 +15,7 @@ void main() async {
   // Initialize AndroidAlarmManager
   await AndroidAlarmManager.initialize();
   runApp(const MewApp());
+  AlarmSetUp().setUpAlarmMidnight();
 }
 
 class MewApp extends StatelessWidget {

@@ -126,4 +126,25 @@ class DatabaseHandler {
     String path = '$databasesPath/$dbName';
     await deleteDatabase(path);
   }
+
+  countOneUpAll() async {
+    final db = await initDB();
+    List<Drug> drugs = await getAll();
+    for (Drug drug in drugs) {
+        if (drug.counter < drug.frequency - 1) {
+          drug.counter = drug.counter + 1;
+        }
+        else {
+          drug.counter = 0;
+        }
+        await db.update(
+          'medicaments',
+          {
+            'counter': drug.counter,
+          },
+          where: 'id = ?',
+          whereArgs: [drug.id],
+        );
+    }
+  }
 }

@@ -15,6 +15,11 @@ void callback(int idMed) async {
   );
 }
 
+void callbackMidnight() async {
+  DatabaseHandler().countOneUpAll;
+  }
+
+
 class AlarmSetUp{
 
 void setAlarm(int idMed, DateTime dateTime, int frequency) async {
@@ -40,4 +45,22 @@ void setAlarm(int idMed, DateTime dateTime, int frequency) async {
   void cancelAlarm(int idMed) async {
     await AndroidAlarmManager.cancel(idMed);
   }
+
+void setUpAlarmMidnight(){
+  DateTime now = DateTime.now();
+  DateTime midnight = DateTime(now.year, now.month, now.day, 0, 0, 0);
+  int id = -0;
+  try {
+    AndroidAlarmManager.periodic(
+        const Duration(days: 1),
+        id,
+        callbackMidnight,
+        exact: true,
+        wakeup: true,
+        startAt: midnight,
+        rescheduleOnReboot: true);
+  } catch (e) {
+    print(e);
+  }
+}
 }
