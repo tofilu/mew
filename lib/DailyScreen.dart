@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,8 +24,9 @@ class DailyScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done &&
               !snapshot.hasError) {
             List<Drug> drugs = snapshot.data;
+            List<Drug> sortedDrugs = sortDrugsByTime(drugs);
 
-            List<TakeDrugBar> drugAlarmBars = makeDrugBars(drugs);
+            List<TakeDrugBar> drugAlarmBars = makeDrugBars(sortedDrugs);
             return displayBars(drugAlarmBars);
           } else if (snapshot.hasError) {
             return Text("Error fetching Alarms");
@@ -52,5 +55,11 @@ class DailyScreen extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return Container(child: alarmBars[index]);
         });
+  }
+
+  List<Drug> sortDrugsByTime(List<Drug> drugs) {
+    List<Drug> sortedDrugs = List.from(drugs);
+    sortedDrugs.sort((a, b) => a.time.compareTo(b.time));
+    return sortedDrugs;
   }
 }
