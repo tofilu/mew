@@ -1,11 +1,11 @@
-//import 'dart:nativewrappers/_internal/vm/lib/internal_patch.dart';
+
 
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common/sqlite_api.dart';
 import 'package:path/path.dart';
 
 import '../Helper/Drug.dart';
 import '../Helper/AlarmSetUp.dart';
+import '../Helper/TimeConverter.dart';
 
 class DatabaseHandler {
   static Future<Database> initDB() async {
@@ -30,9 +30,19 @@ class DatabaseHandler {
 
   Future<void> addToDataBase(Drug drug) async {
     final db = await initDB();
-    await db.insert('medicaments', drug.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
-    AlarmSetUp().setAlarm(drug.id!, drug.time as DateTime, drug.frequency);
+    try {
+     int id = await db.insert(
+         'medicaments',
+         drug.toMap(),
+         conflictAlgorithm: ConflictAlgorithm.replace);
+
+     DateTime dateTime = TimeConverter.parseTimeToDateTime(drug.time);
+     AlarmSetUp().setAlarm(id, dateTime, drug.frequency);
+    } catch (e) {
+      print(e);
+    }
+
+
   }
 
   Future<Drug> get(int id) async {
