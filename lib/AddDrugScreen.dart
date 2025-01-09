@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'Helper/Drug.dart';
+import 'Home.dart';
 import 'database/DatabaseHandler.dart';
 
 class AddDrugScreen extends StatefulWidget {
@@ -37,8 +38,6 @@ class _AddDrugScreenState extends State<AddDrugScreen> {
         counter: 0,
       ),
     );
-
-
 
     // Show a snackbar
     ScaffoldMessenger.of(context).showSnackBar(
@@ -124,9 +123,15 @@ class _AddDrugScreenState extends State<AddDrugScreen> {
                 onPressed: () {
                   saveMedication();
                   // Add save logic here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Medication saved!')),
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const Home(index: 2),
+                    ),
+                    (Route<dynamic> route) =>
+                        false, // Remove all previous routes
                   );
+                  ;
                 },
                 child: Text('Save'),
               ),

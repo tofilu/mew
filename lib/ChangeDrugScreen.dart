@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mew/Helper/TimeConverter.dart';
 
+import 'Home.dart';
+
 class ChangeDrugScreen extends StatefulWidget {
   String medicationName;
   String dosage;
@@ -96,6 +98,15 @@ class _ChangeDrugScreenState extends State<ChangeDrugScreen> {
                   // Add save logic here
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Medication saved!')),
+                  );
+
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const Home(index: 2),
+                    ),
+                    (Route<dynamic> route) =>
+                        false, // Remove all previous routes
                   );
                 },
                 child: Text('Save Changes'),
