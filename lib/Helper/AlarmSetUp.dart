@@ -7,7 +7,9 @@ import 'Drug.dart';
 final NotificationService notificationService = NotificationService();
 
 //Top Level Function
+@pragma('vm:entry-point')
 void callback(int idMed) async {
+  print("im callback mit idMed: $idMed");
   Drug drug = await DatabaseHandler().getDrug(idMed);
   await notificationService.showNotification(
     title: 'Medication Reminder of ${drug.name}',
@@ -15,6 +17,7 @@ void callback(int idMed) async {
   );
 }
 
+@pragma('vm:entry-point')
 void callbackMidnight() async {
   DatabaseHandler().countOneUpAll;
   }
@@ -32,6 +35,7 @@ void setAlarm(int idMed, DateTime dateTime, int frequency) async {
         wakeup: true,
         startAt: dateTime,
         rescheduleOnReboot: true);
+      print("saved Alarm");
   } catch (e) {
     print("ES SAVED DAS DING NICHT, Fehler:  $e");
   }
@@ -47,6 +51,7 @@ void setAlarm(int idMed, DateTime dateTime, int frequency) async {
   }
 
 void setUpAlarmMidnight(){
+  print("midnight alarm saved");
   DateTime now = DateTime.now();
   DateTime midnight = DateTime(now.year, now.month, now.day, 0, 0, 0);
   int id = -0;
@@ -63,4 +68,12 @@ void setUpAlarmMidnight(){
     print(e);
   }
 }
+
+void cancelAllAlarms() async {
+  for (int i = 0; i <= 5; i++) {
+    await AndroidAlarmManager.cancel(i); // Assuming you use IDs from 1 to 100
+  }
+}
+
+
 }

@@ -8,6 +8,7 @@ import '../Helper/AlarmSetUp.dart';
 import '../Helper/TimeConverter.dart';
 
 class DatabaseHandler {
+
   static Future<Database> initDB() async {
     final database = openDatabase(
       join(await getDatabasesPath(), 'medicament_database.db'),
@@ -42,19 +43,27 @@ class DatabaseHandler {
       print(e);
     }
 
-
   }
 
   Future<Drug> getDrug(int id) async {
-    final db = await initDB();
-    final List<Map<String, dynamic>> maps = await db
-        .query('medicaments', columns: null, where: 'id = ?', whereArgs: [id]);
-    if (maps.isNotEmpty) {
-      return makeDrug(maps.first);
-    } else {
-      throw Exception('Drug not found');
-    }
+      try {
+        final db = await initDB();
+        final List<Map<String, dynamic>> maps = await db
+            .query('medicaments', columns: null, where: 'id = ?', whereArgs: [id]);
+
+        if (maps.isNotEmpty) {
+          return makeDrug(maps.first);
+        } else {
+          throw Exception('Drug not found');
+        }
+      } catch (e) {
+        print('Error: $e');
+        // Provide a fallback or show an error message to the user
+        return Future.error('Drug not found');
+      }
   }
+
+
 
   Future<List<Drug>> getAll() async {
     final db = await initDB();

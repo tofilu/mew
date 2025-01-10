@@ -20,7 +20,8 @@ class _AddDrugScreenState extends State<AddDrugScreen> {
   final TextEditingController frequencyController = TextEditingController();
   TimeOfDay? selectedTime;
 
-  void saveMedication() {
+
+  Future<void> saveMedication() async {
     final String medicationName = medicationNameController.text;
     final String dosage = dosageController.text;
     final int frequency = int.parse(frequencyController.text);
@@ -41,7 +42,7 @@ class _AddDrugScreenState extends State<AddDrugScreen> {
 
     // Show a snackbar
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Medication saved!')),
+      SnackBar(content: Text("Medication: $medicationName saved")),
     );
   }
 
