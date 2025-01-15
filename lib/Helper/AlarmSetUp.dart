@@ -19,12 +19,11 @@ void callback(int idMed) async {
 
 @pragma('vm:entry-point')
 void callbackMidnight() async {
-  DatabaseHandler().countOneUpAll;
+  DatabaseHandler().countOneUpAll();
   }
 
-
 class AlarmSetUp{
-
+/*
 void setAlarm(int idMed, DateTime dateTime, int frequency) async {
   try {
     await AndroidAlarmManager.periodic(
@@ -40,6 +39,28 @@ void setAlarm(int idMed, DateTime dateTime, int frequency) async {
     print("ES SAVED DAS DING NICHT, Fehler:  $e");
   }
   }
+*/
+  void setAlarm (int idMed, DateTime dateTime, int frequency) async {
+    try {
+      await AndroidAlarmManager.oneShotAt(
+        dateTime,
+        idMed,
+        () => callback(idMed),
+        exact: true,
+        wakeup: true,
+        rescheduleOnReboot: true,
+      );
+      print("saved OneShotAlarm $idMed");
+      DateTime now = DateTime.now();
+      print("Aktuelle Zeit (DateTime): $now");
+      print ("Alarmzeit (DateTime): $dateTime");
+    }
+
+    catch(e){
+      print("Fehler beim Oneshot Alarm:  $e");
+    }
+  }
+
 
   void changeAlarm(int idMed, DateTime dateTime, int frequency) async {
     await AndroidAlarmManager.cancel(idMed);
