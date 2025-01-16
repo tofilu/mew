@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:mew/Helper/AlarmSetUp.dart';
 import 'package:mew/theme/mewTheme.dart';
+import 'package:mew/Helper/NotificationService.dart';
 
 import 'Home.dart';
 
@@ -13,6 +14,8 @@ void main() async {
   // Initialize AndroidAlarmManager
   await AndroidAlarmManager.initialize();
   AlarmSetUp().setUpAlarmMidnight();
+
+  await notificationService.initNotification();
 
   runApp(const MewApp());
 }

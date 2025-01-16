@@ -1,10 +1,10 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class NotificationService {
   final FlutterLocalNotificationsPlugin notificationsPlugin = FlutterLocalNotificationsPlugin();
 
   Future<void> initNotification() async {
-    print('Initializing Notification Service...');
     AndroidInitializationSettings initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/ic_launcher');
 
     var initializationSettings = InitializationSettings(
@@ -14,10 +14,24 @@ class NotificationService {
         initializationSettings,
         onDidReceiveNotificationResponse:
             (NotificationResponse notificationResponse) async {
-          print('Notification clicked');
           },
     );
-    print('Notification Service Initialized');
+
+    await requestAndroidNotificationPermission();
+  }
+
+  Future<void> requestAndroidNotificationPermission() async {
+    PermissionStatus status = await Permission.notification.request();
+
+    if (status.isGranted) {
+      print("Benachrichtigungsberechtigung erteilt");
+    } else if (status.isDenied) {
+      print("Benachrichtigungsberechtigung abgelehnt");
+    } else if (status.isPermanentlyDenied) {
+      print("Benachrichtigungsberechtigung dauerhaft abgelehnt");
+      // Öffnen Sie die App-Einstellungen, um die Berechtigung zu aktivieren
+      await openAppSettings();
+    }
   }
 
   Future showNotification (

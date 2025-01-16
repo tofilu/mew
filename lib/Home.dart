@@ -41,9 +41,6 @@ class _HomeState extends State<Home> {
     final notificationService =
         NotificationService(); // Create a single instance
 
-    // Initialize the notification service
-    notificationService.initNotification();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('MEW'),
