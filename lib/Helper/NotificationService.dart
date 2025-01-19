@@ -4,6 +4,16 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
+
+  // Private Konstruktor
+  NotificationService._privateConstructor();
+
+  // Statische Instanz des Singleton
+  static final NotificationService _instance = NotificationService._privateConstructor();
+
+  // Getter für den Zugriff auf die Instanz
+  static NotificationService get instance => _instance;
+
   final FlutterLocalNotificationsPlugin notificationsPlugin = FlutterLocalNotificationsPlugin();
 
   Future<void> initNotification() async {
@@ -26,10 +36,8 @@ class NotificationService {
     try {
       // Versuche, die Zeitzone anhand des Gerätenamens zu setzen
       tz.setLocalLocation(tz.getLocation(deviceTimeZone));
-      print('Zeitzone erfolgreich gesetzt: $deviceTimeZone');
     } catch (e) {
       // Fallback zu einer Standardzeitzone, wenn die Gerätename nicht erkannt wird
-      print('Fehler beim Setzen der Zeitzone: $e. Fallback auf Europe/Berlin');
       tz.setLocalLocation(tz.getLocation('Europe/Berlin'));
     }
     await requestAndroidNotificationPermission();
@@ -38,30 +46,16 @@ class NotificationService {
   Future<void> requestAndroidNotificationPermission() async {
     // Anfrage für Benachrichtigungsberechtigung
     PermissionStatus notificationStatus = await Permission.notification.request();
-
-    if (notificationStatus.isGranted) {
-      print("Benachrichtigungsberechtigung erteilt");
-    } else if (notificationStatus.isDenied) {
-      print("Benachrichtigungsberechtigung abgelehnt");
-    } else if (notificationStatus.isPermanentlyDenied) {
-      print("Benachrichtigungsberechtigung dauerhaft abgelehnt");
-      await openAppSettings();
-      return;
-    }
-
     PermissionStatus alarmStatus = await Permission.scheduleExactAlarm.request();
 
-    if (alarmStatus.isGranted) {
-      print("Benachrichtigungsberechtigung erteilt");
-    } else if (alarmStatus.isDenied) {
-      print("Benachrichtigungsberechtigung abgelehnt");
-    } else if (alarmStatus.isPermanentlyDenied) {
-      print("Benachrichtigungsberechtigung dauerhaft abgelehnt");
+    if (notificationStatus.isDenied && alarmStatus.isDenied) {
+      await openAppSettings();
+      return;
+    } else if (notificationStatus.isPermanentlyDenied && alarmStatus.isPermanentlyDenied) {
       await openAppSettings();
       return;
     }
   }
-
 
   Future showNotification (
   {int id = 0, String? title, String? body, String? payload}) async {
@@ -106,12 +100,8 @@ class NotificationService {
         UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.dateAndTime
       );
-      print('NOTI wurde geplant');
-      print(tz.TZDateTime.now(tz.local));
     } catch (e) {
       print('Error scheduling notification: $e');
     }
   }
-
-
 }

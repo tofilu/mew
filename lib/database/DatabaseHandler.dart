@@ -1,10 +1,7 @@
-
-
+import 'package:mew/Helper/NotificationService.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-
 import '../Helper/Drug.dart';
-import '../Helper/AlarmSetUp.dart';
 import '../Helper/TimeConverter.dart';
 
 class DatabaseHandler {
@@ -38,7 +35,12 @@ class DatabaseHandler {
          conflictAlgorithm: ConflictAlgorithm.replace);
 
      DateTime dateTime = TimeConverter.parseTimeToDateTime(drug.time);
-     AlarmSetUp().setAlarm(id, dateTime, drug.frequency);
+     await NotificationService.instance.scheduleNotification(
+       id: drug.id,
+       title: 'Scheduled Notification',
+       body: 'Scheduled Notification for: $dateTime',
+       scheduleTime: dateTime,
+     );
     } catch (e) {
       print(e);
     }
@@ -62,8 +64,6 @@ class DatabaseHandler {
         return Future.error('Drug not found');
       }
   }
-
-
 
   Future<List<Drug>> getAll() async {
     final db = await initDB();
