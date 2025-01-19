@@ -1,120 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:mew/AddDrugScreen.dart';
 import 'package:mew/Helper/TimeConverter.dart';
 
-import 'Home.dart';
-
-class ChangeDrugScreen extends StatefulWidget {
+class ChangeDrugScreen extends AddDrugScreen {
   String medicationName;
   String dosage;
   String time;
+  int frequency;
+  int prescriptionTime;
   late TimeOfDay toD;
 
   ChangeDrugScreen(
       {super.key,
       required this.medicationName,
       required this.dosage,
-      required this.time})
+      required this.time,
+      required this.frequency,
+      required this.prescriptionTime})
       : toD = TimeConverter.convertStringToTimeOfDay(time);
 
   @override
-  _ChangeDrugScreenState createState() => _ChangeDrugScreenState();
+  createState() => ChangeDrugScreenState();
 }
 
-class _ChangeDrugScreenState extends State<ChangeDrugScreen> {
+class ChangeDrugScreenState extends AddDrugScreenState {
   TimeOfDay? selectedTime;
 
   void initState() {
     super.initState();
-    selectedTime = widget.toD;
-  }
-
-  void _selectTime(BuildContext context) async {
-    final TimeOfDay? time = await showTimePicker(
-      context: context,
-      initialTime: selectedTime ?? TimeOfDay.now(),
-    );
-    if (time != null && time != selectedTime) {
-      setState(() {
-        selectedTime = time;
-      });
-    }
+    selectedTime = (widget as ChangeDrugScreen).toD;
   }
 
   @override
   Widget build(BuildContext context) {
-    print(TimeOfDay(hour: 15, minute: 00).format(context));
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Change Alarm'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextFormField(
-              initialValue: widget.medicationName,
-              decoration: InputDecoration(
-                //labelText: 'Medication Name',
-                hintText: 'Enter the name of the medication',
-              ),
-            ),
-            SizedBox(height: 24),
-            TextFormField(
-              initialValue: widget.dosage,
-              decoration: InputDecoration(
-                //labelText: 'Dosage',
-                hintText: 'Enter the dosage (e.g., 500 mg)',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 24),
-            Row(
-              children: [
-                Text(
-                  selectedTime != null
-                      ? 'Time: ${selectedTime!.format(context)}'
-                      : 'Select a time:',
-                ),
-                SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: () => _selectTime(context),
-                  child: Text('Pick Time'),
-                ),
-              ],
-            ),
-            SizedBox(height: 24),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Supply',
-                hintText: 'Enter your supply',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 24),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Add save logic here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Medication saved!')),
-                  );
-
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const Home(index: 2),
-                    ),
-                    (Route<dynamic> route) =>
-                        false, // Remove all previous routes
-                  );
-                },
-                child: Text('Save Changes'),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    medicationNameController.text = (widget as ChangeDrugScreen).medicationName;
+    dosageController.text = (widget as ChangeDrugScreen).dosage;
+    frequencyController.text =
+        (widget as ChangeDrugScreen).frequency.toString();
+    presciptionTimeController.text =
+        (widget as ChangeDrugScreen).prescriptionTime.toString();
+    return super.build(context);
   }
 }

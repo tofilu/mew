@@ -1,23 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mew/ChangeDrugScreen.dart';
 
 import 'Helper/Drug.dart';
 
 class DrugAlarmBar extends StatelessWidget {
-  Drug drug;
-  Drug exampleDrug = Drug(
-      id: 2,
-      name: "exampleDrug",
-      time: "10:00",
-      frequency: 2,
-      prescriptionTime: 10,
-      counter: 0,
-      dosage: "100 mg");
+  final Drug drug;
 
-  DrugAlarmBar({super.key, required this.drug}) {
-    this.drug = drug;
-  }
+  const DrugAlarmBar({super.key, required this.drug});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +32,9 @@ class DrugAlarmBar extends StatelessWidget {
                             builder: (context) => ChangeDrugScreen(
                                 medicationName: drug.name,
                                 dosage: drug.dosage,
-                                time: drug.time)));
+                                time: drug.time,
+                                frequency: drug.frequency,
+                                prescriptionTime: drug.frequency)));
                   },
                   child: Icon(Icons.edit)))
         ]));

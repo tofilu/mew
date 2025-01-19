@@ -8,10 +8,10 @@ class AddDrugScreen extends StatefulWidget {
   const AddDrugScreen({super.key});
 
   @override
-  _AddDrugScreenState createState() => _AddDrugScreenState();
+  AddDrugScreenState createState() => AddDrugScreenState();
 }
 
-class _AddDrugScreenState extends State<AddDrugScreen> {
+class AddDrugScreenState extends State<AddDrugScreen> {
   final TextEditingController medicationNameController =
       TextEditingController();
   final TextEditingController dosageController = TextEditingController();
@@ -19,7 +19,6 @@ class _AddDrugScreenState extends State<AddDrugScreen> {
       TextEditingController();
   final TextEditingController frequencyController = TextEditingController();
   TimeOfDay? selectedTime;
-
 
   Future<void> saveMedication() async {
     final String medicationName = medicationNameController.text;
