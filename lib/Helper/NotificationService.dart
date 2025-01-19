@@ -1,5 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
   final FlutterLocalNotificationsPlugin notificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -17,22 +19,49 @@ class NotificationService {
           },
     );
 
+    tz.initializeTimeZones();
+    // Abrufen der Zeitzoneneinstellung des Geräts
+    String deviceTimeZone = DateTime.now().timeZoneName;
+
+    try {
+      // Versuche, die Zeitzone anhand des Gerätenamens zu setzen
+      tz.setLocalLocation(tz.getLocation(deviceTimeZone));
+      print('Zeitzone erfolgreich gesetzt: $deviceTimeZone');
+    } catch (e) {
+      // Fallback zu einer Standardzeitzone, wenn die Gerätename nicht erkannt wird
+      print('Fehler beim Setzen der Zeitzone: $e. Fallback auf Europe/Berlin');
+      tz.setLocalLocation(tz.getLocation('Europe/Berlin'));
+    }
     await requestAndroidNotificationPermission();
   }
 
   Future<void> requestAndroidNotificationPermission() async {
-    PermissionStatus status = await Permission.notification.request();
+    // Anfrage für Benachrichtigungsberechtigung
+    PermissionStatus notificationStatus = await Permission.notification.request();
 
-    if (status.isGranted) {
+    if (notificationStatus.isGranted) {
       print("Benachrichtigungsberechtigung erteilt");
-    } else if (status.isDenied) {
+    } else if (notificationStatus.isDenied) {
       print("Benachrichtigungsberechtigung abgelehnt");
-    } else if (status.isPermanentlyDenied) {
+    } else if (notificationStatus.isPermanentlyDenied) {
       print("Benachrichtigungsberechtigung dauerhaft abgelehnt");
-      // Öffnen Sie die App-Einstellungen, um die Berechtigung zu aktivieren
       await openAppSettings();
+      return;
+    }
+
+    PermissionStatus alarmStatus = await Permission.scheduleExactAlarm.request();
+
+    if (alarmStatus.isGranted) {
+      print("Benachrichtigungsberechtigung erteilt");
+    } else if (alarmStatus.isDenied) {
+      print("Benachrichtigungsberechtigung abgelehnt");
+    } else if (alarmStatus.isPermanentlyDenied) {
+      print("Benachrichtigungsberechtigung dauerhaft abgelehnt");
+      await openAppSettings();
+      return;
     }
   }
+
 
   Future showNotification (
   {int id = 0, String? title, String? body, String? payload}) async {
@@ -42,13 +71,47 @@ class NotificationService {
   Future<NotificationDetails> notificationDetails() async {
     return const NotificationDetails(
       android: AndroidNotificationDetails(
-        'channelId', // Unique channel ID
-        'channelName', // Channel name displayed to the user
-        channelDescription: 'Channel description', // Optional description
+        '1', // Unique channel ID
+        'MEW', // Channel name displayed to the user
+        channelDescription: 'MEW App', // Optional description
         importance: Importance.max,
         priority: Priority.high, // Ensures the notification is displayed prominently
       ),
     );
   }
+
+  Future<void> scheduleNotification({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime scheduleTime,
+  }) async {
+    final tz.TZDateTime scheduledDate = tz.TZDateTime.from(scheduleTime, tz.local);
+
+    try {
+      await notificationsPlugin.zonedSchedule(
+        id,
+        title,
+        body,
+        scheduledDate,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            '2',
+            'Mew Scheduled',
+            channelDescription: 'Scheduled Notifications from MEW',
+          ),
+        ),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.dateAndTime
+      );
+      print('NOTI wurde geplant');
+      print(tz.TZDateTime.now(tz.local));
+    } catch (e) {
+      print('Error scheduling notification: $e');
+    }
+  }
+
 
 }

@@ -1,10 +1,7 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
-
 import 'package:mew/Helper/AlarmSetUp.dart';
 import 'package:mew/theme/mewTheme.dart';
-import 'package:mew/Helper/NotificationService.dart';
-
 import 'Home.dart';
 
 

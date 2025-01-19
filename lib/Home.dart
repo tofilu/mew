@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'AddDrugScreen.dart';
 import 'DailyScreen.dart';
 import 'DrugPlanScreen.dart';
@@ -41,6 +39,9 @@ class _HomeState extends State<Home> {
     final notificationService =
         NotificationService(); // Create a single instance
 
+    var timeNow = DateTime.now();
+    var time = DateTime.now().add(Duration(seconds: 5));
+
     return Scaffold(
       appBar: AppBar(
         title: Text('MEW'),
@@ -50,8 +51,15 @@ class _HomeState extends State<Home> {
               // Test notification
               try {
                 await notificationService.showNotification(
-                  title: 'Test',
-                  body: 'This is a test notification',
+                  title: 'Instant Notification',
+                  body: 'Instant Notification at: $timeNow',
+                );
+                print('pressed button');
+                await notificationService.scheduleNotification(
+                  id: 1,
+                  title: 'Scheduled Notification',
+                  body: 'Scheduled Notification for: $time',
+                  scheduleTime: DateTime.now().add(Duration(seconds: 5)),
                 );
               } catch (e) {
                 print('ERROR NOTI: $e');

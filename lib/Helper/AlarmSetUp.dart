@@ -1,7 +1,6 @@
 import "package:android_alarm_manager_plus/android_alarm_manager_plus.dart";
 import 'package:mew/Helper/NotificationService.dart';
 import '../database/DatabaseHandler.dart';
-
 import 'Drug.dart';
 
 final NotificationService notificationService = NotificationService();
