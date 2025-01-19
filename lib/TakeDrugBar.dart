@@ -3,14 +3,6 @@ import 'Helper/Drug.dart';
 
 class TakeDrugBar extends StatelessWidget {
   Drug drug;
-  Drug exampleDrug = Drug(
-      id: 2,
-      name: "exampleDrug",
-      time: "10:00",
-      frequency: 2,
-      prescriptionTime: 10,
-      counter: 0,
-      dosage: "100 mg");
 
   TakeDrugBar({super.key, required this.drug}) {
     this.drug = drug;
