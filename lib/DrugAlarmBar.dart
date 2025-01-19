@@ -1,45 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mew/ChangeDrugScreen.dart';
+import 'package:path/path.dart';
 
+import 'DrugBar.dart';
 import 'Helper/Drug.dart';
 
-class DrugAlarmBar extends StatelessWidget {
+class DrugAlarmBar extends DrugBar {
   final Drug drug;
 
-  const DrugAlarmBar({super.key, required this.drug});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        elevation: 5.0,
-        color: Colors.grey,
-        shape: BeveledRectangleBorder(),
-        child: ListBody(children: [
-          Padding(
-              padding:
-                  const EdgeInsets.only(top: 12.0, bottom: 3.0, left: 16.0),
-              child: buildDrugAlarmTitle()),
-          Padding(
-              padding: const EdgeInsets.only(bottom: 5.0, left: 16.0),
-              child: buildDrugAlarmInformation()),
-          Padding(
-              padding: const EdgeInsets.only(bottom: 5.0, left: 16.0),
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ChangeDrugScreen(
-                                medicationName: drug.name,
-                                dosage: drug.dosage,
-                                time: drug.time,
-                                frequency: drug.frequency,
-                                prescriptionTime: drug.frequency,
-                                id: drug.id)));
-                  },
-                  child: Icon(Icons.edit)))
-        ]));
-  }
+  DrugAlarmBar({required this.drug});
 
   Row buildDrugAlarmTitle() {
     return Row(children: [
@@ -63,5 +32,37 @@ class DrugAlarmBar extends StatelessWidget {
             child: Text("every " + drug.frequency.toString() + " days"))
       ])
     ]);
+  }
+
+  @override
+  Widget buildDrugAlarm(BuildContext context) {
+    return ListBody(children: [
+      Padding(
+          padding: const EdgeInsets.only(top: 12.0, bottom: 3.0, left: 16.0),
+          child: buildDrugAlarmTitle()),
+      Padding(
+          padding: const EdgeInsets.only(bottom: 5.0, left: 16.0),
+          child: buildDrugAlarmInformation()),
+      Padding(
+          padding: const EdgeInsets.only(bottom: 5.0, left: 16.0),
+          child: ElevatedButton(
+              onPressed: () {
+                _routeToChangeDrugScreen(context);
+              },
+              child: Icon(Icons.edit)))
+    ]);
+  }
+
+  _routeToChangeDrugScreen(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ChangeDrugScreen(
+                medicationName: drug.name,
+                dosage: drug.dosage,
+                time: drug.time,
+                frequency: drug.frequency,
+                prescriptionTime: drug.frequency,
+                id: drug.id)));
   }
 }

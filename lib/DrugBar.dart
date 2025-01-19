@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'Helper/Drug.dart';
+
 abstract class DrugBar extends StatelessWidget {
+  late Drug drug;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -11,9 +15,9 @@ abstract class DrugBar extends StatelessWidget {
         child: ListBody(children: [
           Padding(
               padding: const EdgeInsets.only(bottom: 15.0, top: 15.0),
-              child: buildDrugAlarm())
+              child: buildDrugAlarm(context))
         ]));
   }
 
-  buildDrugAlarm() {}
+  Widget buildDrugAlarm(BuildContext context);
 }

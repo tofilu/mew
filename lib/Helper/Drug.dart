@@ -1,5 +1,5 @@
 class Drug {
-  int id = 0;
+  int id;
   String name;
   String time;
   int frequency;
