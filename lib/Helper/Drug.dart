@@ -1,5 +1,5 @@
 class Drug {
-  int? id;
+  int id = 0;
   String name;
   String time;
   int frequency;
@@ -8,7 +8,7 @@ class Drug {
   int counter;
 
   Drug(
-      {this.id,
+      {this.id = 0,
       required this.name,
       required this.time,
       required this.frequency,

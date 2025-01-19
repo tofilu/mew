@@ -28,21 +28,25 @@ class AddDrugScreenState extends State<AddDrugScreen> {
     final String time = selectedTime?.format(context) ?? '';
 
     // Save the medication to the database
-    DatabaseHandler().addToDataBase(
-      Drug(
-        name: medicationName,
-        time: time,
-        frequency: frequency,
-        dosage: dosage,
-        prescriptionTime: prescriptionTime,
-        counter: 0,
-      ),
+
+    Drug drug = Drug(
+      name: medicationName,
+      time: time,
+      frequency: frequency,
+      dosage: dosage,
+      prescriptionTime: prescriptionTime,
+      counter: 0,
     );
+    addToDatabase(drug);
 
     // Show a snackbar
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text("Medication: $medicationName saved")),
     );
+  }
+
+  void addToDatabase(Drug drug) {
+    DatabaseHandler().addToDataBase(drug);
   }
 
   void _selectTime(BuildContext context) async {

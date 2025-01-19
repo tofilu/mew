@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mew/AddDrugScreen.dart';
 import 'package:mew/Helper/TimeConverter.dart';
 
+import 'Helper/Drug.dart';
+import 'database/DatabaseHandler.dart';
+
 class ChangeDrugScreen extends AddDrugScreen {
   String medicationName;
   String dosage;
   String time;
   int frequency;
   int prescriptionTime;
+  int id = 0;
   late TimeOfDay toD;
 
   ChangeDrugScreen(
@@ -16,7 +20,8 @@ class ChangeDrugScreen extends AddDrugScreen {
       required this.dosage,
       required this.time,
       required this.frequency,
-      required this.prescriptionTime})
+      required this.prescriptionTime,
+      required this.id})
       : toD = TimeConverter.convertStringToTimeOfDay(time);
 
   @override
@@ -29,6 +34,12 @@ class ChangeDrugScreenState extends AddDrugScreenState {
   void initState() {
     super.initState();
     selectedTime = (widget as ChangeDrugScreen).toD;
+  }
+
+  @override
+  void addToDatabase(Drug drug) {
+    DatabaseHandler().set((widget as ChangeDrugScreen).id, drug.name, drug.time,
+        drug.frequency, drug.dosage, drug.prescriptionTime, drug.counter);
   }
 
   @override
