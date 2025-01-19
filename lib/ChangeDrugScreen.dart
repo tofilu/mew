@@ -6,6 +6,7 @@ import 'Helper/Drug.dart';
 import 'database/DatabaseHandler.dart';
 
 class ChangeDrugScreen extends AddDrugScreen {
+  final DatabaseHandler dbHandler = DatabaseHandler();
   String medicationName;
   String dosage;
   String time;
@@ -38,7 +39,7 @@ class ChangeDrugScreenState extends AddDrugScreenState {
 
   @override
   void addToDatabase(Drug drug) {
-    DatabaseHandler().set((widget as ChangeDrugScreen).id, drug.name, drug.time,
+    widget.dbHandler.set((widget as ChangeDrugScreen).id, drug.name, drug.time,
         drug.frequency, drug.dosage, drug.prescriptionTime, drug.counter);
   }
 

@@ -5,7 +5,9 @@ import 'Home.dart';
 import 'database/DatabaseHandler.dart';
 
 class AddDrugScreen extends StatefulWidget {
-  const AddDrugScreen({super.key});
+  final DatabaseHandler dbHandler = DatabaseHandler();
+
+  AddDrugScreen({super.key});
 
   @override
   AddDrugScreenState createState() => AddDrugScreenState();
@@ -46,7 +48,7 @@ class AddDrugScreenState extends State<AddDrugScreen> {
   }
 
   void addToDatabase(Drug drug) {
-    DatabaseHandler().addToDataBase(drug);
+    widget.dbHandler.addToDataBase(drug);
   }
 
   void _selectTime(BuildContext context) async {
