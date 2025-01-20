@@ -33,10 +33,10 @@ class DatabaseHandler {
          'medicaments',
          drug.toMap(),
          conflictAlgorithm: ConflictAlgorithm.replace);
-
+     
      DateTime dateTime = TimeConverter.parseTimeToDateTime(drug.time);
      await NotificationService.instance.scheduleNotification(
-       id: drug.id,
+       id: id,
        title: 'Scheduled Notification',
        body: 'Scheduled Notification for: $dateTime',
        scheduleTime: dateTime,
