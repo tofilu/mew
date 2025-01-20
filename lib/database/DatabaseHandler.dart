@@ -33,7 +33,7 @@ class DatabaseHandler {
          'medicaments',
          drug.toMap(),
          conflictAlgorithm: ConflictAlgorithm.replace);
-     
+
      DateTime dateTime = TimeConverter.parseTimeToDateTime(drug.time);
      await NotificationService.instance.scheduleNotification(
        id: id,
@@ -101,6 +101,7 @@ class DatabaseHandler {
       where: 'id = ?',
       whereArgs: [id],
     );
+    NotificationService.instance.deleteNotification(id);
   }
 
   Future<Drug> search(String name) async {
