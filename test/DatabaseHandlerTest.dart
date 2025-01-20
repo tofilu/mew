@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mew/Helper/Drug.dart';
 import 'package:mew/database/DatabaseHandler.dart';
 
-import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
@@ -10,8 +9,11 @@ void main() {
 
   //wird vor jedem Test ausgeführt
   setUp(() {
+    print('setUp called');
     dbHandler = DatabaseHandler();
-    dbHandler.deleteDatabaseFile('medicament_database.db'); //muss nur ausgeführt werden da die Datenbank in den Tests nicht geschlossen wird
+    dbHandler.deleteDatabaseFile('medicament_database.db');
+    //muss nur ausgeführt werden da die Datenbank in den Tests nicht geschlossen wird
+    print('dbHandler initialized');
   });
 
   setUpAll(() {
@@ -21,6 +23,7 @@ void main() {
   });
 
   test('Add Drug to Database', () async {
+    print('test');
     final drug = Drug(
       id: 1,
       name: 'Paracetamol',
@@ -35,18 +38,19 @@ void main() {
     await dbHandler.addToDataBase(drug);
 
     // Hinzugefügtes Medikament aus der Datenbank abrufen
-    final fetchedDrug = await dbHandler.getDrug(drug.id!);
+    final fetchedDrug = await dbHandler.getDrug(drug.id);
 
     // Überprüfen, ob das Medikament korrekt gespeichert wurde
     expect(fetchedDrug, isNotNull);
-    expect(fetchedDrug?.name, 'Paracetamol');
-    expect(fetchedDrug?.time, '08:00');
-    expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.dosage, '1 Tablette');
-    expect(fetchedDrug?.prescriptionTime, 7);
+    expect(fetchedDrug.name, 'Paracetamol');
+    expect(fetchedDrug.time, '08:00');
+    expect(fetchedDrug.frequency, 1);
+    expect(fetchedDrug.dosage, '1 Tablette');
+    expect(fetchedDrug.prescriptionTime, 7);
   });
 
   test('GetAll drugs', () async{
+    print('test');
     final drug1 = Drug(
       id: 1,
       name: 'Paracetamol',
@@ -81,6 +85,7 @@ void main() {
   });
 
   test('get all drugs when database is empty', () async {
+    print('test');
     //Alle Medikamente aus der Datenbank abrufen
     final fetchedDrugs = await dbHandler.getAll();
 
@@ -90,6 +95,7 @@ void main() {
   });
 
   test('Set Drug', () async {
+    print('test');
     final drug = Drug(
       id: 1,
       name: 'Paracetamol',
@@ -103,21 +109,22 @@ void main() {
     await dbHandler.addToDataBase(drug);
 
     //Medikament aktualisieren
-    await dbHandler.set(drug.id!, 'Ibu', '09:00', 1, '1 Tablette', 7,0);
+    await dbHandler.set(drug.id, 'Ibu', '09:00', 1, '1 Tablette', 7,0);
 
     //Aktualisiertes Medikament aus der Datenbank abrufen
-    final fetchedDrug = await dbHandler.getDrug(drug.id!);
+    final fetchedDrug = await dbHandler.getDrug(drug.id);
 
     //Überprüfen, ob das Medikament korrekt aktualisiert wurde
     expect(fetchedDrug, isNotNull);
-    expect(fetchedDrug?.name, 'Ibu');
-    expect(fetchedDrug?.time, '09:00');
-    expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.dosage, '1 Tablette');
-    expect(fetchedDrug?.prescriptionTime, 7);
+    expect(fetchedDrug.name, 'Ibu');
+    expect(fetchedDrug.time, '09:00');
+    expect(fetchedDrug.frequency, 1);
+    expect(fetchedDrug.dosage, '1 Tablette');
+    expect(fetchedDrug.prescriptionTime, 7);
   });
 
   test('Get Drug by ID', () async {
+    print('test');
     final drug = Drug(
       id: 1,
       name: 'Paracetamol',
@@ -131,18 +138,19 @@ void main() {
     await dbHandler.addToDataBase(drug);
 
     //Medikament aus der Datenbank abrufen
-    final fetchedDrug = await dbHandler.getDrug(drug.id!);
+    final fetchedDrug = await dbHandler.getDrug(drug.id);
 
     //Überprüfen, ob das Medikament korrekt abgerufen wurde
     expect(fetchedDrug, isNotNull);
-    expect(fetchedDrug?.name, 'Paracetamol');
-    expect(fetchedDrug?.time, '08:00');
-    expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.dosage, '1 Tablette');
-    expect(fetchedDrug?.prescriptionTime, 7);
+    expect(fetchedDrug.name, 'Paracetamol');
+    expect(fetchedDrug.time, '08:00');
+    expect(fetchedDrug.frequency, 1);
+    expect(fetchedDrug.dosage, '1 Tablette');
+    expect(fetchedDrug.prescriptionTime, 7);
   });
 
   test('search for Drug by Name', () async {
+    print('test');
     final drug = Drug(
       id: 1,
       name: 'Paracetamol',
@@ -158,13 +166,14 @@ void main() {
     final fetchedDrug = await dbHandler.search(drug.name);
 
     expect(fetchedDrug, isNotNull);
-    expect(fetchedDrug?.name, 'Paracetamol');
-    expect(fetchedDrug?.time, '08:00');
-    expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.dosage, '1 Tablette');
-    expect(fetchedDrug?.prescriptionTime, 7);
+    expect(fetchedDrug.name, 'Paracetamol');
+    expect(fetchedDrug.time, '08:00');
+    expect(fetchedDrug.frequency, 1);
+    expect(fetchedDrug.dosage, '1 Tablette');
+    expect(fetchedDrug.prescriptionTime, 7);
   });
   test('search for Drug by Name', () async {
+    print('test');
     final drug = Drug(
       id: 1,
       name: 'Paracetamol',
@@ -180,13 +189,14 @@ void main() {
     final fetchedDrug = await dbHandler.search('Paracetamol');
 
     expect(fetchedDrug, isNotNull);
-    expect(fetchedDrug?.name, 'Paracetamol');
-    expect(fetchedDrug?.time, '08:00');
-    expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.dosage, '1 Tablette');
-    expect(fetchedDrug?.prescriptionTime, 7);
+    expect(fetchedDrug.name, 'Paracetamol');
+    expect(fetchedDrug.time, '08:00');
+    expect(fetchedDrug.frequency, 1);
+    expect(fetchedDrug.dosage, '1 Tablette');
+    expect(fetchedDrug.prescriptionTime, 7);
   });
   test('search for Drug by Name case insensitive', () async {
+    print('test');
     final drug = Drug(
       id: 1,
       name: 'Paracetamol',
@@ -202,14 +212,15 @@ void main() {
     final fetchedDrug = await dbHandler.search('paracetamol');
 
     expect(fetchedDrug, isNotNull);
-    expect(fetchedDrug?.name, 'Paracetamol');
-    expect(fetchedDrug?.time, '08:00');
-    expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.dosage, '1 Tablette');
-    expect(fetchedDrug?.prescriptionTime, 7);
+    expect(fetchedDrug.name, 'Paracetamol');
+    expect(fetchedDrug.time, '08:00');
+    expect(fetchedDrug.frequency, 1);
+    expect(fetchedDrug.dosage, '1 Tablette');
+    expect(fetchedDrug.prescriptionTime, 7);
   });
 
   test('search for Drug by partial Name ', () async {
+    print('test');
     final drug = Drug(
       id: 1,
       name: 'Paracetamol',
@@ -225,15 +236,16 @@ void main() {
     final fetchedDrug = await dbHandler.search('paraceta');
 
     expect(fetchedDrug, isNotNull);
-    expect(fetchedDrug?.name, 'Paracetamol');
-    expect(fetchedDrug?.time, '08:00');
-    expect(fetchedDrug?.frequency, 1);
-    expect(fetchedDrug?.dosage, '1 Tablette');
-    expect(fetchedDrug?.prescriptionTime, 7);
+    expect(fetchedDrug.name, 'Paracetamol');
+    expect(fetchedDrug.time, '08:00');
+    expect(fetchedDrug.frequency, 1);
+    expect(fetchedDrug.dosage, '1 Tablette');
+    expect(fetchedDrug.prescriptionTime, 7);
   });
 
 
   test('Search Drug by Non-Existent Name', () async {
+    print('test');
     // Suche nach einem Medikament, das nicht existiert
     expect(
           () async => await dbHandler.search('NonExistentDrug'),
@@ -243,6 +255,7 @@ void main() {
   });
 
   test('Delete Drug', () async {
+    print('test');
     final drug = Drug(
       id: 1,
       name: 'Paracetamol',
@@ -255,11 +268,12 @@ void main() {
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
     //Medikament aus der Datenbank löschen
-    await dbHandler.delete(drug.id!);
+    await dbHandler.delete(drug.id);
     //Überprüfen, ob das Medikament gelöscht
   });
 
   test('Delete Non-Existent Drug', () async {
+    print('test');
     // Versuch, ein nicht existierendes Medikament zu löschen
     await dbHandler.delete(999); // ID, die nicht existiert
     // Es sollte keine Fehler werfen und nichts tun
