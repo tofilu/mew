@@ -104,4 +104,8 @@ class NotificationService {
       print('Error scheduling notification: $e');
     }
   }
+
+  deleteNotification(int id) async {
+    await notificationsPlugin.cancel(id);
+  }
 }
