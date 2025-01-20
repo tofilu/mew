@@ -92,6 +92,17 @@ class DatabaseHandler {
       where: 'id = ?',
       whereArgs: [id],
     );
+
+    await NotificationService.instance.deleteNotification(id);// Datenbank löschen
+
+    DateTime dateTime = TimeConverter.parseTimeToDateTime(time);
+    await NotificationService.instance.scheduleNotification(
+      id: id,
+      title: 'Scheduled Notification',
+      body: 'Scheduled Notification for: $dateTime',
+      scheduleTime: dateTime,
+    );
+
   }
 
   Future<void> delete(int id) async {

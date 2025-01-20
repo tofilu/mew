@@ -106,6 +106,12 @@ class NotificationService {
   }
 
   deleteNotification(int id) async {
-    await notificationsPlugin.cancel(id);
+    try {
+      await notificationsPlugin.cancel(id);
+      print("Notification with ID $id successfully canceled.");
+    } catch (e) {
+      print("Error canceling notification: $e");
+    }
   }
+
 }

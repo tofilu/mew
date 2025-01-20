@@ -35,13 +35,55 @@ class ChangeDrugScreenState extends AddDrugScreenState {
     super.initState();
     selectedTime = (widget as ChangeDrugScreen).toD;
   }
+  // Methode zum Speichern des geänderten Medikaments
+  Future<void> saveMedication() async {
+    final String medicationName = medicationNameController.text;
+    final String dosage = dosageController.text;
+    final String frequencyText = frequencyController.text;
+    final String prescriptionTimeText = presciptionTimeController.text;
 
+    // Validierung der Eingabewerte
+    if (medicationName.isEmpty || dosage.isEmpty || frequencyText.isEmpty || prescriptionTimeText.isEmpty || selectedTime == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Bitte füllen Sie alle Felder aus')),
+      );
+      return;
+    }
+    final int frequency = int.parse(frequencyText);
+    final int prescriptionTime = int.parse(prescriptionTimeText);
+    final String time = selectedTime?.format(context) ?? '';
+
+    // Speichern des geänderten Medikaments in der Datenbank
+    Drug drug = Drug(
+      name: medicationName,
+      time: time,
+      frequency: frequency,
+      dosage: dosage,
+      prescriptionTime: prescriptionTime,
+      counter: 0, // Counter bleibt auf 0, falls nicht verwendet
+    );
+    // Hier wird das Medikament mit der richtigen ID aktualisiert
+    widget.dbHandler.set(
+      (widget as ChangeDrugScreen).id,
+      drug.name,
+      drug.time,
+      drug.frequency,
+      drug.dosage,
+      drug.prescriptionTime,
+      drug.counter,
+    );
+    // Bestätigungsmeldung
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Medication: $medicationName updated")),
+    );
+  }
+/*
   @override
   void addToDatabase(Drug drug) {
     widget.dbHandler.set((widget as ChangeDrugScreen).id, drug.name, drug.time,
         drug.frequency, drug.dosage, drug.prescriptionTime, drug.counter);
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     medicationNameController.text = (widget as ChangeDrugScreen).medicationName;
