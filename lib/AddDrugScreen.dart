@@ -50,7 +50,7 @@ class AddDrugScreenState extends State<AddDrugScreen> {
     widget.dbHandler.addToDataBase(drug);
   }
 
-  void _selectTime(BuildContext context) async {
+  void selectTime(BuildContext context) async {
     final TimeOfDay? time = await showTimePicker(
       context: context,
       initialTime: selectedTime ?? TimeOfDay.now(),
@@ -99,7 +99,7 @@ class AddDrugScreenState extends State<AddDrugScreen> {
                 ),
                 SizedBox(width: 20),
                 ElevatedButton(
-                  onPressed: () => _selectTime(context),
+                  onPressed: () => selectTime(context),
                   child: Text('Pick Time'),
                 ),
               ],

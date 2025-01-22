@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'Helper/Drug.dart';
 import 'ListScreen.dart';
-import 'database/DatabaseHandler.dart';
 import 'package:mew/TakeDrugBar.dart';
 
 class DailyScreen extends ListScreen {
-  final DatabaseHandler dbHandler = DatabaseHandler();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(key: key, body: createFutureBuilder());

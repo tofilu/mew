@@ -15,9 +15,9 @@ abstract class DrugBar extends StatelessWidget {
         child: ListBody(children: [
           Padding(
               padding: const EdgeInsets.only(bottom: 15.0, top: 15.0),
-              child: buildDrugAlarm(context))
+              child: buildBar(context))
         ]));
   }
 
-  Widget buildDrugAlarm(BuildContext context);
+  Widget buildBar(BuildContext context);
 }

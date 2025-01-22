@@ -10,7 +10,7 @@ class TakeDrugBar extends DrugBar {
   }
 
   @override
-  buildDrugAlarm(BuildContext context) {
+  buildBar(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

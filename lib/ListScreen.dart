@@ -21,10 +21,10 @@ class ListScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done &&
               !snapshot.hasError) {
             List<Drug> drugs = snapshot.data;
-            List<Drug> sortedDrugs = _sortDrugsByTime(drugs);
+            List<Drug> sortedDrugs = sortDrugsByTime(drugs);
 
             List<StatelessWidget> drugAlarmBars = makeDrugBars(sortedDrugs);
-            return _displayBars(drugAlarmBars);
+            return displayBars(drugAlarmBars);
           } else if (snapshot.hasError) {
             return Text("Error fetching Alarms");
             //if future is not done yet, return an empty container,
@@ -35,7 +35,7 @@ class ListScreen extends StatelessWidget {
         });
   }
 
-  ListView _displayBars(List<StatelessWidget> alarmBars) {
+  ListView displayBars(List<StatelessWidget> alarmBars) {
     return ListView.builder(
         itemCount: alarmBars.length,
         itemBuilder: (BuildContext context, int index) {
@@ -54,7 +54,7 @@ class ListScreen extends StatelessWidget {
     return alarmBars;
   }
 
-  List<Drug> _sortDrugsByTime(List<Drug> drugs) {
+  List<Drug> sortDrugsByTime(List<Drug> drugs) {
     List<Drug> sortedDrugs = List.from(drugs);
     sortedDrugs.sort((a, b) => a.time.compareTo(b.time));
     return sortedDrugs;

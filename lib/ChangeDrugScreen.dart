@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mew/AddDrugScreen.dart';
 import 'package:mew/Helper/TimeConverter.dart';
 import 'Helper/Drug.dart';
-import 'database/DatabaseHandler.dart';
 
 class ChangeDrugScreen extends AddDrugScreen {
-  final DatabaseHandler dbHandler = DatabaseHandler();
   String medicationName;
   String dosage;
   String time;
@@ -31,11 +29,14 @@ class ChangeDrugScreen extends AddDrugScreen {
 class ChangeDrugScreenState extends AddDrugScreenState {
   TimeOfDay? selectedTime;
 
+  @override
   void initState() {
     super.initState();
     selectedTime = (widget as ChangeDrugScreen).toD;
   }
+
   // Methode zum Speichern des geänderten Medikaments
+  @override
   Future<void> saveMedication() async {
     final String medicationName = medicationNameController.text;
     final String dosage = dosageController.text;
@@ -43,7 +44,11 @@ class ChangeDrugScreenState extends AddDrugScreenState {
     final String prescriptionTimeText = presciptionTimeController.text;
 
     // Validierung der Eingabewerte
-    if (medicationName.isEmpty || dosage.isEmpty || frequencyText.isEmpty || prescriptionTimeText.isEmpty || selectedTime == null) {
+    if (medicationName.isEmpty ||
+        dosage.isEmpty ||
+        frequencyText.isEmpty ||
+        prescriptionTimeText.isEmpty ||
+        selectedTime == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Bitte füllen Sie alle Felder aus')),
       );
@@ -77,6 +82,7 @@ class ChangeDrugScreenState extends AddDrugScreenState {
       SnackBar(content: Text("Medication: $medicationName updated")),
     );
   }
+
 /*
   @override
   void addToDatabase(Drug drug) {

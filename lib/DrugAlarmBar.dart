@@ -10,7 +10,7 @@ class DrugAlarmBar extends DrugBar {
 
   DrugAlarmBar({required this.drug});
 
-  Row buildDrugAlarmTitle() {
+  Row _buildDrugAlarmTitle() {
     return Row(children: [
       Text(drug.name,
           textAlign: TextAlign.left,
@@ -19,7 +19,7 @@ class DrugAlarmBar extends DrugBar {
     ]);
   }
 
-  Row buildDrugAlarmInformation() {
+  Row _buildDrugAlarmInformation() {
     return Row(children: [
       Column(children: [
         Padding(
@@ -35,14 +35,14 @@ class DrugAlarmBar extends DrugBar {
   }
 
   @override
-  Widget buildDrugAlarm(BuildContext context) {
+  Widget buildBar(BuildContext context) {
     return ListBody(children: [
       Padding(
           padding: const EdgeInsets.only(top: 12.0, bottom: 3.0, left: 16.0),
-          child: buildDrugAlarmTitle()),
+          child: _buildDrugAlarmTitle()),
       Padding(
           padding: const EdgeInsets.only(bottom: 5.0, left: 16.0),
-          child: buildDrugAlarmInformation()),
+          child: _buildDrugAlarmInformation()),
       Padding(
           padding: const EdgeInsets.only(bottom: 5.0, left: 16.0),
           child: ElevatedButton(
