@@ -39,11 +39,30 @@ class AddDrugScreenState extends State<AddDrugScreen> {
       counter: 0,
     );
     addToDatabase(drug);
+  }
 
-    // Show a snackbar
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Medication: $medicationName saved")),
-    );
+  bool checkInput() {
+    bool validInput = true;
+    final String medicationName = medicationNameController.text;
+    if (medicationName.isEmpty) {
+      validInput = false;
+    }
+    final String dosage = dosageController.text;
+    if (dosage.isEmpty) {
+      validInput = false;
+    }
+    final int? frequency = int.tryParse(frequencyController.text);
+    if (frequency == null) {
+      validInput = false;
+    }
+    final int? prescriptionTime = int.tryParse(presciptionTimeController.text);
+    if (prescriptionTime == null) {
+      validInput = false;
+    }
+    if (selectedTime == null) {
+      validInput = false;
+    }
+    return validInput;
   }
 
   void addToDatabase(Drug drug) {
@@ -125,18 +144,31 @@ class AddDrugScreenState extends State<AddDrugScreen> {
             SizedBox(height: 24),
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  saveMedication();
+                onPressed: () async {
+                  if (!checkInput()) {
+                    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text(
+                              "Invalid Input, Medication could not be saved!")),
+                    );
+                  } else {
+                    await saveMedication();
+                    // Show a snackbar
+                    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Medication saved")),
+                    );
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => const Home(index: 2),
+                      ),
+                      (Route<dynamic> route) =>
+                          false, // Remove all previous routes
+                    );
+                  }
                   // Add save logic here
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const Home(index: 2),
-                    ),
-                    (Route<dynamic> route) =>
-                        false, // Remove all previous routes
-                  );
-                  ;
                 },
                 child: Text('Save'),
               ),
