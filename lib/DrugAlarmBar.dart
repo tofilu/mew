@@ -62,7 +62,6 @@ class DrugAlarmBar extends DrugBar {
                 dosage: drug.dosage,
                 time: drug.time,
                 frequency: drug.frequency,
-                prescriptionTime: drug.frequency,
                 id: drug.id)));
   }
 }

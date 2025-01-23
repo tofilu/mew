@@ -16,8 +16,6 @@ class AddDrugScreenState extends State<AddDrugScreen> {
   final TextEditingController medicationNameController =
       TextEditingController();
   final TextEditingController dosageController = TextEditingController();
-  final TextEditingController presciptionTimeController =
-      TextEditingController();
   final TextEditingController frequencyController = TextEditingController();
   TimeOfDay? selectedTime;
 
@@ -25,7 +23,6 @@ class AddDrugScreenState extends State<AddDrugScreen> {
     final String medicationName = medicationNameController.text;
     final String dosage = dosageController.text;
     final int frequency = int.parse(frequencyController.text);
-    final int prescriptionTime = int.parse(presciptionTimeController.text);
     final String time = selectedTime?.format(context) ?? '';
 
     // Save the medication to the database
@@ -35,7 +32,6 @@ class AddDrugScreenState extends State<AddDrugScreen> {
       time: time,
       frequency: frequency,
       dosage: dosage,
-      prescriptionTime: prescriptionTime,
       counter: 0,
     );
     addToDatabase(drug);
@@ -55,10 +51,11 @@ class AddDrugScreenState extends State<AddDrugScreen> {
     if (frequency == null) {
       validInput = false;
     }
-    final int? prescriptionTime = int.tryParse(presciptionTimeController.text);
+ /*   final int? prescriptionTime = int.tryParse(presciptionTimeController.text);
     if (prescriptionTime == null) {
       validInput = false;
     }
+  */
     if (selectedTime == null) {
       validInput = false;
     }
@@ -132,7 +129,7 @@ class AddDrugScreenState extends State<AddDrugScreen> {
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 24),
+/*            SizedBox(height: 24),
             TextField(
               controller: presciptionTimeController,
               decoration: InputDecoration(
@@ -141,6 +138,8 @@ class AddDrugScreenState extends State<AddDrugScreen> {
               ),
               keyboardType: TextInputType.number,
             ),
+
+ */
             SizedBox(height: 24),
             Center(
               child: ElevatedButton(

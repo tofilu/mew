@@ -16,7 +16,6 @@ class DatabaseHandler {
               time TEXT, 
               frequency INTEGER,
               dosage TEXT,
-              prescriptionTime INTEGER,
               counter INTEGER
               )''');
         //für Kalender wäre noch ein Datum nötig
@@ -77,7 +76,7 @@ class DatabaseHandler {
   }
 
   Future<void> set(int id, String name, String time, int frequency,
-      String dosage, int prescriptionTime, int counter) async {
+      String dosage, int counter) async {
     final db = await initDB();
     await db.update(
       'medicaments',
@@ -86,7 +85,6 @@ class DatabaseHandler {
         'time': time,
         'frequency': frequency,
         'dosage': dosage,
-        'prescriptionTime': prescriptionTime,
         'counter': counter,
       },
       where: 'id = ?',
@@ -136,7 +134,6 @@ class DatabaseHandler {
       time: map['time'],
       frequency: map['frequency'],
       dosage: map['dosage'],
-      prescriptionTime: map['prescriptionTime'],
       counter: map['counter'],
     );
     return drug;

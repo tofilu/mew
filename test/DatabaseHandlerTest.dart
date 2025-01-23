@@ -30,7 +30,6 @@ void main() {
       time: '08:00',
       frequency: 1, //wie oft einnehmen? mehrmals am Tag, ....
       dosage: '1 Tablette',
-      prescriptionTime: 7,
       counter: 0,
     );
 
@@ -46,7 +45,6 @@ void main() {
     expect(fetchedDrug.time, '08:00');
     expect(fetchedDrug.frequency, 1);
     expect(fetchedDrug.dosage, '1 Tablette');
-    expect(fetchedDrug.prescriptionTime, 7);
   });
 
   test('GetAll drugs', () async{
@@ -57,7 +55,6 @@ void main() {
       time: '08:00',
       frequency: 1,
       dosage: '1 Tablette',
-      prescriptionTime: 7,
       counter: 0,
     );
     final drug2 = Drug(
@@ -66,7 +63,6 @@ void main() {
       time: '09:00',
       frequency: 2,
       dosage: '1 Tablette',
-      prescriptionTime: 7,
       counter: 0,
     );
 
@@ -102,14 +98,13 @@ void main() {
       time: '08:00',
       frequency: 1,
       dosage: '1 Tablette',
-      prescriptionTime: 7,
       counter: 0,
     );
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
 
     //Medikament aktualisieren
-    await dbHandler.set(drug.id, 'Ibu', '09:00', 1, '1 Tablette', 7,0);
+    await dbHandler.set(drug.id, 'Ibu', '09:00', 1, '1 Tablette',0);
 
     //Aktualisiertes Medikament aus der Datenbank abrufen
     final fetchedDrug = await dbHandler.getDrug(drug.id);
@@ -120,7 +115,6 @@ void main() {
     expect(fetchedDrug.time, '09:00');
     expect(fetchedDrug.frequency, 1);
     expect(fetchedDrug.dosage, '1 Tablette');
-    expect(fetchedDrug.prescriptionTime, 7);
   });
 
   test('Get Drug by ID', () async {
@@ -131,7 +125,6 @@ void main() {
       time: '08:00',
       frequency: 1,
       dosage: '1 Tablette',
-      prescriptionTime: 7,
       counter: 0,
     );
     //Medikament zur Datenbank hinzufügen
@@ -146,7 +139,6 @@ void main() {
     expect(fetchedDrug.time, '08:00');
     expect(fetchedDrug.frequency, 1);
     expect(fetchedDrug.dosage, '1 Tablette');
-    expect(fetchedDrug.prescriptionTime, 7);
   });
 
   test('search for Drug by Name', () async {
@@ -157,7 +149,6 @@ void main() {
       time: '08:00',
       frequency: 1,
       dosage: '1 Tablette',
-      prescriptionTime: 7,
       counter: 0,
     );
 
@@ -170,7 +161,6 @@ void main() {
     expect(fetchedDrug.time, '08:00');
     expect(fetchedDrug.frequency, 1);
     expect(fetchedDrug.dosage, '1 Tablette');
-    expect(fetchedDrug.prescriptionTime, 7);
   });
   test('search for Drug by Name', () async {
     print('test');
@@ -180,7 +170,6 @@ void main() {
       time: '08:00',
       frequency: 1,
       dosage: '1 Tablette',
-      prescriptionTime: 7,
       counter: 0,
     );
 
@@ -193,7 +182,6 @@ void main() {
     expect(fetchedDrug.time, '08:00');
     expect(fetchedDrug.frequency, 1);
     expect(fetchedDrug.dosage, '1 Tablette');
-    expect(fetchedDrug.prescriptionTime, 7);
   });
   test('search for Drug by Name case insensitive', () async {
     print('test');
@@ -203,7 +191,6 @@ void main() {
       time: '08:00',
       frequency: 1,
       dosage: '1 Tablette',
-      prescriptionTime: 7,
       counter: 0,
     );
 
@@ -216,7 +203,6 @@ void main() {
     expect(fetchedDrug.time, '08:00');
     expect(fetchedDrug.frequency, 1);
     expect(fetchedDrug.dosage, '1 Tablette');
-    expect(fetchedDrug.prescriptionTime, 7);
   });
 
   test('search for Drug by partial Name ', () async {
@@ -227,7 +213,6 @@ void main() {
       time: '08:00',
       frequency: 1,
       dosage: '1 Tablette',
-      prescriptionTime: 7,
       counter: 0,
     );
 
@@ -240,7 +225,6 @@ void main() {
     expect(fetchedDrug.time, '08:00');
     expect(fetchedDrug.frequency, 1);
     expect(fetchedDrug.dosage, '1 Tablette');
-    expect(fetchedDrug.prescriptionTime, 7);
   });
 
 
@@ -262,7 +246,6 @@ void main() {
       time: '08:00',
       frequency: 1,
       dosage: '1 Tablette',
-      prescriptionTime: 7,
       counter: 0,
     );
     //Medikament zur Datenbank hinzufügen

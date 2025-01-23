@@ -8,7 +8,6 @@ class ChangeDrugScreen extends AddDrugScreen {
   String dosage;
   String time;
   int frequency;
-  int prescriptionTime;
   int id = 0;
   late TimeOfDay toD;
 
@@ -18,7 +17,6 @@ class ChangeDrugScreen extends AddDrugScreen {
       required this.dosage,
       required this.time,
       required this.frequency,
-      required this.prescriptionTime,
       required this.id})
       : toD = TimeConverter.convertStringToTimeOfDay(time);
 
@@ -41,13 +39,11 @@ class ChangeDrugScreenState extends AddDrugScreenState {
     final String medicationName = medicationNameController.text;
     final String dosage = dosageController.text;
     final String frequencyText = frequencyController.text;
-    final String prescriptionTimeText = presciptionTimeController.text;
 
     // Validierung der Eingabewerte
     if (medicationName.isEmpty ||
         dosage.isEmpty ||
         frequencyText.isEmpty ||
-        prescriptionTimeText.isEmpty ||
         selectedTime == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Bitte füllen Sie alle Felder aus')),
@@ -55,7 +51,6 @@ class ChangeDrugScreenState extends AddDrugScreenState {
       return;
     }
     final int frequency = int.parse(frequencyText);
-    final int prescriptionTime = int.parse(prescriptionTimeText);
     final String time = selectedTime?.format(context) ?? '';
 
     // Speichern des geänderten Medikaments in der Datenbank
@@ -64,7 +59,6 @@ class ChangeDrugScreenState extends AddDrugScreenState {
       time: time,
       frequency: frequency,
       dosage: dosage,
-      prescriptionTime: prescriptionTime,
       counter: 0, // Counter bleibt auf 0, falls nicht verwendet
     );
     // Hier wird das Medikament mit der richtigen ID aktualisiert
@@ -74,7 +68,6 @@ class ChangeDrugScreenState extends AddDrugScreenState {
       drug.time,
       drug.frequency,
       drug.dosage,
-      drug.prescriptionTime,
       drug.counter,
     );
     // Bestätigungsmeldung
@@ -96,8 +89,8 @@ class ChangeDrugScreenState extends AddDrugScreenState {
     dosageController.text = (widget as ChangeDrugScreen).dosage;
     frequencyController.text =
         (widget as ChangeDrugScreen).frequency.toString();
-    presciptionTimeController.text =
-        (widget as ChangeDrugScreen).prescriptionTime.toString();
+ //   presciptionTimeController.text =
+ //       (widget as ChangeDrugScreen).prescriptionTime.toString();
     return super.build(context);
   }
 }
