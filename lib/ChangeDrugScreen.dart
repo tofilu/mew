@@ -26,13 +26,13 @@ class ChangeDrugScreen extends AddDrugScreen {
 
 class ChangeDrugScreenState extends AddDrugScreenState {
   TimeOfDay? selectedTime;
-
+/*
   @override
   void initState() {
     super.initState();
     selectedTime = (widget as ChangeDrugScreen).toD;
   }
-
+*/
   // Methode zum Speichern des geänderten Medikaments
   @override
   Future<void> saveMedication() async {
@@ -83,14 +83,21 @@ class ChangeDrugScreenState extends AddDrugScreenState {
         drug.frequency, drug.dosage, drug.prescriptionTime, drug.counter);
   }
 */
+
   @override
   Widget build(BuildContext context) {
+    // Entferne die Zeilen, die den Text der Controller jedes Mal setzen
+    return super.build(context);
+  }
+  
+  @override
+  void initState() {
+    super.initState();
     medicationNameController.text = (widget as ChangeDrugScreen).medicationName;
     dosageController.text = (widget as ChangeDrugScreen).dosage;
     frequencyController.text =
         (widget as ChangeDrugScreen).frequency.toString();
- //   presciptionTimeController.text =
- //       (widget as ChangeDrugScreen).prescriptionTime.toString();
-    return super.build(context);
+    selectedTime = (widget as ChangeDrugScreen).toD;
   }
+
 }
