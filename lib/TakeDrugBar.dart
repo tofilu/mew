@@ -40,7 +40,7 @@ class TakeDrugBar extends DrugBar {
         mainAxisSize: MainAxisSize.min,
         // Verhindert übergroßen Dialog
         children: [
-          Text("Take medication"),
+          Text("Did you take your medication?"),
           SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -49,13 +49,13 @@ class TakeDrugBar extends DrugBar {
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
                 },
-                child: Text("Skip"),
+                child: Text("Skip Today"),
               ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
                 },
-                child: Text("Done"),
+                child: Text("Yes"),
               ),
             ],
           )
