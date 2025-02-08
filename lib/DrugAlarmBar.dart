@@ -27,6 +27,11 @@ class DrugAlarmBar extends DrugBar {
             child: Text("time " + drug.time))
       ]),
       Column(children: [
+        if (drug.frequency == 1)
+          Padding(
+              padding: const EdgeInsets.only(right: 5.0),
+              child: Text("every day"))
+        else
         Padding(
             padding: const EdgeInsets.only(right: 5.0),
             child: Text("every " + drug.frequency.toString() + " days"))
