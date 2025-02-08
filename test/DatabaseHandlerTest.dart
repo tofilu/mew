@@ -25,7 +25,6 @@ void main() {
   test('Add Drug to Database', () async {
     print('test');
     final drug = Drug(
-      id: 1,
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1, //wie oft einnehmen? mehrmals am Tag, ....
@@ -36,8 +35,9 @@ void main() {
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
 
+    final drugId = await dbHandler.getDrugId(drug.name);
     // Hinzugefügtes Medikament aus der Datenbank abrufen
-    final fetchedDrug = await dbHandler.getDrug(drug.id);
+    final fetchedDrug = await dbHandler.getDrug(drugId);
 
     // Überprüfen, ob das Medikament korrekt gespeichert wurde
     expect(fetchedDrug, isNotNull);
@@ -50,7 +50,6 @@ void main() {
   test('GetAll drugs', () async{
     print('test');
     final drug1 = Drug(
-      id: 1,
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
@@ -58,7 +57,6 @@ void main() {
       counter: 0,
     );
     final drug2 = Drug(
-      id: 2,
       name: 'Ibuprofen',
       time: '09:00',
       frequency: 2,
@@ -93,7 +91,6 @@ void main() {
   test('Set Drug', () async {//muss angepasst werden
     print('test');
     final drug = Drug(
-      id: 1,
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
@@ -103,11 +100,12 @@ void main() {
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
 
+    final drugId = await dbHandler.getDrugId(drug.name);
     //Medikament aktualisieren
-    await dbHandler.set(drug.id, 'Ibu', '09:00', 1, '1 Tablette',0);
+    await dbHandler.set(drugId, 'Ibu', '09:00', 1, '1 Tablette',0);
 
     //Aktualisiertes Medikament aus der Datenbank abrufen
-    final fetchedDrug = await dbHandler.getDrug(drug.id);
+    final fetchedDrug = await dbHandler.getDrug(drugId);
 
     //Überprüfen, ob das Medikament korrekt aktualisiert wurde
     expect(fetchedDrug, isNotNull);
@@ -120,7 +118,6 @@ void main() {
   test('Get Drug by ID', () async {
     print('test');
     final drug = Drug(
-      id: 1,
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
@@ -131,7 +128,8 @@ void main() {
     await dbHandler.addToDataBase(drug);
 
     //Medikament aus der Datenbank abrufen
-    final fetchedDrug = await dbHandler.getDrug(drug.id);
+    final drugId = await dbHandler.getDrugId(drug.name);
+    final fetchedDrug = await dbHandler.getDrug(drugId);
 
     //Überprüfen, ob das Medikament korrekt abgerufen wurde
     expect(fetchedDrug, isNotNull);
@@ -144,7 +142,6 @@ void main() {
   test('search for Drug by Name', () async {
     print('test');
     final drug = Drug(
-      id: 1,
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
@@ -165,7 +162,6 @@ void main() {
   test('search for Drug by Name', () async {
     print('test');
     final drug = Drug(
-      id: 1,
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
@@ -186,7 +182,6 @@ void main() {
   test('search for Drug by Name case insensitive', () async {
     print('test');
     final drug = Drug(
-      id: 1,
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
@@ -208,7 +203,6 @@ void main() {
   test('search for Drug by partial Name ', () async {
     print('test');
     final drug = Drug(
-      id: 1,
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
@@ -241,7 +235,6 @@ void main() {
   test('Delete Drug', () async {
     print('test');
     final drug = Drug(
-      id: 1,
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
@@ -251,7 +244,8 @@ void main() {
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
     //Medikament aus der Datenbank löschen
-    await dbHandler.delete(drug.id);
+    final drugId = await dbHandler.getDrugId(drug.name);
+    await dbHandler.delete(drugId);
     //Überprüfen, ob das Medikament gelöscht
   });
 
