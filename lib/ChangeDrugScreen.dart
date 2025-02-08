@@ -17,7 +17,7 @@ class ChangeDrugScreen extends AddDrugScreen {
       required this.dosage,
       required this.time,
       required this.frequency,
-      required this.id})
+      })
       : toD = TimeConverter.convertStringToTimeOfDay(time);
 
   @override

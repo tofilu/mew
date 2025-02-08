@@ -1,7 +1,9 @@
+import 'package:mew/Helper/DrugOfDatabase.dart';
 import 'package:mew/Helper/NotificationService.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../Helper/Drug.dart';
+import '../Helper/DrugOfDatabase.dart';
 import '../Helper/TimeConverter.dart';
 
 class DatabaseHandler {
@@ -29,9 +31,10 @@ class DatabaseHandler {
     final db = await initDB();
     try {
      int id = await db.insert(
-         'medicaments',
-         drug.toMap(),
+        'medicaments',
+        drug.toMap(),
          conflictAlgorithm: ConflictAlgorithm.replace);
+     print('Inserted drug with ID: $id');
 
      DateTime dateTime = TimeConverter.parseTimeToDateTime(drug.time);
      await NotificationService.instance.scheduleNotification(
@@ -43,7 +46,14 @@ class DatabaseHandler {
     } catch (e) {
       print(e);
     }
+    printAll();
+  }
 
+  printAll() async {
+    List<Drug> drugs = await getAll();
+    for (Drug drug in drugs) {
+      print(drug.toString());
+    }
   }
 
   Future<Drug> getDrug(int id) async {
@@ -64,15 +74,22 @@ class DatabaseHandler {
       }
   }
 
-  Future<List<Drug>> getAll() async {
+  Future<List<DrugOfDatabase>> getAll() async {
     final db = await initDB();
     final List<Map<String, dynamic>> maps = await db.query('medicaments');
     if (maps.isNotEmpty) {
       return List.generate(maps.length, (i) {
-        return makeDrug(maps[i]);
+        return DrugOfDatabase(
+          id: maps[i]['id'],
+          name: maps[i]['name'],
+          time: maps[i]['time'],
+          frequency: maps[i]['frequency'],
+          dosage: maps[i]['dosage'],
+          counter: maps[i]['counter'],
+        );
       });
     }
-    return []; //leere Liste zurückgeben
+    return [];
   }
 
   Future<void> set(int id, String name, String time, int frequency,
@@ -91,7 +108,7 @@ class DatabaseHandler {
       whereArgs: [id],
     );
 
-    await NotificationService.instance.deleteNotification(id);// Datenbank löschen
+    await NotificationService.instance.deleteNotification(id);// Noti löschen
 
     DateTime dateTime = TimeConverter.parseTimeToDateTime(time);
     await NotificationService.instance.scheduleNotification(
@@ -129,7 +146,6 @@ class DatabaseHandler {
 
   Drug makeDrug(Map map) {
     Drug drug = Drug(
-      id: map['id'],
       name: map['name'],
       time: map['time'],
       frequency: map['frequency'],
@@ -147,8 +163,8 @@ class DatabaseHandler {
 
   countOneUpAll() async {
     final db = await initDB();
-    List<Drug> drugs = await getAll();
-    for (Drug drug in drugs) {
+    List<DrugOfDatabase> drugs = await getAll();
+    for (DrugOfDatabase drug in drugs) {
         if (drug.counter < drug.frequency - 1) {
           drug.counter = drug.counter + 1;
         }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mew/theme/mewTheme.dart';
 import 'Helper/NotificationService.dart';
 import 'Home.dart';
+import 'database/DatabaseHandler.dart';
 
 
 void main() async {

@@ -16,6 +16,7 @@ class DailyScreen extends ListScreen {
       if (drug.counter == 0) {
         TakeDrugBar bar = TakeDrugBar(drug: drug);
         alarmBars.add(bar);
+      print("DailyScreen: makeDrugBars: drug: ${drug.name}");
       }
     }
     return alarmBars;

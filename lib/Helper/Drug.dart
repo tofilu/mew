@@ -1,5 +1,4 @@
 class Drug {
-  int id;
   String name;
   String time;
   int frequency;
@@ -7,7 +6,7 @@ class Drug {
   int counter;
 
   Drug(
-      {this.id = 0,
+      {
       required this.name,
       required this.time,
       required this.frequency,
@@ -16,7 +15,6 @@ class Drug {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'name': name,
       'time': time,
       'frequency': frequency,
