@@ -176,6 +176,7 @@ class DatabaseHandler {
         }
         else {
           drug.counter = 0;
+          updateDrugState(drug.id, DrugState.notTaken);
         }
         await db.update(
           'medicaments',
@@ -185,6 +186,7 @@ class DatabaseHandler {
           where: 'id = ?',
           whereArgs: [drug.id],
         );
+        print(drug.counter);
     }
   }
 

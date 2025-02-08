@@ -1,6 +1,8 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:mew/theme/mewTheme.dart';
 import 'Helper/NotificationService.dart';
+import 'Helper/AlarmMidnight.dart';
 import 'Home.dart';
 import 'database/DatabaseHandler.dart';
 
@@ -10,6 +12,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await NotificationService.instance.initNotification();
+  await AndroidAlarmManager.initialize();
+
+ // await scheduleDailyCheck();
 
   runApp(const MewApp());
 }
