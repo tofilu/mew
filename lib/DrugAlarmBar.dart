@@ -67,6 +67,7 @@ class DrugAlarmBar extends DrugBar {
         context,
         MaterialPageRoute(
             builder: (context) => ChangeDrugScreen(
+                nameBefore: drug.name,
                 medicationName: drug.name,
                 dosage: drug.dosage,
                 time: drug.time,
