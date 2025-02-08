@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mew/ChangeDrugScreen.dart';
-import 'package:path/path.dart';
-
 import 'DrugBar.dart';
 import 'Helper/Drug.dart';
 
 class DrugAlarmBar extends DrugBar {
   final Drug drug;
+  final bool isDismissible;
 
-  DrugAlarmBar({required this.drug});
+  DrugAlarmBar({required this.drug, this.isDismissible = true});
+
+  @override
+  bool isDismissibleCard() {
+    return isDismissible; // Falls `isDismissible` true ist, nutze andere Card
+  }
 
   Row _buildDrugAlarmTitle() {
     return Row(children: [
@@ -49,7 +53,7 @@ class DrugAlarmBar extends DrugBar {
           padding: const EdgeInsets.only(bottom: 5.0, left: 16.0),
           child: _buildDrugAlarmInformation()),
       Padding(
-          padding: const EdgeInsets.only(bottom: 5.0, left: 16.0),
+          padding: const EdgeInsets.only(bottom: 5.0, left: 16.0, right: 16.0),
           child: ElevatedButton(
               onPressed: () {
                 _routeToChangeDrugScreen(context);
