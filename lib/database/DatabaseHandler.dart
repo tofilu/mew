@@ -60,14 +60,14 @@ class DatabaseHandler {
     }
   }
 
-  Future<Drug> getDrug(int id) async {
+  Future<DrugOfDatabase> getDrug(int id) async {
       try {
         final db = await initDB();
         final List<Map<String, dynamic>> maps = await db
             .query('medicaments', columns: null, where: 'id = ?', whereArgs: [id]);
 
         if (maps.isNotEmpty) {
-          return makeDrug(maps.first);
+          return makeDrugOfDatabase(maps.first);
         } else {
           throw Exception('Drug not found');
         }
@@ -83,15 +83,7 @@ class DatabaseHandler {
     final List<Map<String, dynamic>> maps = await db.query('medicaments');
     if (maps.isNotEmpty) {
       return List.generate(maps.length, (i) {
-        return DrugOfDatabase(
-          id: maps[i]['id'],
-          name: maps[i]['name'],
-          time: maps[i]['time'],
-          frequency: maps[i]['frequency'],
-          dosage: maps[i]['dosage'],
-          counter: maps[i]['counter'],
-          state: DrugState.values[maps[i]['state']],
-        );
+        return makeDrugOfDatabase(maps[i]);
       });
     }
     return [];
@@ -161,6 +153,19 @@ class DatabaseHandler {
     return drug;
   }
 
+  DrugOfDatabase makeDrugOfDatabase(Map map) {
+    DrugOfDatabase drug = DrugOfDatabase(
+      id: map['id'],
+      name: map['name'],
+      time: map['time'],
+      frequency: map['frequency'],
+      dosage: map['dosage'],
+      counter: map['counter'],
+      state: DrugState.values[map['state']],
+    );
+    return drug;
+  }
+
   Future<void> deleteDatabaseFile(String dbName) async {
     var databasesPath = await getDatabasesPath();
     String path = '$databasesPath/$dbName';
@@ -214,6 +219,16 @@ class DatabaseHandler {
     );
     if (state == DrugState.taken || state == DrugState.NotRequired) {
       await NotificationService.instance.deleteNotification(id);
+    }
+    if (state == DrugState.notTaken){
+      DrugOfDatabase drug = await getDrug(id);
+      DateTime dateTime = TimeConverter.parseTimeToDateTime(drug.time);
+      await NotificationService.instance.scheduleNotification(
+        id: id,
+        title: 'Scheduled Notification',
+        body: 'Scheduled Notification for: $dateTime',
+        scheduleTime: dateTime,
+      );
     }
   }
 
