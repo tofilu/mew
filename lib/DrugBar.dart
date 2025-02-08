@@ -1,51 +1,59 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'Helper/Drug.dart';
+import 'database/DatabaseHandler.dart';
 
 abstract class DrugBar extends StatelessWidget {
   late Drug drug;
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      key: Key(drug.hashCode.toString()), // Eindeutiger Schlüssel für Dismissible
-      direction: DismissDirection.horizontal, // Links oder rechts wischen
-      background: Container(
-        color: Colors.red, // Hintergrundfarbe beim Wischen
-        alignment: Alignment.centerLeft,
-        padding: EdgeInsets.only(left: 20),
-        child: Icon(Icons.delete, color: Colors.white, size: 30), // Icon links
+    Widget card = Card(
+      elevation: 5.0,
+      color: Colors.grey,
+      shape: RoundedRectangleBorder(
+        side: BorderSide.none,
+        borderRadius: BorderRadius.circular(15.0),
       ),
-      secondaryBackground: Container(
-        color: Colors.red,
-        alignment: Alignment.centerRight,
-        padding: EdgeInsets.only(right: 20),
-        child: Icon(Icons.delete, color: Colors.white, size: 30), // Icon rechts
-      ),
-      onDismissed: (direction) {
-        // Hier kannst du die Löschlogik implementieren
-        print("${drug} wurde gelöscht");
-      },
-      child: Card(
-        elevation: 5.0,
-        color: Colors.grey,
-        shape: RoundedRectangleBorder(
-            side: BorderSide.none,
-            borderRadius: BorderRadius.circular(15.0)
+      child: ListBody(children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 15.0, top: 15.0),
+          child: buildBar(context),
         ),
-        clipBehavior: Clip.antiAlias,
-        child: ListBody(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15.0, top: 15.0),
-              child: buildBar(context),
-            ),
-          ],
-        ),
-      ),
+      ]),
     );
+
+    // Falls die Karte als dismissible sein soll, umschließen wir sie mit `Dismissible`
+    if (isDismissibleCard()) {
+      return Dismissible(
+        key: Key(drug.name), // Eindeutiger Key für Dismissible
+        direction: DismissDirection.endToStart, // Wischen von rechts nach links erlaubt
+        background: Container(
+          alignment: Alignment.centerRight,
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          color: Colors.red, // Hintergrundfarbe beim Wischen
+          child: Icon(Icons.delete, color: Colors.white),
+        ),
+        onDismissed: (direction) {
+          
+        },
+        child: card,
+      );
+    } else {
+      return card;
+    }
+  }
+
+  /// Diese Methode kann von Unterklassen überschrieben werden
+  bool isDismissibleCard() {
+    return false;
   }
 
   Widget buildBar(BuildContext context);
+
+  /// Wird aufgerufen, wenn das Widget durch Wischen entfernt wird
+  void _onDismissed(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("${drug.name} removed")),
+    );
+  }
 }
