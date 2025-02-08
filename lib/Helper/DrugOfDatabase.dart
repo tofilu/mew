@@ -9,7 +9,8 @@ class DrugOfDatabase extends Drug{
         required super.time,
         required super.frequency,
         required super.dosage,
-        required super.counter
+        required super.counter,
+        required super.state
       });
 
   Map<String, dynamic> toMap() {
@@ -19,7 +20,8 @@ class DrugOfDatabase extends Drug{
       'time': time,
       'frequency': frequency,
       'dosage': dosage,
-      'counter': counter
+      'counter': counter,
+
     };
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mew/Helper/DrugOfDatabase.dart';
 
 import 'DrugAlarmBar.dart';
 import 'Helper/Drug.dart';
@@ -11,9 +12,9 @@ class DrugPlanScreen extends ListScreen {
   }
 
   @override
-  makeDrugBars(List<Drug> drugs) {
+  makeDrugBars(List<DrugOfDatabase> drugs) {
     List<DrugAlarmBar> alarmBars = [];
-    for (Drug drug in drugs) {
+    for (DrugOfDatabase drug in drugs) {
       DrugAlarmBar bar = DrugAlarmBar(drug: drug);
       alarmBars.add(bar);
     }

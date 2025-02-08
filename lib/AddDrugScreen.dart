@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'Helper/Drug.dart';
 import 'Home.dart';
 import 'database/DatabaseHandler.dart';
+import '../Helper/DrugState.dart';
 
 class AddDrugScreen extends StatefulWidget {
   final DatabaseHandler dbHandler = DatabaseHandler();
@@ -33,6 +34,7 @@ class AddDrugScreenState extends State<AddDrugScreen> {
       frequency: frequency,
       dosage: dosage,
       counter: 0,
+      state: DrugState.notTaken,
     );
     addToDatabase(drug);
   }

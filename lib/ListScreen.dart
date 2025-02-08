@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mew/Helper/DrugOfDatabase.dart';
 
 import 'Helper/Drug.dart';
 import 'TakeDrugBar.dart';
@@ -20,8 +21,8 @@ class ListScreen extends StatelessWidget {
           //for every entry and display in listview
           if (snapshot.connectionState == ConnectionState.done &&
               !snapshot.hasError) {
-            List<Drug> drugs = snapshot.data;
-            List<Drug> sortedDrugs = sortDrugsByTime(drugs);
+            List<DrugOfDatabase> drugs = snapshot.data;
+            List<DrugOfDatabase> sortedDrugs = sortDrugsByTime(drugs);
 
             List<StatelessWidget> drugAlarmBars = makeDrugBars(sortedDrugs);
             return displayBars(drugAlarmBars);
@@ -43,9 +44,9 @@ class ListScreen extends StatelessWidget {
         });
   }
 
-  List<StatelessWidget> makeDrugBars(List<Drug> drugs) {
+  List<StatelessWidget> makeDrugBars(List<DrugOfDatabase> drugs) {
     List<TakeDrugBar> alarmBars = [];
-    for (Drug drug in drugs) {
+    for (DrugOfDatabase drug in drugs) {
       if (drug.counter == 0) {
         TakeDrugBar bar = TakeDrugBar(drug: drug);
         alarmBars.add(bar);
@@ -54,8 +55,8 @@ class ListScreen extends StatelessWidget {
     return alarmBars;
   }
 
-  List<Drug> sortDrugsByTime(List<Drug> drugs) {
-    List<Drug> sortedDrugs = List.from(drugs);
+  List<DrugOfDatabase> sortDrugsByTime(List<DrugOfDatabase> drugs) {
+    List<DrugOfDatabase> sortedDrugs = List.from(drugs);
     sortedDrugs.sort((a, b) => a.time.compareTo(b.time));
     return sortedDrugs;
   }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'Helper/Drug.dart';
+import 'Helper/DrugOfDatabase.dart';
 import 'ListScreen.dart';
 import 'package:mew/TakeDrugBar.dart';
+import '../Helper/DrugState.dart';
 
 class DailyScreen extends ListScreen {
   @override
@@ -10,10 +11,10 @@ class DailyScreen extends ListScreen {
   }
 
   @override
-  makeDrugBars(List<Drug> drugs) {
+  makeDrugBars(List<DrugOfDatabase> drugs) {
     List<TakeDrugBar> alarmBars = [];
-    for (Drug drug in drugs) {
-      if (drug.counter == 0) {
+    for (DrugOfDatabase drug in drugs) {
+      if (drug.state == DrugState.notTaken) {
         TakeDrugBar bar = TakeDrugBar(drug: drug);
         alarmBars.add(bar);
       print("DailyScreen: makeDrugBars: drug: ${drug.name}");

@@ -19,7 +19,7 @@ class MewApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //DatabaseHandler().deleteDatabaseFile('medicament_database.db');
+    DatabaseHandler().deleteDatabaseFile('medicament_database.db');
     return MaterialApp(
         theme: MewTheme.lightTheme,
         darkTheme: MewTheme.darkTheme,

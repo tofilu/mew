@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mew/ChangeDrugScreen.dart';
+import 'package:mew/Helper/DrugOfDatabase.dart';
 import 'DrugBar.dart';
 import 'Helper/Drug.dart';
 
 class DrugAlarmBar extends DrugBar {
-  final Drug drug;
+  final DrugOfDatabase drug;
   final bool isDismissible;
 
   DrugAlarmBar({required this.drug, this.isDismissible = true});

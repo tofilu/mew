@@ -4,7 +4,10 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../Helper/Drug.dart';
 import '../Helper/DrugOfDatabase.dart';
+import '../Helper/DrugState.dart';
 import '../Helper/TimeConverter.dart';
+
+
 
 class DatabaseHandler {
 
@@ -18,7 +21,8 @@ class DatabaseHandler {
               time TEXT, 
               frequency INTEGER,
               dosage TEXT,
-              counter INTEGER
+              counter INTEGER,
+              state DrugState
               )''');
         //für Kalender wäre noch ein Datum nötig
       },
@@ -32,7 +36,7 @@ class DatabaseHandler {
     try {
      int id = await db.insert(
         'medicaments',
-        drug.toMap(),
+         drug.toMap()..['state'] = DrugState.notTaken.index,
          conflictAlgorithm: ConflictAlgorithm.replace);
      print('Inserted drug with ID: $id');
 
@@ -86,6 +90,7 @@ class DatabaseHandler {
           frequency: maps[i]['frequency'],
           dosage: maps[i]['dosage'],
           counter: maps[i]['counter'],
+          state: DrugState.values[maps[i]['state']],
         );
       });
     }
@@ -151,6 +156,7 @@ class DatabaseHandler {
       frequency: map['frequency'],
       dosage: map['dosage'],
       counter: map['counter'],
+      state: DrugState.values[map['state']],
     );
     return drug;
   }
@@ -196,5 +202,33 @@ class DatabaseHandler {
     }
   }
 
+  Future<void> updateDrugState(int id, DrugState state) async {
+    final db = await initDB();
+    await db.update(
+      'medicaments',
+      {'state': state.index},  // Speichert als Integer
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (state == DrugState.taken || state == DrugState.NotRequired) {
+      await NotificationService.instance.deleteNotification(id);
+    }
+  }
+
+  Future<DrugState?> getDrugState(int id) async {
+    final db = await initDB();
+    final List<Map<String, dynamic>> maps = await db.query(
+      'medicaments',
+      columns: ['state'],
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      int stateIndex = maps.first['state'];
+      return DrugState.values[stateIndex];  // Integer zu Enum konvertieren
+    }
+    return null;
+  }
 }
 
