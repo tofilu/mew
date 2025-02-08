@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mew/Helper/DrugOfDatabase.dart';
 import 'DrugBar.dart';
-import 'Helper/Drug.dart';
 import 'database/DatabaseHandler.dart';
 import 'Helper/DrugOfDatabase.dart';
 
@@ -52,14 +51,14 @@ class TakeDrugBar extends DrugBar {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
-                dbHandler.updateDrugState(drug.name, DrugState.notTaken);
+                dbHandler.updateDrugState(drug.id, DrugState.notTaken);
                 },
                 child: Text("Skip Today"),
               ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
-                dbHandler.updateDrugState(drug., DrugState.taken);
+                dbHandler.updateDrugState(drug.id, DrugState.taken);
                 },
                 child: Text("Yes"),
               ),
