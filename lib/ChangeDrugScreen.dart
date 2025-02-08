@@ -4,6 +4,7 @@ import 'package:mew/Helper/TimeConverter.dart';
 import 'Helper/Drug.dart';
 
 class ChangeDrugScreen extends AddDrugScreen {
+  String nameBefore;
   String medicationName;
   String dosage;
   String time;
@@ -12,6 +13,7 @@ class ChangeDrugScreen extends AddDrugScreen {
 
   ChangeDrugScreen(
       {super.key,
+      required this.nameBefore,
       required this.medicationName,
       required this.dosage,
       required this.time,
@@ -25,6 +27,7 @@ class ChangeDrugScreen extends AddDrugScreen {
 
 class ChangeDrugScreenState extends AddDrugScreenState {
   TimeOfDay? selectedTime;
+
 /*
   @override
   void initState() {
@@ -60,9 +63,10 @@ class ChangeDrugScreenState extends AddDrugScreenState {
       dosage: dosage,
       counter: 0, // Counter bleibt auf 0, falls nicht verwendet
     );
+    int id = widget.dbHandler.getDrugId((widget as ChangeDrugScreen).nameBefore);
     // Hier wird das Medikament mit der richtigen ID aktualisiert
     widget.dbHandler.set(
-      (widget as ChangeDrugScreen).id,
+      id,
       drug.name,
       drug.time,
       drug.frequency,
