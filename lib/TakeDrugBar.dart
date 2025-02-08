@@ -3,6 +3,7 @@ import 'package:mew/Helper/DrugOfDatabase.dart';
 import 'DrugBar.dart';
 import 'database/DatabaseHandler.dart';
 import 'Helper/DrugOfDatabase.dart';
+import '../Helper/DrugState.dart';
 
 class TakeDrugBar extends DrugBar {
   DrugOfDatabase drug;
@@ -51,7 +52,7 @@ class TakeDrugBar extends DrugBar {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
-                dbHandler.updateDrugState(drug.id, DrugState.notTaken);
+                dbHandler.updateDrugState(drug.id, DrugState.NotRequired);
                 },
                 child: Text("Skip Today"),
               ),

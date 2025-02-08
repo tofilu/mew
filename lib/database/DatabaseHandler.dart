@@ -4,13 +4,11 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../Helper/Drug.dart';
 import '../Helper/DrugOfDatabase.dart';
+import '../Helper/DrugState.dart';
 import '../Helper/TimeConverter.dart';
 
-enum DrugState{
-  taken, //0
-  notTaken, //1
-  NotRequired //2
-}
+
+
 class DatabaseHandler {
 
   static Future<Database> initDB() async {
@@ -24,7 +22,7 @@ class DatabaseHandler {
               frequency INTEGER,
               dosage TEXT,
               counter INTEGER,
-              state INTEGER
+              state DrugState
               )''');
         //für Kalender wäre noch ein Datum nötig
       },
@@ -158,6 +156,7 @@ class DatabaseHandler {
       frequency: map['frequency'],
       dosage: map['dosage'],
       counter: map['counter'],
+      state: DrugState.values[map['state']],
     );
     return drug;
   }
@@ -211,6 +210,9 @@ class DatabaseHandler {
       where: 'id = ?',
       whereArgs: [id],
     );
+    if (state == DrugState.taken || state == DrugState.NotRequired) {
+      await NotificationService.instance.deleteNotification(id);
+    }
   }
 
   Future<DrugState?> getDrugState(int id) async {

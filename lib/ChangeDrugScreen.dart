@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mew/AddDrugScreen.dart';
 import 'package:mew/Helper/TimeConverter.dart';
 import 'Helper/Drug.dart';
+import '../Helper/DrugState.dart';
 
 class ChangeDrugScreen extends AddDrugScreen {
   String nameBefore;
@@ -62,6 +63,8 @@ class ChangeDrugScreenState extends AddDrugScreenState {
       frequency: frequency,
       dosage: dosage,
       counter: 0, // Counter bleibt auf 0, falls nicht verwendet
+      state: DrugState.notTaken,
+
     );
     int id = await widget.dbHandler.getDrugId((widget as ChangeDrugScreen).nameBefore);
     // Hier wird das Medikament mit der richtigen ID aktualisiert
