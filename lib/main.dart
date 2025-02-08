@@ -13,8 +13,7 @@ void main() async {
 
   await NotificationService.instance.initNotification();
   await AndroidAlarmManager.initialize();
-
- // await scheduleDailyCheck();
+  await AlarmMidnight.scheduleMidnightAlarm();
 
   runApp(const MewApp());
 }

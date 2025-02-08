@@ -186,7 +186,7 @@ class DatabaseHandler {
           where: 'id = ?',
           whereArgs: [drug.id],
         );
-        print(drug.counter);
+        print( "drug.counter ${drug.counter}");
     }
   }
 
