@@ -7,10 +7,10 @@ class TextFieldTheme {
       labelStyle: const TextStyle().copyWith(color: Colors.white, fontWeight: FontWeight.bold),
       hintStyle: const TextStyle().copyWith(color: Colors.white54),
       errorStyle: const TextStyle().copyWith(),
-      floatingLabelStyle: const TextStyle().copyWith(color: Colors.teal[900]),
+      floatingLabelStyle: const TextStyle().copyWith(color: Colors.white),
 
       filled: true,
-      fillColor: Colors.teal,
+      fillColor: Colors.blue[200],
 
       border: OutlineInputBorder(
           borderSide: BorderSide.none,
@@ -26,10 +26,10 @@ class TextFieldTheme {
       labelStyle: const TextStyle().copyWith(color: Colors.white, fontWeight: FontWeight.bold),
       hintStyle: const TextStyle().copyWith(color: Colors.white54),
       errorStyle: const TextStyle().copyWith(),
-      floatingLabelStyle: const TextStyle().copyWith(color: Colors.teal[900]),
+      floatingLabelStyle: const TextStyle().copyWith(color: Colors.white),
 
       filled: true,
-      fillColor: Colors.teal,
+      fillColor: Colors.blueGrey[300],
 
       border: OutlineInputBorder(
         borderSide: BorderSide.none,

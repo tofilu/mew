@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
             currentPageIndex = index;
           });
         },
-        indicatorColor: Colors.blue,
+        indicatorColor: Colors.blue[200],
         selectedIndex: currentPageIndex,
         destinations: screenIcons,
       ),

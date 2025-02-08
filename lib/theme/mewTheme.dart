@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mew/theme/textFieldTheme.dart';
 import 'package:mew/theme/elevatedButtonTheme.dart';
+import 'package:mew/theme/cardTheme.dart';
 
 class MewTheme {
   MewTheme._();
@@ -12,10 +13,16 @@ class MewTheme {
     ),
     appBarTheme: AppBarTheme(
       color: Colors.blue[200],
-      titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 36, color: Colors.black),
+      titleTextStyle: TextStyle(fontWeight: FontWeight.w900, fontSize: 50, color: Colors.white),
+      toolbarHeight: 85,
+      titleSpacing: 40,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15.0), bottomRight: Radius.circular(15.0))
+      )
     ),
     inputDecorationTheme: TextFieldTheme.textFieldLight,
     elevatedButtonTheme: MewElevatedButtonTheme.lightElevatedButtonTheme,
+    cardTheme: MewCardTheme.lightCardTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -24,8 +31,13 @@ class MewTheme {
       surface: Colors.grey.shade900,
     ),
     appBarTheme: AppBarTheme(
-      color: Colors.blue[800],
-      titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 36, color: Colors.white),
+        color: Colors.blueGrey[300],
+        titleTextStyle: TextStyle(fontWeight: FontWeight.w900, fontSize: 50, color: Colors.white),
+        toolbarHeight: 85,
+        titleSpacing: 40,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15.0), bottomRight: Radius.circular(15.0))
+        )
     ),
     textTheme: TextTheme(
       bodyMedium: TextStyle().copyWith(fontWeight: FontWeight.w900),
@@ -33,6 +45,7 @@ class MewTheme {
     ),
     inputDecorationTheme: TextFieldTheme.textFieldDark,
     elevatedButtonTheme: MewElevatedButtonTheme.darkElevatedButtonTheme,
+    cardTheme: MewCardTheme.darkCardTheme,
   );
 }
 

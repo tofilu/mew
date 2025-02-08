@@ -82,7 +82,11 @@ class AddDrugScreenState extends State<AddDrugScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Medication'),
+        elevation: 0,
+        title: Text("New Medication"),
+        titleTextStyle: TextStyle(fontWeight: FontWeight.w900, fontSize: 50, color: Colors.blueGrey[100]),
+        backgroundColor: Colors.transparent,
+        toolbarHeight: 120,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

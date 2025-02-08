@@ -10,7 +10,6 @@ abstract class DrugBar extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget card = Card(
       elevation: 5.0,
-      color: Colors.grey,
       shape: RoundedRectangleBorder(
         side: BorderSide.none,
         borderRadius: BorderRadius.circular(15.0),
@@ -31,7 +30,7 @@ abstract class DrugBar extends StatelessWidget {
         background: Container(
           alignment: Alignment.centerRight,
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          color: Colors.red, // Hintergrundfarbe beim Wischen
+          color: Colors.red[300], // Hintergrundfarbe beim Wischen
           child: Icon(Icons.delete, color: Colors.white),
         ),
         onDismissed: (direction) async {

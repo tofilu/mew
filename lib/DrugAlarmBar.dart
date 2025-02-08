@@ -19,7 +19,7 @@ class DrugAlarmBar extends DrugBar {
       Text(drug.name,
           textAlign: TextAlign.left,
           style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold))
+              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold))
     ]);
   }
 

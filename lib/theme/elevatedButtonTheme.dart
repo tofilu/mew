@@ -5,8 +5,9 @@ class MewElevatedButtonTheme {
 
   static var lightElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.blue[200],
       foregroundColor: Colors.white,
+      iconColor: Colors.white,
       textStyle: TextStyle(
           fontWeight: FontWeight.w900,
           fontSize: 20
@@ -16,8 +17,9 @@ class MewElevatedButtonTheme {
 
   static var darkElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.blueGrey[300],
         foregroundColor: Colors.white,
+        iconColor: Colors.white,
         textStyle: TextStyle(
             fontWeight: FontWeight.w900,
             fontSize: 20
