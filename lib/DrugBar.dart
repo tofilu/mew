@@ -4,6 +4,7 @@ import 'database/DatabaseHandler.dart';
 
 abstract class DrugBar extends StatelessWidget {
   late Drug drug;
+  late DatabaseHandler databaseHandler;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,8 @@ abstract class DrugBar extends StatelessWidget {
           child: Icon(Icons.delete, color: Colors.white),
         ),
         onDismissed: (direction) {
-          
+          int drugId = databaseHandler.getDrugId(drug.name);
+          databaseHandler.delete(drugId);
         },
         child: card,
       );
