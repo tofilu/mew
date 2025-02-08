@@ -34,8 +34,9 @@ abstract class DrugBar extends StatelessWidget {
           color: Colors.red, // Hintergrundfarbe beim Wischen
           child: Icon(Icons.delete, color: Colors.white),
         ),
-        onDismissed: (direction) {
-          int drugId = databaseHandler.getDrugId(drug.name);
+        onDismissed: (direction) async {
+          databaseHandler = DatabaseHandler();
+          int drugId = await databaseHandler.getDrugId(drug.name);
           databaseHandler.delete(drugId);
         },
         child: card,
@@ -51,11 +52,4 @@ abstract class DrugBar extends StatelessWidget {
   }
 
   Widget buildBar(BuildContext context);
-
-  /// Wird aufgerufen, wenn das Widget durch Wischen entfernt wird
-  void _onDismissed(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("${drug.name} removed")),
-    );
-  }
 }

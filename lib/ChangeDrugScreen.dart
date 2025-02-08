@@ -63,7 +63,7 @@ class ChangeDrugScreenState extends AddDrugScreenState {
       dosage: dosage,
       counter: 0, // Counter bleibt auf 0, falls nicht verwendet
     );
-    int id = widget.dbHandler.getDrugId((widget as ChangeDrugScreen).nameBefore);
+    int id = await widget.dbHandler.getDrugId((widget as ChangeDrugScreen).nameBefore);
     // Hier wird das Medikament mit der richtigen ID aktualisiert
     widget.dbHandler.set(
       id,
