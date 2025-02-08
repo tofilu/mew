@@ -8,7 +8,6 @@ class ChangeDrugScreen extends AddDrugScreen {
   String dosage;
   String time;
   int frequency;
-  int id = 0;
   late TimeOfDay toD;
 
   ChangeDrugScreen(

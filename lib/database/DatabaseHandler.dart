@@ -181,4 +181,20 @@ class DatabaseHandler {
         );
     }
   }
+
+  getDrugId(String name) async {
+    final db = await initDB();
+    final List<Map<String, dynamic>> maps = await db.query(
+      'medicaments',
+      where: 'name = ?',
+      whereArgs: [name],
+    );
+    if (maps.isNotEmpty) {
+      return maps.first['id'];
+    } else {
+      throw Exception('Drug not found');
+    }
+  }
+
 }
+
