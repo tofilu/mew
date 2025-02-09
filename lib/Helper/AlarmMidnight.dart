@@ -2,7 +2,6 @@ import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:mew/database/DatabaseHandler.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'NotificationService.dart';
 
 @pragma('vm:entry-point')
 Future<void> _checkMidnight() async {
