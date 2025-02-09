@@ -13,7 +13,9 @@ void main() async {
 
   await NotificationService.instance.initNotification();
   await AndroidAlarmManager.initialize();
-  await AlarmMidnight.scheduleMidnightAlarm();
+
+  await AlarmMidnight.scheduleMidnightAlarm(0);
+
 
   runApp(const MewApp());
 }
@@ -23,7 +25,7 @@ class MewApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DatabaseHandler().deleteDatabaseFile('medicament_database.db');
+    //DatabaseHandler().deleteDatabaseFile('medicament_database.db');
     return MaterialApp(
         theme: MewTheme.lightTheme,
         darkTheme: MewTheme.darkTheme,
