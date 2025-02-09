@@ -49,6 +49,9 @@ class TakeDrugBar extends DrugBar {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red[200],
+                ),
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
                 dbHandler.updateDrugState(drug.id, DrugState.NotRequired);
@@ -56,6 +59,9 @@ class TakeDrugBar extends DrugBar {
                 child: Text("Skip Today"),
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green[200],
+                ),
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
                 dbHandler.updateDrugState(drug.id, DrugState.taken);

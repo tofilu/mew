@@ -25,7 +25,7 @@ abstract class DrugBar extends StatelessWidget {
     // Falls die Karte als dismissible sein soll, umschließen wir sie mit `Dismissible`
     if (isDismissibleCard()) {
       return Dismissible(
-        key: Key(drug.name), // Eindeutiger Key für Dismissible
+        key: Key(drug.id.toString()), // Eindeutiger Key für Dismissible
         direction: DismissDirection.endToStart, // Wischen von rechts nach links erlaubt
         background: Container(
           alignment: Alignment.centerRight,
