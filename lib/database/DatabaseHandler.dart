@@ -24,7 +24,6 @@ class DatabaseHandler {
               counter INTEGER,
               state DrugState
               )''');
-        //für Kalender wäre noch ein Datum nötig
       },
       version: 1,
     );
