@@ -46,7 +46,9 @@ class _HomeState extends State<Home> {
             currentPageIndex = index;
           });
         },
-        indicatorColor: Colors.blue[200],
+        indicatorColor: Theme.of(context).brightness == Brightness.dark
+            ? Colors.blueGrey[300] // Dunklere Farbe für Dark Mode
+            : Colors.blue[200], // Helle Farbe für Light Mode
         selectedIndex: currentPageIndex,
         destinations: screenIcons,
       ),
