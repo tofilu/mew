@@ -3,11 +3,8 @@ import 'package:mew/Helper/NotificationService.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../Helper/Drug.dart';
-import '../Helper/DrugOfDatabase.dart';
 import '../Helper/DrugState.dart';
 import '../Helper/TimeConverter.dart';
-
-
 
 class DatabaseHandler {
 

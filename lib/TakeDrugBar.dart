@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mew/Helper/DrugOfDatabase.dart';
 import 'DrugBar.dart';
 import 'database/DatabaseHandler.dart';
-import 'Helper/DrugOfDatabase.dart';
 import '../Helper/DrugState.dart';
 
 class TakeDrugBar extends DrugBar {

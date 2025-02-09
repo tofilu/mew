@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mew/ChangeDrugScreen.dart';
 import 'package:mew/Helper/DrugOfDatabase.dart';
 import 'DrugBar.dart';
-import 'Helper/Drug.dart';
 
 class DrugAlarmBar extends DrugBar {
   final DrugOfDatabase drug;

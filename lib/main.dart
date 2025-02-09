@@ -4,8 +4,6 @@ import 'package:mew/theme/mewTheme.dart';
 import 'Helper/NotificationService.dart';
 import 'Helper/AlarmMidnight.dart';
 import 'Home.dart';
-import 'database/DatabaseHandler.dart';
-
 
 void main() async {
   // Ensure that plugin services are initialized so that `AndroidAlarmManager` is registered

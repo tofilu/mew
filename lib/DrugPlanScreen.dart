@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mew/Helper/DrugOfDatabase.dart';
-
 import 'DrugAlarmBar.dart';
-import 'Helper/Drug.dart';
 import 'ListScreen.dart';
 
 class DrugPlanScreen extends ListScreen {

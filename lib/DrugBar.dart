@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mew/Helper/DrugOfDatabase.dart';
-import 'Helper/Drug.dart';
 import 'database/DatabaseHandler.dart';
 
 abstract class DrugBar extends StatelessWidget {
