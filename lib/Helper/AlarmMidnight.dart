@@ -9,7 +9,7 @@ tz.initializeTimeZones();
 final DatabaseHandler dbHandler = DatabaseHandler();
 dbHandler.countOneUpAll();
 
-final DateTime nextAlarm = DateTime.now().add(Duration(minutes: 5));
+final DateTime nextAlarm = DateTime.now().add(Duration(days: 1));
 
 await AndroidAlarmManager.oneShotAt(
   nextAlarm,
@@ -24,9 +24,8 @@ print('Scheduled midnight alarm');
 
 
 class AlarmMidnight {
-  bool isAlarmScheduled = false;
 
-  static Future<void> scheduleMidnightAlarm(int n) async {
+  static Future<void> scheduleMidnightAlarm() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     if (sharedPreferences.containsKey('midnightAlarmScheduled')) {
       return;
@@ -34,7 +33,7 @@ class AlarmMidnight {
     sharedPreferences.setBool('midnightAlarmScheduled', true);
 
     await AndroidAlarmManager.oneShotAt(
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 13 ,45, 30),
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1, 0 ,0, 30),
       69,
       _checkMidnight,
       exact: true,

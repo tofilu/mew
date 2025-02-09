@@ -171,7 +171,8 @@ class DatabaseHandler {
   countOneUpAll() async {
     final db = await initDB();
     List<DrugOfDatabase> drugs = await getAll();
-    for (DrugOfDatabase drug in drugs) {
+    if (drugs.isNotEmpty) {
+      for (DrugOfDatabase drug in drugs) {
         if (drug.counter < drug.frequency - 1) {
           drug.counter = drug.counter + 1;
         }
@@ -188,6 +189,7 @@ class DatabaseHandler {
           whereArgs: [drug.id],
         );
         print( "drug.counter ${drug.counter}");
+      }
     }
   }
 
