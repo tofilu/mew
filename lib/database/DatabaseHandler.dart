@@ -39,8 +39,8 @@ class DatabaseHandler {
      DateTime dateTime = TimeConverter.parseTimeToDateTime(drug.time);
      await NotificationService.instance.scheduleNotification(
        id: id,
-       title: 'Scheduled Notification',
-       body: 'Scheduled Notification for: $dateTime',
+       title: 'Nimm ${drug.name}!',
+       body: 'Es ist Zeit ${drug.name} zu nehmen! Du musst ${drug.dosage} nehmen.',
        scheduleTime: dateTime,
      );
     } catch (e) {
@@ -106,8 +106,8 @@ class DatabaseHandler {
     DateTime dateTime = TimeConverter.parseTimeToDateTime(time);
     await NotificationService.instance.scheduleNotification(
       id: id,
-      title: 'Scheduled Notification',
-      body: 'Scheduled Notification for: $dateTime',
+      title: 'Nimm $name!',
+      body: 'Es ist Zeit $name zu nehmen! Du musst $dosage nehmen.',
       scheduleTime: dateTime,
     );
 
@@ -223,8 +223,8 @@ class DatabaseHandler {
       DateTime dateTime = TimeConverter.parseTimeToDateTime(drug.time);
       await NotificationService.instance.scheduleNotification(
         id: id,
-        title: 'Scheduled Notification',
-        body: 'Scheduled Notification for: $dateTime',
+        title: 'Nimm ${drug.name}!',
+        body: 'Es ist Zeit ${drug.name} zu nehmen! Du musst ${drug.dosage} nehmen.',
         scheduleTime: dateTime,
       );
     }
