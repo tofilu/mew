@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mew/Helper/DrugOfDatabase.dart';
 import 'DrugBar.dart';
-import 'database/DatabaseHandler.dart';
+import '../Helper/DrugService.dart';
 import '../Helper/DrugState.dart';
 
 class TakeDrugBar extends DrugBar {
   DrugOfDatabase drug;
-  final DatabaseHandler dbHandler = DatabaseHandler();
+  final drugService = DrugService();
 
   TakeDrugBar({required this.drug}) {
     this.drug = drug;
@@ -54,7 +54,7 @@ class TakeDrugBar extends DrugBar {
                 ),
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
-                dbHandler.updateDrugState(drug.id, DrugState.NotRequired);
+                drugService.updateState(drug.id, DrugState.NotRequired);
                 },
                 child: Text("Skip Today"),
               ),
@@ -64,7 +64,7 @@ class TakeDrugBar extends DrugBar {
                 ),
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
-                dbHandler.updateDrugState(drug.id, DrugState.taken);
+                drugService.updateState(drug.id, DrugState.taken);
                 },
                 child: Text("Yes"),
               ),

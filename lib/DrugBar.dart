@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mew/Helper/DrugOfDatabase.dart';
-import 'database/DatabaseHandler.dart';
+import '../Helper/DrugService.dart';
 
 abstract class DrugBar extends StatelessWidget {
   late DrugOfDatabase drug;
-  late DatabaseHandler databaseHandler;
+  late DrugService drugService = DrugService();
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +34,8 @@ abstract class DrugBar extends StatelessWidget {
           child: Icon(Icons.delete, color: Colors.white),
         ),
         onDismissed: (direction) async {
-          databaseHandler = DatabaseHandler();
-          int drugId = await databaseHandler.getDrugId(drug.name);
-          databaseHandler.delete(drugId);
+          int drugId = await drugService.getDrugId(drug.name);
+          drugService.delete(drugId);
         },
         child: card,
       );

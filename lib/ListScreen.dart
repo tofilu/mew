@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mew/Helper/DrugOfDatabase.dart';
 import 'TakeDrugBar.dart';
-import 'database/DatabaseHandler.dart';
+import '../Helper/DrugService.dart';
 
 class ListScreen extends StatelessWidget {
-  final DatabaseHandler dbHandler = DatabaseHandler();
+  final drugService = DrugService();
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class ListScreen extends StatelessWidget {
 
   FutureBuilder createFutureBuilder() {
     return FutureBuilder(
-        future: dbHandler.getAll(),
+        future: drugService.getAllDrugs(),
         builder: (context, snapshot) {
           //if future is completed and no error occurred, create an alarmbar
           //for every entry and display in listview

@@ -29,13 +29,6 @@ class ChangeDrugScreen extends AddDrugScreen {
 class ChangeDrugScreenState extends AddDrugScreenState {
   TimeOfDay? selectedTime;
 
-/*
-  @override
-  void initState() {
-    super.initState();
-    selectedTime = (widget as ChangeDrugScreen).toD;
-  }
-*/
   // Methode zum Speichern des geänderten Medikaments
   @override
   Future<void> saveMedication() async {
@@ -64,11 +57,11 @@ class ChangeDrugScreenState extends AddDrugScreenState {
       dosage: dosage,
       counter: 0, // Counter bleibt auf 0, falls nicht verwendet
       state: DrugState.notTaken,
-
     );
-    int id = await widget.dbHandler.getDrugId((widget as ChangeDrugScreen).nameBefore);
+
+    int id = await widget.drugService.getDrugId((widget as ChangeDrugScreen).nameBefore);
     // Hier wird das Medikament mit der richtigen ID aktualisiert
-    widget.dbHandler.set(
+    widget.drugService.update(
       id,
       drug.name,
       drug.time,

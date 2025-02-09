@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'Helper/Drug.dart';
 import 'Home.dart';
-import 'database/DatabaseHandler.dart';
 import '../Helper/DrugState.dart';
+import '../Helper/DrugService.dart';
 
 class AddDrugScreen extends StatefulWidget {
-  final DatabaseHandler dbHandler = DatabaseHandler();
+  final drugService = DrugService();
 
   AddDrugScreen({super.key});
 
@@ -36,7 +36,7 @@ class AddDrugScreenState extends State<AddDrugScreen> {
       counter: 0,
       state: DrugState.notTaken,
     );
-    addToDatabase(drug);
+    widget.drugService.addDrug(drug);
   }
 
   bool checkInput() {
@@ -53,19 +53,11 @@ class AddDrugScreenState extends State<AddDrugScreen> {
     if (frequency == null) {
       validInput = false;
     }
- /*   final int? prescriptionTime = int.tryParse(presciptionTimeController.text);
-    if (prescriptionTime == null) {
-      validInput = false;
-    }
-  */
+
     if (selectedTime == null) {
       validInput = false;
     }
     return validInput;
-  }
-
-  void addToDatabase(Drug drug) {
-    widget.dbHandler.addToDataBase(drug);
   }
 
   void selectTime(BuildContext context) async {
@@ -140,17 +132,7 @@ class AddDrugScreenState extends State<AddDrugScreen> {
               ),
               keyboardType: TextInputType.number,
             ),
-/*            SizedBox(height: 24),
-            TextField(
-              controller: presciptionTimeController,
-              decoration: InputDecoration(
-                labelText: 'Presciption time',
-                hintText: 'Enter your prescription time',
-              ),
-              keyboardType: TextInputType.number,
-            ),
 
- */
             SizedBox(height: 24),
             Center(
               child: ElevatedButton(
