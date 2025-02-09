@@ -15,7 +15,7 @@ void main() async {
   await AndroidAlarmManager.initialize();
 
   await AlarmMidnight.scheduleMidnightAlarm(0);
-
+  print("in der main");
 
   runApp(const MewApp());
 }
