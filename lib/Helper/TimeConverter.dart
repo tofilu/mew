@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TimeConverter {
 
   static TimeOfDay convertStringToTimeOfDay(String time) {
-    List<int> timeList = getTime(time);
+    List<int> timeList = _getTime(time);
 
     return TimeOfDay(hour: timeList.first, minute: timeList.last);
   }
@@ -27,7 +27,7 @@ class TimeConverter {
   }
 
   static DateTime parseTimeToDateTime(String time) {
-    List<int> timeList = getTime(time);
+    List<int> timeList = _getTime(time);
     int hour = timeList.first;
     int minute = timeList.last;
 
@@ -42,7 +42,7 @@ class TimeConverter {
     );
   }
 
-  static List<int> getTime(String time){
+  static List<int> _getTime(String time){
     int hour = 0;
     int minute = 0;
 

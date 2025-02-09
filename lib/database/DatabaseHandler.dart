@@ -46,10 +46,10 @@ class DatabaseHandler {
     } catch (e) {
       print(e);
     }
-    printAll();
+    _printAll();
   }
 
-  printAll() async {
+  _printAll() async {
     List<Drug> drugs = await getAll();
     for (Drug drug in drugs) {
       print(drug.toString());
@@ -63,7 +63,7 @@ class DatabaseHandler {
             .query('medicaments', columns: null, where: 'id = ?', whereArgs: [id]);
 
         if (maps.isNotEmpty) {
-          return makeDrugOfDatabase(maps.first);
+          return _makeDrugOfDatabase(maps.first);
         } else {
           throw Exception('Drug not found');
         }
@@ -79,7 +79,7 @@ class DatabaseHandler {
     final List<Map<String, dynamic>> maps = await db.query('medicaments');
     if (maps.isNotEmpty) {
       return List.generate(maps.length, (i) {
-        return makeDrugOfDatabase(maps[i]);
+        return _makeDrugOfDatabase(maps[i]);
       });
     }
     return [];
@@ -131,13 +131,13 @@ class DatabaseHandler {
       whereArgs: ['%${name.toLowerCase()}%'],
     );
     if (maps.isNotEmpty) {
-      return makeDrug(maps.first);
+      return _makeDrug(maps.first);
     } else {
       throw Exception('Drug not found');
     }
   }
 
-  Drug makeDrug(Map map) {
+  Drug _makeDrug(Map map) {
     Drug drug = Drug(
       name: map['name'],
       time: map['time'],
@@ -149,7 +149,7 @@ class DatabaseHandler {
     return drug;
   }
 
-  DrugOfDatabase makeDrugOfDatabase(Map map) {
+  DrugOfDatabase _makeDrugOfDatabase(Map map) {
     DrugOfDatabase drug = DrugOfDatabase(
       id: map['id'],
       name: map['name'],
@@ -168,7 +168,7 @@ class DatabaseHandler {
     await deleteDatabase(path);
   }
 
-  countOneUpAll() async {
+  Future<void> countOneUpAll() async {
     final db = await initDB();
     List<DrugOfDatabase> drugs = await getAll();
     if (drugs.isNotEmpty) {
@@ -230,20 +230,5 @@ class DatabaseHandler {
     }
   }
 
-  Future<DrugState?> getDrugState(int id) async {
-    final db = await initDB();
-    final List<Map<String, dynamic>> maps = await db.query(
-      'medicaments',
-      columns: ['state'],
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-
-    if (maps.isNotEmpty) {
-      int stateIndex = maps.first['state'];
-      return DrugState.values[stateIndex];  // Integer zu Enum konvertieren
-    }
-    return null;
-  }
 }
 
