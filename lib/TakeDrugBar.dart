@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mew/Helper/DrugOfDatabase.dart';
 import 'DrugBar.dart';
 import 'database/DatabaseHandler.dart';
-import 'Helper/DrugOfDatabase.dart';
 import '../Helper/DrugState.dart';
 
 class TakeDrugBar extends DrugBar {
@@ -50,6 +49,9 @@ class TakeDrugBar extends DrugBar {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red[200],
+                ),
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
                 dbHandler.updateDrugState(drug.id, DrugState.NotRequired);
@@ -57,6 +59,9 @@ class TakeDrugBar extends DrugBar {
                 child: Text("Skip Today"),
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green[200],
+                ),
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
                 dbHandler.updateDrugState(drug.id, DrugState.taken);

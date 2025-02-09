@@ -84,9 +84,14 @@ class AddDrugScreenState extends State<AddDrugScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
         title: Text("New Medication"),
-        titleTextStyle: TextStyle(fontWeight: FontWeight.w900, fontSize: 50, color: Colors.blueGrey[100]),
+        titleTextStyle: TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: 50,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.blueGrey[200] // Farbe im Dark Mode
+                : Colors.blue[200], // Farbe im Light Mode
+        ),
         backgroundColor: Colors.transparent,
         toolbarHeight: 120,
       ),

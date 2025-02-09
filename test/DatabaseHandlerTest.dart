@@ -2,8 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mew/Helper/Drug.dart';
 import 'package:mew/database/DatabaseHandler.dart';
 import 'package:mew/Helper/DrugState.dart';
-
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() {
   late DatabaseHandler dbHandler;
@@ -104,7 +104,7 @@ void main() {
     );
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
-
+    tz.initializeTimeZones();
     final drugId = await dbHandler.getDrugId(drug.name);
     //Medikament aktualisieren
     await dbHandler.set(drugId, 'Ibu', '09:00', 1, '1 Tablette',0);
@@ -266,5 +266,4 @@ void main() {
     await dbHandler.delete(999); // ID, die nicht existiert
     // Es sollte keine Fehler werfen und nichts tun
   });
-  
 }

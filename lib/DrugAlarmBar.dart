@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mew/ChangeDrugScreen.dart';
 import 'package:mew/Helper/DrugOfDatabase.dart';
 import 'DrugBar.dart';
-import 'Helper/Drug.dart';
 
 class DrugAlarmBar extends DrugBar {
   final DrugOfDatabase drug;
@@ -25,6 +24,7 @@ class DrugAlarmBar extends DrugBar {
   }
 
   Row _buildDrugAlarmInformation() {
+    print(drug.counter);
     return Row(children: [
       Column(children: [
         Padding(
@@ -34,12 +34,22 @@ class DrugAlarmBar extends DrugBar {
       Column(children: [
         if (drug.frequency == 1)
           Padding(
-              padding: const EdgeInsets.only(right: 5.0),
+              padding: const EdgeInsets.only(right: 15.0),
               child: Text("every day"))
         else
         Padding(
-            padding: const EdgeInsets.only(right: 5.0),
+            padding: const EdgeInsets.only(right: 15.0),
             child: Text("every " + drug.frequency.toString() + " days"))
+      ]),
+      Column(children: [
+        if (drug.frequency - drug.counter == 1)
+          Padding(
+              padding: const EdgeInsets.only(right: 5.0),
+              child: Text("next time: tomorrow"))
+        else
+        Padding(
+            padding: const EdgeInsets.only(right: 5.0),
+            child: Text("next time: ${drug.frequency - drug.counter} days"))
       ])
     ]);
   }

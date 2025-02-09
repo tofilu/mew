@@ -49,7 +49,7 @@ void main() {
   // Tests für den NotificationService
   late NotificationService notificationService;
   setUp(() {
-    notificationService = NotificationService();
+    notificationService = NotificationService.instance;
   });
 
   test('initialize notifications', () async {
@@ -85,9 +85,9 @@ void main() {
           'payload': '',
           'platformSpecifics': <String, Object?>{
             'icon': null,
-            'channelId': 'channelId',
-            'channelName': 'channelName',
-            'channelDescription': 'Channel description',
+            'channelId': '1',
+            'channelName': 'MEW',
+            'channelDescription': 'MEW App',
             'channelShowBadge': true,
             'channelAction': 0,
             'importance': 5,
