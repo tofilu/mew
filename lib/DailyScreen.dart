@@ -15,7 +15,7 @@ class DailyScreen extends ListScreen {
   makeDrugBars(List<DrugOfDatabase> drugs) {
     List<TakeDrugBar> alarmBars = [];
     for (DrugOfDatabase drug in drugs) {
-      if (drug.state == TakeTodayState()) {
+      if (drug.state is TakeTodayState) {
         TakeDrugBar bar = TakeDrugBar(drug: drug);
         alarmBars.add(bar);
       print("DailyScreen: makeDrugBars: drug: ${drug.name}");

@@ -37,7 +37,7 @@ class DatabaseHandler {
     try {
      int id = await db.insert(
         'medicaments',
-         drug.toMap()..['state'] = TakeTodayState(),
+         drug.toMap()..['state'] = "TakeTodayState()",
          conflictAlgorithm: ConflictAlgorithm.replace);
      print('Inserted drug with ID: $id');
 
@@ -232,11 +232,11 @@ class DatabaseHandler {
     final db = await initDB();
     await db.update(
       'medicaments',
-      {'state': state},  // Speichert als Integer
+      {'state': state.toString()},
       where: 'id = ?',
       whereArgs: [id],
     );
-    if (state == TakenState || state == SkippedState) {
+    if (state is TakenState || state is SkippedState) {
       await NotificationService.instance.deleteNotification(id);
     }
     /*
