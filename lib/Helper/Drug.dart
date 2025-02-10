@@ -13,7 +13,7 @@ class Drug {
   int frequency;
   String dosage;
   int counter;
-  DrugState state;
+  DrugStateBase state;
 
   Drug(
       {
@@ -32,33 +32,10 @@ class Drug {
       'frequency': frequency,
       'dosage': dosage,
       'counter': counter,
-      'state': state.index,
+      'state': state,
     };
   }
 
-  void changeState(DatabaseHandler dbHandler, DrugState newState) {
-    DrugStateBase state = _getStateInstance(newState);
-    state.handleStateChange(dbHandler, DrugOfDatabase(
-      id: name.hashCode, // Kein echtes DB-Id, nur für Demonstration
-      name: name,
-      time: time,
-      frequency: frequency,
-      dosage: dosage,
-      counter: counter,
-      state: newState,
-    ));
-  }
 
-  static DrugStateBase _getStateInstance(DrugState state) {
-    switch (state) {
-      case DrugState.notTaken:
-        return NotTakenState();
-      case DrugState.taken:
-        return TakenState();
-      case DrugState.NotRequired:
-        return NotRequiredState();
-      default:
-        return NotTakenState();
-    }
-  }
+
 }

@@ -1,5 +1,6 @@
 import 'package:mew/Helper/DrugOfDatabase.dart';
 import 'package:mew/Helper/NotificationService.dart';
+import 'package:mew/states/DrugStateBase.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../Helper/Drug.dart';
@@ -92,7 +93,7 @@ class DatabaseHandler {
           frequency: maps[i]['frequency'],
           dosage: maps[i]['dosage'],
           counter: maps[i]['counter'],
-          state: DrugState.values[maps[i]['state']],
+          state: maps[i]['state'],
         );
       });
     }
@@ -158,7 +159,7 @@ class DatabaseHandler {
       frequency: map['frequency'],
       dosage: map['dosage'],
       counter: map['counter'],
-      state: DrugState.values[map['state']],
+      state: map['state'],
     );
     return drug;
   }
@@ -232,16 +233,16 @@ class DatabaseHandler {
     }
     return null;
   }
-  Future<void> updateDrugState(int id, DrugState state) async {
+  Future<void> updateDrugState(int id, DrugStateBase state) async {
     final db = await initDB();
     await db.update(
       'medicaments',
-      {'state': state.index},  // Speichert als Integer
+      {'state': state},
       where: 'id = ?',
       whereArgs: [id],
     );
 
-    Drug drug = await getDrug(id);
+    DrugOfDatabase drug = await getDrug(id);
     drug.changeState(this, state);
   }
   Future<void> updateCounter(int id, int newCounter) async {
@@ -260,9 +261,9 @@ class DatabaseHandler {
     if (drugs.isNotEmpty) {
       for (DrugOfDatabase drug in drugs) {
         if (drug.state is NotTakenState || drug.state is TakenState) {
-          drug.changeState(this, DrugState.taken);
+          drug.changeState(this, TakenState());
         } else {
-          drug.changeState(this, DrugState.notTaken);
+          drug.changeState(this, NotTakenState());
         }
       }
     }

@@ -32,21 +32,7 @@ class DrugOfDatabase extends Drug{
     };
   }
   @override
-  void changeState(DatabaseHandler dbHandler, DrugState newState) {
-    DrugStateBase state = _getStateInstance(newState);
+  void changeState(DatabaseHandler dbHandler, DrugStateBase state) {
     state.handleStateChange(dbHandler, this);
-  }
-
-  static DrugStateBase _getStateInstance(DrugState state) {
-    switch (state) {
-      case DrugState.notTaken:
-        return NotTakenState();
-      case DrugState.taken:
-        return TakenState();
-      case DrugState.NotRequired:
-        return NotRequiredState();
-      default:
-        return NotTakenState();
-    }
   }
 }

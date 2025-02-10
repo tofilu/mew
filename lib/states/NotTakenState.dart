@@ -4,14 +4,8 @@ import '../database/DatabaseHandler.dart';
 import 'DrugStateBase.dart';
 
 class NotTakenState extends DrugStateBase {
- /* @override
-  void handleStateChange(DatabaseHandler dbHandler, int drugId) {
-    dbHandler.updateDrugState(drugId, DrugState.notTaken);
-  }
-
-  */
   @override
   void handleStateChange(DatabaseHandler dbHandler, DrugOfDatabase drug) {
-    dbHandler.updateDrugState(drug.id, DrugState.notTaken);
+    dbHandler.updateDrugState(drug.id, drug.state);
   }
 }

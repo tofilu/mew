@@ -30,6 +30,7 @@ void main() {
       frequency: 1, //wie oft einnehmen? mehrmals am Tag, ....
       dosage: '1 Tablette',
       counter: 0,
+      state : DrugState.notTaken,
     );
 
     //Medikament zur Datenbank hinzufügen
