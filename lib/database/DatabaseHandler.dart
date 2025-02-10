@@ -24,7 +24,7 @@ class DatabaseHandler {
               frequency INTEGER,
               dosage TEXT,
               counter INTEGER,
-              state DrugState
+              state TEXT
               )''');
       },
       version: 1,
@@ -149,7 +149,7 @@ class DatabaseHandler {
       frequency: map['frequency'],
       dosage: map['dosage'],
       counter: map['counter'],
-      state: [map['state']],
+      state: getStateFromString(map['state']),
     );
     return drug;
   }
@@ -254,6 +254,8 @@ class DatabaseHandler {
 
      */
   }
+
+
 
 }
 

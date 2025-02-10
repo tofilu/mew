@@ -25,7 +25,7 @@ class Drug {
       'frequency': frequency,
       'dosage': dosage,
       'counter': counter,
-      'state': state,//????
+      'state': state.toString(),
     };
   }
 }
