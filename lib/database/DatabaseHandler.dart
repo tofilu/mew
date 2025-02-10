@@ -37,7 +37,7 @@ class DatabaseHandler {
     try {
      int id = await db.insert(
         'medicaments',
-         drug.toMap()..['state'] = "TakeTodayState()",
+         drug.toMap()..['state'] = "TakeTodayState",
          conflictAlgorithm: ConflictAlgorithm.replace);
      print('Inserted drug with ID: $id');
 
@@ -229,29 +229,18 @@ class DatabaseHandler {
   }
 
   Future<void> updateDrugState(int id, DrugStates state) async {
+    print("in updateDrugState id: $id, state: $state");
     final db = await initDB();
     await db.update(
       'medicaments',
-      {'state': state.toString()},
+      {'state': state.runtimeType.toString()},
       where: 'id = ?',
       whereArgs: [id],
     );
     if (state is TakenState || state is SkippedState) {
       await NotificationService.instance.deleteNotification(id);
     }
-    /*
-    if (state == DrugState.notTaken){
-      DrugOfDatabase drug = await getDrug(id);
-      DateTime dateTime = TimeConverter.parseTimeToDateTime(drug.time);
-      await NotificationService.instance.scheduleNotification(
-        id: id,
-        title: 'Nimm ${drug.name}!',
-        body: 'Es ist Zeit ${drug.name} zu nehmen! Du musst ${drug.dosage} nehmen.',
-        scheduleTime: dateTime,
-      );
-    }
 
-     */
   }
 
 

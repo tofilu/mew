@@ -9,18 +9,20 @@ abstract class DrugStates {
   void countUp(DrugOfDatabase drug);
 
   static DrugStates getStateFromString(String state) {
-    print(state);
+    print("state: $state in DrugStates");
     switch (state) {
-      case 'TakeTodayState()':
+      case  'TakeTodayState':
         return TakeTodayState();
-      case 'TakeSoonState()':
+      case 'TakeSoonState':
         return TakeSoonState();
-      case 'TakenState()':
+      case 'TakenState':
         return TakenState();
-      case 'SkippedState()':
+      case 'SkippedState':
         return SkippedState();
       default:
+        print("ey jo was tun wir im default bro");
         return TakeTodayState();
     }
   }
+
 }

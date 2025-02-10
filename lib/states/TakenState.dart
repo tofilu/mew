@@ -4,7 +4,7 @@ import 'DrugStates.dart';
 import 'TakeTodayState.dart';
 
 class TakenState extends DrugStates {
-  
+
   @override
   void countUp(DrugOfDatabase drug) {
     drug.counter = 1;
