@@ -7,7 +7,7 @@ import 'TakenState.dart';
 abstract class DrugStates {
   void countUp(DrugOfDatabase drug);
 
-  DrugStates getStateFromString(String state) {
+  static DrugStates getStateFromString(String state) {
     switch (state) {
       case 'TakeTodayState':
         return TakeTodayState();

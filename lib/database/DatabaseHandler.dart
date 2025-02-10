@@ -149,7 +149,7 @@ class DatabaseHandler {
       frequency: map['frequency'],
       dosage: map['dosage'],
       counter: map['counter'],
-      state: getStateFromString(map['state']),
+      state: DrugStates.getStateFromString(map['state']),
     );
     return drug;
   }
@@ -162,7 +162,7 @@ class DatabaseHandler {
       frequency: map['frequency'],
       dosage: map['dosage'],
       counter: map['counter'],
-      state: getStateFromString(map['state']),
+      state: DrugStates.getStateFromString(map['state']),
     );
     return drug;
   }
@@ -211,7 +211,6 @@ class DatabaseHandler {
         where: 'id = ?',
         whereArgs: [drug.id],
       );
-      print("Aktueller Counter für ${drug.name}: ${drug.counter}, Zustand: ${drug._state.runtimeType}");
     }
   }
 
@@ -237,7 +236,7 @@ class DatabaseHandler {
       where: 'id = ?',
       whereArgs: [id],
     );
-    if (state == TankenState || state == SkippenState) {
+    if (state == TakenState || state == SkippedState) {
       await NotificationService.instance.deleteNotification(id);
     }
     /*
