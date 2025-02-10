@@ -5,6 +5,11 @@ import 'package:path/path.dart';
 import '../Helper/Drug.dart';
 import '../Helper/DrugState.dart';
 import '../Helper/TimeConverter.dart';
+import '../states/DrugStates.dart';
+import '../states/TakenState.dart';
+import '../states/TakeSoonState.dart';
+import '../states/SkippedState.dart';
+import '../states/TakeTodayState.dart';
 
 class DatabaseHandler {
 
@@ -32,7 +37,7 @@ class DatabaseHandler {
     try {
      int id = await db.insert(
         'medicaments',
-         drug.toMap()..['state'] = DrugState.notTaken.index,
+         drug.toMap()..['state'] = TakeTodayState(),
          conflictAlgorithm: ConflictAlgorithm.replace);
      print('Inserted drug with ID: $id');
 
@@ -144,7 +149,7 @@ class DatabaseHandler {
       frequency: map['frequency'],
       dosage: map['dosage'],
       counter: map['counter'],
-      state: DrugState.values[map['state']],
+      state: [map['state']],
     );
     return drug;
   }
@@ -157,7 +162,7 @@ class DatabaseHandler {
       frequency: map['frequency'],
       dosage: map['dosage'],
       counter: map['counter'],
-      state: DrugState.values[map['state']],
+      state: getStateFromString(map['state']),
     );
     return drug;
   }
@@ -228,7 +233,7 @@ class DatabaseHandler {
     final db = await initDB();
     await db.update(
       'medicaments',
-      {'state': state.index},  // Speichert als Integer
+      {'state': state},  // Speichert als Integer
       where: 'id = ?',
       whereArgs: [id],
     );

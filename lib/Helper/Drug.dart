@@ -1,4 +1,4 @@
-import '../Helper/DrugState.dart';
+import '../states/DrugStates.dart';
 
 class Drug {
   String name;
@@ -25,7 +25,7 @@ class Drug {
       'frequency': frequency,
       'dosage': dosage,
       'counter': counter,
-      'state': state.index,//????
+      'state': state,//????
     };
   }
 }

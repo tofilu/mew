@@ -1,4 +1,5 @@
 import 'package:mew/Helper/Drug.dart';
+import '../states/DrugStates.dart';
 
 class DrugOfDatabase extends Drug{
   int id;
@@ -26,6 +27,6 @@ class DrugOfDatabase extends Drug{
   }
 
   void countUp() {
-    _state.countUp(this);
+    state.countUp(this);
   }
 }

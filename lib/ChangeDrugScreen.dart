@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mew/AddDrugScreen.dart';
 import 'package:mew/Helper/TimeConverter.dart';
+import 'package:mew/states/TakeTodayState.dart';
 import 'Helper/Drug.dart';
 import '../Helper/DrugState.dart';
 
@@ -56,7 +57,7 @@ class ChangeDrugScreenState extends AddDrugScreenState {
       frequency: frequency,
       dosage: dosage,
       counter: 0, // Counter bleibt auf 0, falls nicht verwendet
-      state: DrugState.notTaken,
+      state: TakeTodayState(),
     );
 
     int id = await widget.drugService.getDrugId((widget as ChangeDrugScreen).nameBefore);
