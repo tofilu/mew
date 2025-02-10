@@ -33,7 +33,7 @@ class DrugService {
     await _dbHandler.set(id, name, time, frequency, dosage, counter);
   }
 
-  Future<void> updateState(int id, DrugState state) async {
+  Future<void> updateState(int id, DrugStates state) async {
     await _dbHandler.updateDrugState(id, state);
   }
 

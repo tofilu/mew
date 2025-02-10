@@ -10,7 +10,7 @@ class DrugOfDatabase extends Drug{
         required super.frequency,
         required super.dosage,
         required super.counter,
-        required super.state
+        required DrugStates state,
       });
 
   Map<String, dynamic> toMap() {
@@ -21,7 +21,11 @@ class DrugOfDatabase extends Drug{
       'frequency': frequency,
       'dosage': dosage,
       'counter': counter,
-
+//????
     };
+  }
+
+  void countUp() {
+    _state.countUp(this);
   }
 }

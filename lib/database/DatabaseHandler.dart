@@ -167,7 +167,7 @@ class DatabaseHandler {
     String path = '$databasesPath/$dbName';
     await deleteDatabase(path);
   }
-
+/*
   Future<void> countOneUpAll() async {
     final db = await initDB();
     List<DrugOfDatabase> drugs = await getAll();
@@ -193,6 +193,23 @@ class DatabaseHandler {
     }
   }
 
+ */
+  Future<void> countOneUpAll() async {
+    final db = await initDB();
+    List<DrugOfDatabase> drugs = await getAll();
+
+    for (DrugOfDatabase drug in drugs) {
+      drug.countUp(); // Jeder Zustand entscheidet selbst, was passiert
+      await db.update(
+        'medicaments',
+        {'counter': drug.counter},
+        where: 'id = ?',
+        whereArgs: [drug.id],
+      );
+      print("Aktueller Counter für ${drug.name}: ${drug.counter}, Zustand: ${drug._state.runtimeType}");
+    }
+  }
+
   Future<int> getDrugId(String name) async {
     final db = await initDB();
     final List<Map<String, dynamic>> maps = await db.query(
@@ -207,7 +224,7 @@ class DatabaseHandler {
     }
   }
 
-  Future<void> updateDrugState(int id, DrugState state) async {
+  Future<void> updateDrugState(int id, DrugStates state) async {
     final db = await initDB();
     await db.update(
       'medicaments',
@@ -215,9 +232,10 @@ class DatabaseHandler {
       where: 'id = ?',
       whereArgs: [id],
     );
-    if (state == DrugState.taken || state == DrugState.NotRequired) {
+    if (state == TankenState || state == SkippenState) {
       await NotificationService.instance.deleteNotification(id);
     }
+    /*
     if (state == DrugState.notTaken){
       DrugOfDatabase drug = await getDrug(id);
       DateTime dateTime = TimeConverter.parseTimeToDateTime(drug.time);
@@ -228,6 +246,8 @@ class DatabaseHandler {
         scheduleTime: dateTime,
       );
     }
+
+     */
   }
 
 }

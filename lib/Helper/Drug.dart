@@ -6,7 +6,7 @@ class Drug {
   int frequency;
   String dosage;
   int counter;
-  DrugState state;
+  DrugStates state;
 
   Drug(
       {
@@ -25,7 +25,7 @@ class Drug {
       'frequency': frequency,
       'dosage': dosage,
       'counter': counter,
-      'state': state.index,
+      'state': state.index,//????
     };
   }
 }

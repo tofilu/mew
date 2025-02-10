@@ -54,7 +54,7 @@ class TakeDrugBar extends DrugBar {
                 ),
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
-                drugService.updateState(drug.id, DrugState.NotRequired);
+                drugService.updateState(drug.id, SkippedState());
                 },
                 child: Text("Skip Today"),
               ),
@@ -64,7 +64,7 @@ class TakeDrugBar extends DrugBar {
                 ),
                 onPressed: () {
                   Navigator.of(context).pop(); // Schließt den Dialog
-                drugService.updateState(drug.id, DrugState.taken);
+                drugService.updateState(drug.id, TakenState());
                 },
                 child: Text("Yes"),
               ),
