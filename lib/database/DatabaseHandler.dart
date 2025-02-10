@@ -6,6 +6,8 @@ import '../Helper/Drug.dart';
 import '../Helper/DrugOfDatabase.dart';
 import '../Helper/DrugState.dart';
 import '../Helper/TimeConverter.dart';
+import '../states/NotTakenState.dart';
+import '../states/TakenState.dart';
 
 
 
@@ -166,7 +168,7 @@ class DatabaseHandler {
     String path = '$databasesPath/$dbName';
     await deleteDatabase(path);
   }
-
+/*
   countOneUpAll() async {
     final db = await initDB();
     List<DrugOfDatabase> drugs = await getAll();
@@ -187,7 +189,7 @@ class DatabaseHandler {
         );
     }
   }
-
+*/
   Future<int> getDrugId(String name) async {
     final db = await initDB();
     final List<Map<String, dynamic>> maps = await db.query(
@@ -201,7 +203,7 @@ class DatabaseHandler {
       throw Exception('Drug not found');
     }
   }
-
+/*
   Future<void> updateDrugState(int id, DrugState state) async {
     final db = await initDB();
     await db.update(
@@ -214,7 +216,7 @@ class DatabaseHandler {
       await NotificationService.instance.deleteNotification(id);
     }
   }
-
+*/
   Future<DrugState?> getDrugState(int id) async {
     final db = await initDB();
     final List<Map<String, dynamic>> maps = await db.query(
@@ -229,6 +231,41 @@ class DatabaseHandler {
       return DrugState.values[stateIndex];  // Integer zu Enum konvertieren
     }
     return null;
+  }
+  Future<void> updateDrugState(int id, DrugState state) async {
+    final db = await initDB();
+    await db.update(
+      'medicaments',
+      {'state': state.index},  // Speichert als Integer
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    Drug drug = await getDrug(id);
+    drug.changeState(this, state);
+  }
+  Future<void> updateCounter(int id, int newCounter) async {
+    final db = await initDB();
+    await db.update(
+      'medicaments',
+      {'counter': newCounter},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+  Future<void> countOneUpAll() async {
+    final db = await initDB();
+    List<DrugOfDatabase> drugs = await getAll();
+
+    if (drugs.isNotEmpty) {
+      for (DrugOfDatabase drug in drugs) {
+        if (drug.state is NotTakenState || drug.state is TakenState) {
+          drug.changeState(this, DrugState.taken);
+        } else {
+          drug.changeState(this, DrugState.notTaken);
+        }
+      }
+    }
   }
 }
 
