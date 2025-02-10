@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mew/states/TakeTodayState.dart';
 import 'Helper/Drug.dart';
 import 'Home.dart';
 import '../Helper/DrugState.dart';
@@ -34,7 +35,7 @@ class AddDrugScreenState extends State<AddDrugScreen> {
       frequency: frequency,
       dosage: dosage,
       counter: 0,
-      state: DrugState.notTaken,
+      state: TakeTodayState(),
     );
     widget.drugService.addDrug(drug);
   }
