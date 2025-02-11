@@ -2,6 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mew/Helper/Drug.dart';
 import 'package:mew/database/DatabaseHandler.dart';
 import 'package:mew/Helper/DrugState.dart';
+import 'package:mew/states/TakeTodayState.dart';
+import 'package:mew/states/TakenState.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
@@ -28,10 +30,11 @@ void main() {
     final drug = Drug(
       name: 'Paracetamol',
       time: '08:00',
-      frequency: 1, //wie oft einnehmen? mehrmals am Tag, ....
+      frequency: 1,
+      //wie oft einnehmen? mehrmals am Tag, ....
       dosage: '1 Tablette',
       counter: 0,
-      state : DrugState.notTaken,
+      state: TakeTodayState(),
     );
 
     //Medikament zur Datenbank hinzufügen
@@ -49,7 +52,7 @@ void main() {
     expect(fetchedDrug.dosage, '1 Tablette');
   });
 
-  test('GetAll drugs', () async{
+  test('GetAll drugs', () async {
     print('test');
     final drug1 = Drug(
       name: 'Paracetamol',
@@ -57,7 +60,7 @@ void main() {
       frequency: 1,
       dosage: '1 Tablette',
       counter: 0,
-      state : DrugState.notTaken,
+      state: TakeTodayState(),
     );
     final drug2 = Drug(
       name: 'Ibuprofen',
@@ -65,7 +68,7 @@ void main() {
       frequency: 2,
       dosage: '1 Tablette',
       counter: 0,
-      state : DrugState.notTaken,
+      state: TakeTodayState(),
     );
 
     //Medikamente zur Datenbank hinzufügen
@@ -92,7 +95,7 @@ void main() {
     expect(fetchedDrugs.length, 0);
   });
 
-  test('Set Drug', () async {//muss angepasst werden
+  test('Set Drug', () async { //muss angepasst werden
     print('test');
     final drug = Drug(
       name: 'Paracetamol',
@@ -100,14 +103,14 @@ void main() {
       frequency: 1,
       dosage: '1 Tablette',
       counter: 0,
-      state : DrugState.notTaken,
+      state: TakeTodayState(),
     );
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
     tz.initializeTimeZones();
     final drugId = await dbHandler.getDrugId(drug.name);
     //Medikament aktualisieren
-    await dbHandler.set(drugId, 'Ibu', '09:00', 1, '1 Tablette',0);
+    await dbHandler.set(drugId, 'Ibu', '09:00', 1, '1 Tablette', 0);
 
     //Aktualisiertes Medikament aus der Datenbank abrufen
     final fetchedDrug = await dbHandler.getDrug(drugId);
@@ -128,7 +131,7 @@ void main() {
       frequency: 1,
       dosage: '1 Tablette',
       counter: 0,
-      state : DrugState.notTaken,
+      state: TakeTodayState(),
     );
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
@@ -153,7 +156,7 @@ void main() {
       frequency: 1,
       dosage: '1 Tablette',
       counter: 0,
-      state : DrugState.notTaken,
+      state: TakeTodayState(),
     );
 
     //Medikament zur Datenbank hinzufügen
@@ -174,7 +177,7 @@ void main() {
       frequency: 1,
       dosage: '1 Tablette',
       counter: 0,
-      state : DrugState.notTaken,
+      state: TakeTodayState(),
     );
 
     //Medikament zur Datenbank hinzufügen
@@ -195,7 +198,7 @@ void main() {
       frequency: 1,
       dosage: '1 Tablette',
       counter: 0,
-      state : DrugState.notTaken,
+      state: TakeTodayState(),
     );
 
     //Medikament zur Datenbank hinzufügen
@@ -217,7 +220,7 @@ void main() {
       frequency: 1,
       dosage: '1 Tablette',
       counter: 0,
-      state : DrugState.notTaken,
+      state: TakeTodayState(),
     );
 
     //Medikament zur Datenbank hinzufügen
@@ -239,7 +242,6 @@ void main() {
           () async => await dbHandler.search('NonExistentDrug'),
       throwsException,
     );
-
   });
 
   test('Delete Drug', () async {
@@ -250,7 +252,7 @@ void main() {
       frequency: 1,
       dosage: '1 Tablette',
       counter: 0,
-      state : DrugState.notTaken,
+      state: TakeTodayState(),
     );
     //Medikament zur Datenbank hinzufügen
     await dbHandler.addToDataBase(drug);
@@ -261,9 +263,84 @@ void main() {
   });
 
   test('Delete Non-Existent Drug', () async {
-    print('test');
-    // Versuch, ein nicht existierendes Medikament zu löschen
     await dbHandler.delete(999); // ID, die nicht existiert
-    // Es sollte keine Fehler werfen und nichts tun
   });
+
+  test(' delete Databse File', () async {
+    final drug1 = Drug(
+      name: 'Paracetamol',
+      time: '08:00',
+      frequency: 2,
+      dosage: '1 Tablette',
+      counter: 1,
+      state: TakenState(),
+    );
+    await dbHandler.deleteDatabaseFile('medicament_database.db');
+    await dbHandler.getAll();
+    expect(await dbHandler.getAll(), isEmpty);
+  });
+
+  test(' Count Drugs', () async {
+    print('test');
+    final drug1 = Drug(
+      name: 'Paracetamol',
+      time: '08:00',
+      frequency: 2,
+      dosage: '1 Tablette',
+      counter: 1,
+      state: TakenState(),
+    );
+
+
+    //Medikamente zur Datenbank hinzufügen
+    await dbHandler.addToDataBase(drug1);
+
+    //Anzahl der Medikamente in der Datenbank zählen
+    await dbHandler.countOneUpAll();
+    final count = drug1.counter;
+
+    //Überprüfen, ob die Anzahl korrekt ist
+    expect(count, 1);
+
+  });
+
+
+  test('getDrugId()', () async {
+    // Arrange
+    final drug = Drug(
+      name: 'Paracetamol',
+      time: '08:00',
+      frequency: 1,
+      dosage: '1 Tablette',
+      counter: 0,
+      state: TakeTodayState(),
+    );
+    await dbHandler.addToDataBase(drug);
+
+    // Act
+    final drugId = await dbHandler.getDrugId(drug.name);
+
+    // Assert
+    expect(drugId, isNotNull);
+  });
+
+  test('Test updateDrugState()', () async {
+    // Arrange
+    final drug = Drug(
+      name: 'Paracetamol',
+      time: '08:00',
+      frequency: 1,
+      dosage: '1 Tablette',
+      counter: 0,
+      state: TakeTodayState(),
+    );
+    await dbHandler.addToDataBase(drug);
+    final drugId = await dbHandler.getDrugId(drug.name);
+    dbHandler.updateDrugState(drugId, TakenState());
+    final fetchedDrug = await dbHandler.getDrug(drugId);
+
+    // Assert
+    expect(fetchedDrug.state, isInstanceOf<TakenState>());
+  });
+
 }
