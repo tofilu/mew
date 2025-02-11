@@ -207,10 +207,20 @@ class DatabaseHandler {
       drug.countUp(); // Jeder Zustand entscheidet selbst, was passiert
       await db.update(
         'medicaments',
-        {'counter': drug.counter},
+        {'counter': drug.counter,
+        'state': drug.state.runtimeType.toString()},
         where: 'id = ?',
         whereArgs: [drug.id],
       );
+      if (drug.state is TakeTodayState) {
+        DateTime dateTime = TimeConverter.parseTimeToDateTime(drug.time);
+        await NotificationService.instance.scheduleNotification(
+          id: drug.id,
+          title: 'Nimm ${drug.name}!',
+          body: 'Es ist Zeit ${drug.name} zu nehmen! Du musst ${drug.dosage} nehmen.',
+          scheduleTime: dateTime,
+        );
+      }
     }
   }
 
