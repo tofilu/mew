@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mew/Helper/Drug.dart';
 import 'package:mew/database/DatabaseHandler.dart';
-import 'package:mew/Helper/DrugState.dart';
 import 'package:mew/states/TakeTodayState.dart';
 import 'package:mew/states/TakenState.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -12,7 +11,6 @@ void main() {
 
   //wird vor jedem Test ausgeführt
   setUp(() {
-    print('setUp called');
     dbHandler = DatabaseHandler();
     dbHandler.deleteDatabaseFile('medicament_database.db');
     //muss nur ausgeführt werden da die Datenbank in den Tests nicht geschlossen wird
@@ -26,12 +24,10 @@ void main() {
   });
 
   test('Add Drug to Database', () async {
-    print('test');
     final drug = Drug(
       name: 'Paracetamol',
       time: '08:00',
       frequency: 1,
-      //wie oft einnehmen? mehrmals am Tag, ....
       dosage: '1 Tablette',
       counter: 0,
       state: TakeTodayState(),
@@ -53,7 +49,6 @@ void main() {
   });
 
   test('GetAll drugs', () async {
-    print('test');
     final drug1 = Drug(
       name: 'Paracetamol',
       time: '08:00',
@@ -86,7 +81,6 @@ void main() {
   });
 
   test('get all drugs when database is empty', () async {
-    print('test');
     //Alle Medikamente aus der Datenbank abrufen
     final fetchedDrugs = await dbHandler.getAll();
 
@@ -96,7 +90,6 @@ void main() {
   });
 
   test('Set Drug', () async { //muss angepasst werden
-    print('test');
     final drug = Drug(
       name: 'Paracetamol',
       time: '08:00',
@@ -124,7 +117,6 @@ void main() {
   });
 
   test('Get Drug by ID', () async {
-    print('test');
     final drug = Drug(
       name: 'Paracetamol',
       time: '08:00',
@@ -149,7 +141,6 @@ void main() {
   });
 
   test('search for Drug by Name', () async {
-    print('test');
     final drug = Drug(
       name: 'Paracetamol',
       time: '08:00',
@@ -170,7 +161,6 @@ void main() {
     expect(fetchedDrug.dosage, '1 Tablette');
   });
   test('search for Drug by Name', () async {
-    print('test');
     final drug = Drug(
       name: 'Paracetamol',
       time: '08:00',
@@ -191,7 +181,6 @@ void main() {
     expect(fetchedDrug.dosage, '1 Tablette');
   });
   test('search for Drug by Name case insensitive', () async {
-    print('test');
     final drug = Drug(
       name: 'Paracetamol',
       time: '08:00',
@@ -213,7 +202,6 @@ void main() {
   });
 
   test('search for Drug by partial Name ', () async {
-    print('test');
     final drug = Drug(
       name: 'Paracetamol',
       time: '08:00',
@@ -236,8 +224,6 @@ void main() {
 
 
   test('Search Drug by Non-Existent Name', () async {
-    print('test');
-    // Suche nach einem Medikament, das nicht existiert
     expect(
           () async => await dbHandler.search('NonExistentDrug'),
       throwsException,
@@ -245,7 +231,6 @@ void main() {
   });
 
   test('Delete Drug', () async {
-    print('test');
     final drug = Drug(
       name: 'Paracetamol',
       time: '08:00',
@@ -281,7 +266,6 @@ void main() {
   });
 
   test(' Count Drugs', () async {
-    print('test');
     final drug1 = Drug(
       name: 'Paracetamol',
       time: '08:00',

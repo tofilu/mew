@@ -4,7 +4,6 @@ import 'package:mew/states/SkippedState.dart';
 import 'package:mew/states/TakenState.dart';
 import 'DrugBar.dart';
 import '../Helper/DrugService.dart';
-import '../Helper/DrugState.dart';
 
 class TakeDrugBar extends DrugBar {
   DrugOfDatabase drug;

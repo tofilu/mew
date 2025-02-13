@@ -3,7 +3,6 @@ import 'package:mew/AddDrugScreen.dart';
 import 'package:mew/Helper/TimeConverter.dart';
 import 'package:mew/states/TakeTodayState.dart';
 import 'Helper/Drug.dart';
-import '../Helper/DrugState.dart';
 
 class ChangeDrugScreen extends AddDrugScreen {
   String nameBefore;

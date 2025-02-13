@@ -1,4 +1,3 @@
-import 'package:mew/Helper/DrugState.dart';
 import 'package:mew/database/DatabaseHandler.dart';
 import '../states/DrugStates.dart';
 import 'DrugOfDatabase.dart';

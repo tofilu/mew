@@ -3,7 +3,6 @@ import 'package:mew/states/TakeTodayState.dart';
 import 'Helper/DrugOfDatabase.dart';
 import 'ListScreen.dart';
 import 'package:mew/TakeDrugBar.dart';
-import '../Helper/DrugState.dart';
 
 class DailyScreen extends ListScreen {
   @override
