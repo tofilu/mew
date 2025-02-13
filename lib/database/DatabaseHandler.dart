@@ -162,7 +162,7 @@ class DatabaseHandler {
       frequency: map['frequency'],
       dosage: map['dosage'],
       counter: map['counter'],
-      state: DrugStates.getStateFromString(map['state']),
+      state: DrugStates.getStateFromString(map['state'].toString()),
     );
     return drug;
   }
